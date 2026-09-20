@@ -1,53 +1,299 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Erin Enterprises | Online Store</title>
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f7f7f7;color:#222}
-header{background:#111;color:#fff;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;gap:15px;position:sticky;top:0;z-index:10}
-.logo{font-size:22px;font-weight:700}.cart{background:#fff;color:#111;border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer}
-.hero{padding:55px 5%;background:linear-gradient(135deg,#111,#333);color:#fff;text-align:center}
-.hero h1{font-size:38px;margin:0 0 10px}.hero p{font-size:18px;margin:0}
-main{padding:30px 5%;max-width:1200px;margin:auto}.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 2px 10px #0001}.card h3{margin:8px 0}.price{font-weight:700;font-size:19px;margin:10px 0}.btn{width:100%;padding:12px;border:0;border-radius:8px;background:#111;color:#fff;cursor:pointer}.btn:hover{opacity:.85}
-.notice{background:#fff3cd;padding:14px;border-radius:8px;margin-bottom:20px}
-footer{background:#111;color:#fff;text-align:center;padding:25px;margin-top:30px}
-#cartPanel{display:none;position:fixed;right:0;top:0;width:min(380px,100%);height:100%;background:#fff;z-index:20;padding:22px;box-shadow:-5px 0 20px #0003;overflow:auto}
-.close{float:right;border:0;background:none;font-size:25px;cursor:pointer}.item{border-bottom:1px solid #ddd;padding:12px 0}
-.checkout{display:block;text-align:center;background:#00875a;color:#fff;padding:13px;border-radius:8px;text-decoration:none;margin-top:15px}
-</style>
-</head>
-<body>
-<header><div class="logo">Erin Enterprises</div><button class="cart" onclick="openCart()">🛒 Cart (<span id="count">0</span>)</button></header>
-<section class="hero"><h1>Welcome to Erin Enterprises</h1><p>Shop our products online — simple, secure and convenient.</p></section>
-<main>
-<div class="notice">Products below can be replaced with your exact Paystack product names and prices.</div>
-<h2>Our Products</h2>
-<div class="products" id="products"></div>
-</main>
-<div id="cartPanel"><button class="close" onclick="closeCart()">×</button><h2>Your Cart</h2><div id="cart"></div><h3>Total: ₦<span id="total">0</span></h3>
-<a class="checkout" href="https://paystack.shop/pay/563bput8e4" target="_blank" rel="noopener">Proceed to Paystack</a></div>
-<footer>© 2026 Erin Enterprises. All rights reserved.</footer>
-<script>
-const products=[
-{name:"Product 1",price:5500},{name:"Product 2",price:4000},{name:"Product 3",price:3500},
-{name:"Product 4",price:25000},{name:"Product 5",price:3500}
-];
-let cart=[];
-const money=n=>n.toLocaleString("en-NG");
-function render(){
- document.getElementById("products").innerHTML=products.map((p,i)=>`<div class="card"><h3>${p.name}</h3><div class="price">₦${money(p.price)}</div><button class="btn" onclick="add(${i})">Add to Cart</button></div>`).join("");
- document.getElementById("cart").innerHTML=cart.length?cart.map((p,i)=>`<div class="item"><b>${p.name}</b><br>₦${money(p.price)} <button onclick="removeItem(${i})">Remove</button></div>`).join(""):"<p>Your cart is empty.</p>";
- document.getElementById("count").textContent=cart.length;
- document.getElementById("total").textContent=money(cart.reduce((s,p)=>s+p.price,0));
+<title>Erin Enterprises | Online Store</title><style>
+* {
+  box-sizing: border-box;
 }
-function add(i){cart.push(products[i]);render()}
-function removeItem(i){cart.splice(i,1);render()}
-function openCart(){document.getElementById("cartPanel").style.display="block"}
-function closeCart(){document.getElementById("cartPanel").style.display="none"}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  color: #222;
+}
+
+header {
+  background: #111;
+  color: #fff;
+  padding: 18px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.cart {
+  background: #fff;
+  color: #111;
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hero {
+  padding: 55px 5%;
+  background: linear-gradient(135deg, #111, #333);
+  color: #fff;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 38px;
+  margin: 0 0 10px;
+}
+
+.hero p {
+  font-size: 18px;
+  margin: 0;
+}
+
+main {
+  padding: 30px 5%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 2px 10px #0001;
+}
+
+.card h3 {
+  margin: 8px 0;
+}
+
+.price {
+  font-weight: 700;
+  font-size: 19px;
+  margin: 10px 0;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  border: 0;
+  border-radius: 8px;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: .85;
+}
+
+.notice {
+  background: #fff3cd;
+  padding: 14px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+footer {
+  background: #111;
+  color: #fff;
+  text-align: center;
+  padding: 25px;
+  margin-top: 30px;
+}
+
+#cartPanel {
+  display: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: min(380px, 100%);
+  height: 100%;
+  background: #fff;
+  z-index: 20;
+  padding: 22px;
+  box-shadow: -5px 0 20px #0003;
+  overflow: auto;
+}
+
+.close {
+  float: right;
+  border: 0;
+  background: none;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.item {
+  border-bottom: 1px solid #ddd;
+  padding: 12px 0;
+}
+
+.remove {
+  margin-top: 6px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 5px;
+  background: #ddd;
+  cursor: pointer;
+}
+
+.checkout {
+  display: block;
+  text-align: center;
+  background: #00875a;
+  color: #fff;
+  padding: 13px;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-top: 15px;
+}
+</style></head><body><header>
+  <div class="logo">Erin Enterprises</div>  <button class="cart" onclick="openCart()">
+    🛒 Cart (<span id="count">0</span>)
+  </button>
+</header><section class="hero">
+  <h1>Welcome to Erin Enterprises</h1>
+  <p>Shop our products online — simple, secure and convenient.</p>
+</section><main>  <div class="notice">
+    Shop our available products below. Add your items to the cart and proceed to Paystack for payment.
+  </div>  <h2>Our Products</h2>  <div class="products" id="products"></div></main><div id="cartPanel"><button class="close" onclick="closeCart()">×</button>
+
+  <h2>Your Cart</h2>  <div id="cart"></div>  <h3>
+    Total: ₦<span id="total">0</span>
+  </h3><a
+class="checkout"
+href="https://paystack.shop/pay/563bput8e4"
+target="_blank"
+rel="noopener"
+
+«»
+
+Proceed to Paystack
+
+  </a></div><footer>
+  © 2026 Erin Enterprises. All rights reserved.
+</footer><script>
+
+const products = [
+  {
+    name: "P Clinic",
+    price: 12000
+  },
+  {
+    name: "Vivon Kiddies",
+    price: 5500
+  },
+  {
+    name: "Dodo Skin Gold Vit C Soap",
+    price: 3500
+  },
+  {
+    name: "Kiddies Shoes",
+    price: 25000
+  },
+  {
+    name: "Dodo Black Soap",
+    price: 1500
+  }
+];
+
+let cart = [];
+
+const money = (number) => {
+  return number.toLocaleString("en-NG");
+};
+
+function render() {
+
+  document.getElementById("products").innerHTML =
+    products.map((product, index) => `
+      <div class="card">
+
+        <h3>${product.name}</h3>
+
+        <div class="price">
+          ₦${money(product.price)}
+        </div>
+
+        <button class="btn" onclick="add(${index})">
+          Add to Cart
+        </button>
+
+      </div>
+    `).join("");
+
+  document.getElementById("cart").innerHTML =
+    cart.length
+
+    ? cart.map((product, index) => `
+        <div class="item">
+
+          <b>${product.name}</b>
+
+          <br>
+
+          ₦${money(product.price)}
+
+          <br>
+
+          <button
+            class="remove"
+            onclick="removeItem(${index})"
+          >
+            Remove
+          </button>
+
+        </div>
+      `).join("")
+
+    : "<p>Your cart is empty.</p>";
+
+  document.getElementById("count").textContent = cart.length;
+
+  document.getElementById("total").textContent =
+    money(
+      cart.reduce(
+        (total, product) => total + product.price,
+        0
+      )
+    );
+}
+
+function add(index) {
+  cart.push(products[index]);
+  render();
+}
+
+function removeItem(index) {
+  cart.splice(index, 1);
+  render();
+}
+
+function openCart() {
+  document.getElementById("cartPanel").style.display = "block";
+}
+
+function closeCart() {
+  document.getElementById("cartPanel").style.display = "none";
+}
+
 render();
-</script>
-</body>
-</html>
+
+</script></body>
+                                                                                   </html>
