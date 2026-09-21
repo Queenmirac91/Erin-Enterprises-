@@ -3,117 +3,271 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Erin Enterprises | Online Store</title>
 
 <style>
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f7f7f7;
-  color:#222
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-header{
-  background:#111;
-  color:#fff;
-  padding:18px 5%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  position:sticky;
-  top:0;
-  z-index:10
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f7fa;
+  color: #222;
 }
 
-.logo{
-  font-size:22px;
-  font-weight:700
+header {
+  background: #0b6b3a;
+  color: white;
+  padding: 22px 15px;
+  text-align: center;
 }
 
-.cart{
-  background:#fff;
-  color:#111;
-  border:0;
-  border-radius:8px;
-  padding:10px 14px;
-  font-weight:700;
-  cursor:pointer
+header h1 {
+  font-size: 30px;
+  margin-bottom: 8px;
 }
 
-.hero{
-  padding:55px 5%;
-  background:linear-gradient(135deg,#111,#333);
-  color:#fff;
-  text-align:center
+header p {
+  font-size: 15px;
 }
 
-.hero h1{
-  font-size:38px;
-  margin:0 0 10px
+nav {
+  background: white;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.hero p{
-  font-size:18px;
-  margin:0
+nav a {
+  color: #0b6b3a;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0 10px;
 }
 
-main{
-  padding:30px 5%;
-  max-width:1200px;
-  margin:auto
+.hero {
+  background: #e8f5ee;
+  padding: 40px 20px;
+  text-align: center;
 }
 
-.products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px
+.hero h2 {
+  color: #0b6b3a;
+  font-size: 28px;
+  margin-bottom: 12px;
 }
 
-.card{
-  background:#fff;
-  border-radius:12px;
-  padding:18px;
-  box-shadow:0 2px 10px #0001
+.hero p {
+  max-width: 650px;
+  margin: auto;
+  line-height: 1.6;
 }
 
-.card h3{
-  margin:8px 0
+.container {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 15px;
 }
 
-.price{
-  font-weight:700;
-  font-size:19px;
-  margin:10px 0
+.section-title {
+  text-align: center;
+  color: #0b6b3a;
+  margin-bottom: 25px;
+  font-size: 26px;
 }
 
-.btn{
-  width:100%;
-  padding:12px;
-  border:0;
-  border-radius:8px;
-  background:#111;
-  color:#fff;
-  cursor:pointer
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
 }
 
-.btn:hover{
-  opacity:.85
+.product {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
 }
 
-.notice{
-  background:#fff3cd;
-  padding:14px;
-  border-radius:8px;
-  margin-bottom:
-    const products = [
-  {name:"P Clinic",price:12000},
-  {name:"Vivon Kiddies",price:5500},
-  {name:"Dodo Skin Gold Vit C Soap",price:3500},
-  {name:"Kiddies Shoes",price:25000},
-  {name:"Dodo Black Soap",price:1500},
-  {name:"Vitamin C Whitening Cream",price:2500},
-  {name:"Dr Paris",price:12000},
-  {name:"Adult Shoe",price:30000}
-];
+.product-icon {
+  font-size: 55px;
+  margin-bottom: 15px;
+}
+
+.product h3 {
+  color: #0b6b3a;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 12px 0;
+  color: #111;
+}
+
+.buy-btn {
+  display: inline-block;
+  background: #0b6b3a;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 7px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.buy-btn:hover {
+  background: #084d2b;
+}
+
+.about {
+  background: white;
+  padding: 30px 20px;
+  margin-top: 35px;
+  border-radius: 12px;
+  line-height: 1.7;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.contact {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.contact a {
+  color: #0b6b3a;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+footer {
+  background: #0b6b3a;
+  color: white;
+  text-align: center;
+  padding: 25px 15px;
+  margin-top: 40px;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 25px;
+  }
+
+  .hero h2 {
+    font-size: 23px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Erin Enterprises</h1>
+  <p>Quality Products • Reliable Service • Online Shopping</p>
+</header>
+
+<nav>
+  <a href="#home">Home</a>
+  <a href="#products">Products</a>
+  <a href="#about">About Us</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section class="hero" id="home">
+  <h2>Welcome to Erin Enterprises</h2>
+  <p>
+    Shop quality products from Erin Enterprises.
+    Browse our products and place your order online.
+  </p>
+</section>
+
+<section class="container" id="products">
+
+  <h2 class="section-title">Our Products</h2>
+
+  <div class="products">
+
+    <div class="product">
+      <div class="product-icon">🛍️</div>
+      <h3>P Clinic</h3>
+      <p>Quality product available from Erin Enterprises.</p>
+      <div class="price">₦12,000</div>
+      <a
+        class="buy-btn"
+        href="https://paystack.shop/pay/563bput8e4"
+        target="_blank">
+        Buy Now
+      </a>
+    </div>
+
+    <div class="product">
+      <div class="product-icon">📦</div>
+      <h3>Erin Enterprises Product</h3>
+      <p>Quality products available for online customers.</p>
+      <div class="price">Contact Us</div>
+      <a
+        class="buy-btn"
+        href="https://wa.me/2348125253898"
+        target="_blank">
+        Order on WhatsApp
+      </a>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="container" id="about">
+
+  <div class="about">
+
+    <h2 class="section-title">About Erin Enterprises</h2>
+
+    <p>
+      Erin Enterprises is an online business providing quality products
+      and convenient ordering for customers.
+    </p>
+
+    <br>
+
+    <p>
+      We are building our online store so customers can browse products,
+      place orders and make payments easily.
+    </p>
+
+  </div>
+
+</section>
+
+<section class="container" id="contact">
+
+  <div class="about contact">
+
+    <h2 class="section-title">Contact Us</h2>
+
+    <p>For orders and enquiries:</p>
+
+    <p style="margin-top:12px;">
+      📱 <a href="https://wa.me/2348125253898" target="_blank">
+      WhatsApp: +234 812 525 3898
+      </a>
+    </p>
+
+  </div>
+
+</section>
+
+<footer>
+  <p><strong>Erin Enterprises</strong></p>
+  <p>© 2026 Erin Enterprises. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
