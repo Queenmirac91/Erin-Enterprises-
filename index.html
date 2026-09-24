@@ -4,401 +4,289 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Erin Enterprises | Online Shopping</title>
+<title>Erin Enterprises | Online Store</title>
 
 <style>
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f6f6f6;
-  color:#222;
-  padding-bottom:75px;
+    font-family:Arial, sans-serif;
+    background:#f5f5f5;
+    color:#222;
 }
 
 header{
-  background:#0b6b3a;
-  color:white;
-  padding:18px 15px 15px;
-  position:sticky;
-  top:0;
-  z-index:1000;
-}
-
-.header-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  max-width:1100px;
-  margin:auto;
+    background:#111;
+    color:white;
+    padding:18px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
 }
 
 .logo{
-  font-size:22px;
-  font-weight:bold;
+    font-size:23px;
+    font-weight:bold;
 }
 
-.cart{
-  background:white;
-  color:#0b6b3a;
-  border:0;
-  border-radius:25px;
-  padding:9px 14px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.search-box{
-  max-width:1100px;
-  margin:15px auto 0;
-  display:flex;
-  background:white;
-  border-radius:25px;
-  overflow:hidden;
-}
-
-.search-box input{
-  flex:1;
-  border:0;
-  outline:none;
-  padding:13px 16px;
-  font-size:15px;
-}
-
-.search-box button{
-  border:0;
-  background:#ffb300;
-  padding:0 18px;
-  cursor:pointer;
-  font-size:18px;
-}
-
-nav{
-  background:white;
-  padding:12px;
-  display:flex;
-  justify-content:center;
-  gap:18px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-  position:sticky;
-  top:105px;
-  z-index:900;
-}
-
-nav a{
-  color:#333;
-  text-decoration:none;
-  font-size:14px;
-  font-weight:bold;
+.cart-button{
+    background:#fff;
+    color:#111;
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 .hero{
-  background:linear-gradient(135deg,#0b6b3a,#159957);
-  color:white;
-  padding:35px 20px;
-  text-align:center;
+    background:linear-gradient(135deg,#111,#444);
+    color:white;
+    text-align:center;
+    padding:55px 20px;
 }
 
 .hero h1{
-  font-size:30px;
-  margin-bottom:10px;
+    font-size:38px;
+    margin-bottom:12px;
 }
 
 .hero p{
-  line-height:1.6;
-  max-width:600px;
-  margin:auto;
+    font-size:18px;
+    margin-bottom:25px;
 }
 
-.shop-btn{
-  display:inline-block;
-  margin-top:18px;
-  background:#ffb300;
-  color:#222;
-  padding:13px 25px;
-  border-radius:25px;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-.container{
-  max-width:1100px;
-  margin:25px auto;
-  padding:0 15px;
+.shop-button{
+    display:inline-block;
+    background:#25D366;
+    color:white;
+    padding:13px 25px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
 }
 
 .section-title{
-  font-size:23px;
-  margin-bottom:18px;
-}
-
-.categories{
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
-  padding-bottom:8px;
-}
-
-.category{
-  min-width:90px;
-  background:white;
-  border-radius:12px;
-  padding:14px 8px;
-  text-align:center;
-  box-shadow:0 2px 7px rgba(0,0,0,.08);
-  cursor:pointer;
-}
-
-.category span{
-  display:block;
-  font-size:28px;
-  margin-bottom:5px;
-}
-
-.category small{
-  font-weight:bold;
+    text-align:center;
+    margin:35px 0 20px;
+    font-size:28px;
 }
 
 .products{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
 }
 
 .product{
-  background:white;
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow:0 2px 8px rgba(0,0,0,.1);
-  position:relative;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 3px 12px rgba(0,0,0,.12);
+    padding-bottom:18px;
 }
 
 .product-image{
-  height:170px;
-  background:#edf7f1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:65px;
+    width:100%;
+    height:210px;
+    background:#eee;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#777;
+    font-size:14px;
 }
 
-.favorite{
-  position:absolute;
-  top:8px;
-  right:8px;
-  width:35px;
-  height:35px;
-  border:0;
-  border-radius:50%;
-  background:white;
-  font-size:20px;
-  cursor:pointer;
-  box-shadow:0 2px 6px rgba(0,0,0,.15);
+.product-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
-.product-info{
-  padding:13px;
+.product-content{
+    padding:16px;
 }
 
 .product h3{
-  font-size:16px;
-  margin-bottom:7px;
-}
-
-.product-description{
-  color:#777;
-  font-size:13px;
-  line-height:1.4;
-  min-height:36px;
+    margin-bottom:8px;
+    font-size:18px;
 }
 
 .price{
-  font-size:18px;
-  font-weight:bold;
-  color:#0b6b3a;
-  margin:10px 0;
+    font-size:19px;
+    font-weight:bold;
+    margin-bottom:15px;
 }
 
-.product-buttons{
-  display:flex;
-  gap:7px;
+.add-button{
+    width:100%;
+    padding:11px;
+    border:none;
+    border-radius:7px;
+    background:#111;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
 }
 
-.add-btn,
-.buy-btn{
-  flex:1;
-  border:0;
-  padding:10px 5px;
-  border-radius:7px;
-  font-weight:bold;
-  cursor:pointer;
-  font-size:12px;
+.add-button:hover{
+    background:#333;
 }
 
-.add-btn{
-  background:#e8f5ee;
-  color:#0b6b3a;
+.cart{
+    position:fixed;
+    right:-400px;
+    top:0;
+    width:360px;
+    max-width:90%;
+    height:100%;
+    background:white;
+    z-index:2000;
+    box-shadow:-4px 0 15px rgba(0,0,0,.25);
+    padding:20px;
+    transition:.3s;
+    overflow-y:auto;
 }
 
-.buy-btn{
-  background:#0b6b3a;
-  color:white;
-}
-
-.deal{
-  background:#fff4d6;
-  border-radius:14px;
-  padding:20px;
-  margin-bottom:25px;
-  border:1px solid #ffe19a;
-}
-
-.deal h2{
-  color:#d17b00;
-  margin-bottom:7px;
-}
-
-.about{
-  background:white;
-  border-radius:14px;
-  padding:25px;
-  line-height:1.7;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-
-.contact{
-  text-align:center;
-}
-
-.contact a{
-  color:#0b6b3a;
-  font-weight:bold;
-  text-decoration:none;
-}
-
-footer{
-  background:#073d23;
-  color:white;
-  text-align:center;
-  padding:25px 15px;
-  margin-top:35px;
-  line-height:1.7;
-}
-
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:65px;
-  background:white;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  box-shadow:0 -2px 10px rgba(0,0,0,.15);
-  z-index:2000;
-}
-
-.bottom-nav a{
-  text-decoration:none;
-  color:#555;
-  text-align:center;
-  font-size:12px;
-}
-
-.bottom-nav span{
-  display:block;
-  font-size:21px;
-  margin-bottom:3px;
-}
-
-.cart-panel{
-  display:none;
-  position:fixed;
-  top:0;
-  right:0;
-  width:90%;
-  max-width:400px;
-  height:100%;
-  background:white;
-  z-index:3000;
-  box-shadow:-4px 0 15px rgba(0,0,0,.2);
-  padding:20px;
-  overflow:auto;
-}
-
-.cart-panel.active{
-  display:block;
+.cart.open{
+    right:0;
 }
 
 .cart-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
 }
 
 .close-cart{
-  border:0;
-  background:#eee;
-  border-radius:50%;
-  width:35px;
-  height:35px;
-  cursor:pointer;
+    border:none;
+    background:#eee;
+    padding:8px 12px;
+    border-radius:6px;
+    cursor:pointer;
 }
 
 .cart-item{
-  border-bottom:1px solid #ddd;
-  padding:12px 0;
+    border-bottom:1px solid #ddd;
+    padding:12px 0;
 }
 
-.cart-total{
-  font-size:20px;
-  font-weight:bold;
-  margin:20px 0;
+.cart-item strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.quantity{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:8px;
+}
+
+.quantity button{
+    width:28px;
+    height:28px;
+    border:none;
+    background:#111;
+    color:white;
+    border-radius:4px;
+    cursor:pointer;
+}
+
+.total{
+    font-size:21px;
+    font-weight:bold;
+    margin:20px 0;
 }
 
 .checkout{
-  display:block;
-  text-align:center;
-  background:#0b6b3a;
-  color:white;
-  padding:14px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:bold;
+    width:100%;
+    padding:13px;
+    border:none;
+    border-radius:8px;
+    background:#0b8f3c;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    margin-bottom:10px;
 }
 
-.empty{
-  text-align:center;
-  color:#777;
-  padding:40px 10px;
+.whatsapp{
+    width:100%;
+    padding:13px;
+    border:none;
+    border-radius:8px;
+    background:#25D366;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.info{
+    text-align:center;
+    padding:40px 20px;
+    background:white;
+    margin-top:30px;
+}
+
+.info h2{
+    margin-bottom:12px;
+}
+
+.info p{
+    margin:8px 0;
+}
+
+footer{
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:30px;
+}
+
+footer a{
+    color:white;
+    text-decoration:none;
 }
 
 @media(max-width:600px){
-  .hero h1{
-    font-size:25px;
-  }
+    .hero h1{
+        font-size:30px;
+    }
 
-  nav{
-    overflow-x:auto;
-    justify-content:flex-start;
-    white-space:nowrap;
-  }
+    .products{
+        grid-template-columns:repeat(2,1fr);
+        padding:10px;
+        gap:10px;
+    }
 
-  .product-image{
-    height:145px;
-  }
-}
+    .product-image{
+        height:160px;
+    }
 
-@media(min-width:700px){
-  .products{
-    grid-template-columns:repeat(4,1fr);
-  }
+    .product-content{
+        padding:12px;
+    }
+
+    .product h3{
+        font-size:15px;
+    }
+
+    .price{
+        font-size:16px;
+    }
 }
 </style>
 </head>
@@ -406,560 +294,27 @@ footer{
 <body>
 
 <header>
-  <div class="header-top">
     <div class="logo">Erin Enterprises</div>
 
-    <button class="cart" onclick="openCart()">
-      🛒 Cart (<span id="cartCount">0</span>)
+    <button class="cart-button" onclick="openCart()">
+        🛒 Cart (<span id="cartCount">0</span>)
     </button>
-  </div>
-
-  <div class="search-box">
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="Search products..."
-      onkeyup="searchProducts()"
-    >
-    <button onclick="searchProducts()">🔍</button>
-  </div>
 </header>
 
-<nav>
-  <a href="#home">Home</a>
-  <a href="#products">Products</a>
-  <a href="#deals">Deals</a>
-  <a href="#about">About Us</a>
-  <a href="#contact">Contact</a>
-</nav>
+<section class="hero">
+    <h1>Welcome to Erin Enterprises</h1>
 
-<section class="hero" id="home">
-  <h1>Welcome to Erin Enterprises 🛍️</h1>
+    <p>
+        Quality products for everyone — children, ladies, men and more.
+    </p>
 
-  <p>
-    Your trusted online store for quality children's shoes,
-    bags, clothes, adult clothing, skincare products and more.
-  </p>
-
-  <a href="#products" class="shop-btn">🛒 Shop Now</a>
+    <a href="#products" class="shop-button">
+        🛍️ Shop Now
+    </a>
 </section>
 
-<div class="container">
-
-  <h2 class="section-title">Shop by Category</h2>
-
-  <div class="categories">
-    <div class="category" onclick="filterProducts('all')">
-      <span>🛍️</span>
-      <small>All</small>
-    </div>
-
-    <div class="category" onclick="filterProducts('kiddies')">
-      <span>👟</span>
-      <small>Kiddies</small>
-    </div>
-
-    <div class="category" onclick="filterProducts('clothes')">
-      <span>👕</span>
-      <small>Clothes</small>
-    </div>
-
-    <div class="category" onclick="filterProducts('bags')">
-      <span>👜</span>
-      <small>Bags</small>
-    </div>
-
-    <div class="category" onclick="filterProducts('beauty')">
-      <span>🧴</span>
-      <small>Beauty</small>
-    </div>
-  </div>
-
-</div>
-
-<div class="container" id="products">
-
-  <h2 class="section-title">Featured Products</h2>
-
-  <div class="products" id="productGrid">
-
-    <div class="product" data-category="beauty" data-name="Vivon Cocoa Shea Butter">
-      <button class="favorite" onclick="favorite(this)">♡</button>
-
-      <div class="product-image">🧴</div>
-
-      <div class="product-info">
-        <h3>Vivon Cocoa Shea Butter</h3>
-        <p class="product-description">
-          Quality skincare product for smooth and nourished skin.
-        </p>
-
-        <div class="price">₦5,500</div>
-
-        <div class="product-buttons">
-          <button class="add-btn" onclick="addToCart('Vivon Cocoa Shea Butter',5500)">
-            Add Cart
-          </button>
-
-          <button class="buy-btn" onclick="buyNow('Vivon Cocoa Shea Butter',5500)">
-            Buy Now
-          </button>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="product" data-category="beauty" data-name="P Clinic">
-      <button class="favorite" onclick="favorite(this)">♡</button>
-
-      <div class="product-image">🧴</div>
-
-      <div class="product-info">
-        <h3>P Clinic</h3>
-        <p class="product-description">
-          Quality beauty and skincare product.
-        </p>
-
-        <div class="price">₦12,000</div>
-
-        <div class="product-buttons">
-          <button class="add-btn" onclick="addToCart('P Clinic',12000)">
-            Add Cart
-          </button>
-
-          <button class="buy-btn" onclick="buyNow('P Clinic',12000)">
-            Buy Now
-          </button>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="product" data-category="kiddies" data-name="Vivon Kiddies">
-      <button class="favorite" onclick="favorite(this)">♡</button>
-
-      <div class="product-image">🧴</div>
-
-      <div class="product-info">
-        <h3>Vivon Kiddies</h3>
-        <p class="product-description">
-          Gentle product suitable for kiddies.
-        </p>
-
-        <div class="price">₦5,500</div>
-
-        <div class="product-buttons">
-          <button class="add-btn" onclick="addToCart('Vivon Kiddies',5500)">
-            Add Cart
-          </button>
-
-          <button class="buy-btn" onclick="buyNow('Vivon Kiddies',5500)">
-            Buy Now
-          </button>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="product" data-category="beauty" data-name="Dodo Skin Gold Vitamin C Soap">
-      <button class="favorite" onclick="favorite(this)">♡</button>
-
-      <div class="product-image">🧼</div>
-
-      <div class="product-info">
-        <h3>Dodo Skin Gold Vitamin C Soap</h3>
-        <p class="product-description">
-          Vitamin C skincare soap.
-        </p>
-
-        <div class="price">₦3,500</div>
-
-        <div class="product-buttons">
-          <button class="add-btn" onclick="addToCart('Dodo Skin Gold Vitamin C Soap',3500)">
-            Add Cart
-          </button>
-
-          <button class="buy-btn" onclick="buyNow('Dodo Skin Gold Vitamin C Soap',3500)">
-            Buy Now
-          </button>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="product" data-category="kiddies" data-name="Kiddies Shoes">
-      <button class="favorite" onclick="favorite(this)">♡</button>
-
-      <div class="product-image">👟</div>
-
-      <div class="product-info">
-        <h3>Kiddies Shoes</h3>
-        <p class="product-description">
-          Stylish and comfortable shoes for children.
-        </p>
-
-        <div class="price">₦25,000</div>
-
-        <div class="product-buttons">
-          <button class="add-btn" onclick="addToCart('Kiddies Shoes',25000)">
-            Add Cart
-          </button>
-
-          <button class="buy-btn" onclick="buyNow('Kiddies Shoes',25000)">
-            Buy Now
-          </button>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="product" data-category="beauty" data-name="Dodo Black Soap">
-      <button class="favorite" onclick="favorite(this)">♡</button>
-
-      <div class="product-image">🧼</div>
-
-      <div class="product-info">
-        <h3>Dodo Black Soap</h3>
-        <p class="product-description">
-          Traditional black soap for everyday skincare.
-        </p>
-
-        <div class="price">₦1,500</div>
-
-        <div class="product-buttons">
-          <button class="add-btn" onclick="addToCart('Dodo Black Soap',1500)">
-            Add Cart
-          </button>
-
-          <button class="buy-btn" onclick="buyNow('Dodo Black Soap',1500)">
-            Buy Now
-          </button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-
-<div class="container" id="deals">
-
-  <div class="deal">
-    <h2>🔥 Special Deals</h2>
-
-    <p>
-      Shop quality products from Erin Enterprises.
-      New products are added regularly.
-    </p>
-
-    <a href="#products" class="shop-btn">Shop Deals</a>
-  </div>
-
-</div>
-
-
-<div class="container" id="about">
-
-  <h2 class="section-title">About Erin Enterprises</h2>
-
-  <div class="about">
-
-    <p>
-      Erin Enterprises is an online shopping store offering
-      a variety of quality products for the whole family.
-    </p>
-
-    <br>
-
-    <p>
-      We offer children's shoes, bags, clothes, adult clothing,
-      skincare products and more.
-    </p>
-
-    <br>
-
-    <p>
-      Our goal is to make shopping simple, convenient and accessible
-      for our customers.
-    </p>
-
-  </div>
-
-</div>
-
-
-<div class="container contact" id="contact">
-
-  <h2 class="section-title">Contact Us</h2>
-
-  <p>
-    📱 WhatsApp:
-    <a href="https://wa.me/2348125253898" target="_blank">
-      +234 812 525 3898
-    </a>
-  </p>
-
-  <br>
-
-  <p>
-    📧 Email:
-    <a href="mailto:Erinsenterprisesvarieties@gmail.com">
-      Erinsenterprisesvarieties@gmail.com
-    </a>
-  </p>
-
-</div>
-
-
-<footer>
-
-  <strong>Erin Enterprises</strong>
-
-  <br>
-
-  Quality Products • Great Service • Easy Shopping
-
-  <br><br>
-
-  © 2026 Erin Enterprises. All Rights Reserved.
-
-</footer>
-
-
-<div class="bottom-nav">
-
-  <a href="#home">
-    <span>🏠</span>
-    Home
-  </a>
-
-  <a href="#products">
-    <span>🛍️</span>
-    Shop
-  </a>
-
-  <a href="#contact">
-    <span>💬</span>
-    Contact
-  </a>
-
-  <a href="#" onclick="openCart();return false;">
-    <span>🛒</span>
-    Cart
-  </a>
-
-</div>
-
-
-<div class="cart-panel" id="cartPanel">
-
-  <div class="cart-header">
-
-    <h2>🛒 Your Cart</h2>
-
-    <button class="close-cart" onclick="closeCart()">
-      ✕
-    </button>
-
-  </div>
-
-  <div id="cartItems"></div>
-
-  <div class="cart-total">
-    Total: ₦<span id="cartTotal">0</span>
-  </div>
-
-  <a
-    class="checkout"
-    href="https://paystack.shop/pay/meocdhp5pf"
-    target="_blank"
-  >
-    Proceed to Payment
-  </a>
-
-</div>
-
-
-<script>
-
-let cart = [];
-
-function addToCart(name, price){
-
-  cart.push({
-    name:name,
-    price:price
-  });
-
-  updateCart();
-
-  alert(name + " has been added to your cart.");
-
-}
-
-
-function updateCart(){
-
-  document.getElementById("cartCount").textContent = cart.length;
-
-  let items = document.getElementById("cartItems");
-
-  let total = 0;
-
-  if(cart.length === 0){
-
-    items.innerHTML =
-      '<div class="empty">Your cart is empty 🛒</div>';
-
-  }else{
-
-    items.innerHTML = "";
-
-    cart.forEach(function(item,index){
-
-      total += item.price;
-
-      items.innerHTML += `
-        <div class="cart-item">
-
-          <strong>${item.name}</strong>
-
-          <br>
-
-          ₦${item.price.toLocaleString()}
-
-          <br><br>
-
-          <button onclick="removeFromCart(${index})">
-            Remove
-          </button>
-
-        </div>
-      `;
-
-    });
-
-  }
-
-  document.getElementById("cartTotal").textContent =
-    total.toLocaleString();
-
-}
-
-
-function removeFromCart(index){
-
-  cart.splice(index,1);
-
-  updateCart();
-
-}
-
-
-function openCart(){
-
-  document.getElementById("cartPanel").classList.add("active");
-
-  updateCart();
-
-}
-
-
-function closeCart(){
-
-  document.getElementById("cartPanel").classList.remove("active");
-
-}
-
-
-function buyNow(name,price){
-
-  let message =
-    "Hello Erin Enterprises, I want to buy " +
-    name +
-    " for ₦" +
-    price.toLocaleString();
-
-  let whatsapp =
-    "https://wa.me/2348125253898?text=" +
-    encodeURIComponent(message);
-
-  window.open(whatsapp,"_blank");
-
-}
-
-
-function favorite(button){
-
-  if(button.textContent === "♡"){
-
-    button.textContent = "♥";
-
-  }else{
-
-    button.textContent = "♡";
-
-  }
-
-}
-
-
-function searchProducts(){
-
-  let search =
-    document.getElementById("searchInput").value.toLowerCase();
-
-  let products =
-    document.querySelectorAll(".product");
-
-  products.forEach(function(product){
-
-    let name =
-      product.dataset.name.toLowerCase();
-
-    if(name.includes(search)){
-
-      product.style.display = "";
-
-    }else{
-
-      product.style.display = "none";
-
-    }
-
-  });
-
-}
-
-
-function filterProducts(category){
-
-  let products =
-    document.querySelectorAll(".product");
-
-  products.forEach(function(product){
-
-    if(
-      category === "all" ||
-      product.dataset.category === category
-    ){
-
-      product.style.display = "";
-
-    }else{
-
-      product.style.display = "none";
-
-    }
-
-  });
-
-}
-
-
-updateCart();
-
-</script>
-
-</body>
-      </html>
+<h2 class="section-title" id="products">
+    Our Products
+</h2>
+
+<section
