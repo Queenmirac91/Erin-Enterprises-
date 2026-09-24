@@ -6,369 +6,255 @@
 
 <title>Erin Enterprises | Online Store</title>
 
+<script src="https://js.paystack.co/v2/inline.js"></script>
+
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  color: #222;
+body{
+  font-family:Arial,sans-serif;
+  background:#f5f5f5;
+  color:#222;
 }
 
-header {
-  background: #111;
-  color: white;
-  padding: 18px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+header{
+  background:#111;
+  color:white;
+  padding:18px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:1000;
 }
 
-.logo {
-  font-size: 22px;
-  font-weight: bold;
+.logo{
+  font-size:22px;
+  font-weight:bold;
 }
 
-.cart-button {
-  background: #25d366;
-  color: white;
-  border: none;
-  padding: 11px 16px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
+.cart-btn{
+  background:#fff;
+  color:#111;
+  border:none;
+  padding:10px 15px;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.hero {
-  background: linear-gradient(135deg, #111, #444);
-  color: white;
-  text-align: center;
-  padding: 55px 20px;
+.hero{
+  background:#222;
+  color:white;
+  text-align:center;
+  padding:45px 20px;
 }
 
-.hero h1 {
-  font-size: 34px;
-  margin-bottom: 12px;
+.hero h1{
+  font-size:32px;
+  margin-bottom:10px;
 }
 
-.hero p {
-  font-size: 17px;
-  margin-bottom: 20px;
+.hero p{
+  font-size:16px;
 }
 
-.shop-btn {
-  display: inline-block;
-  background: #25d366;
-  color: white;
-  text-decoration: none;
-  padding: 13px 22px;
-  border-radius: 8px;
-  font-weight: bold;
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:25px 15px;
 }
 
-.products {
-  padding: 30px 18px;
-  max-width: 1200px;
-  margin: auto;
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
 }
 
-.products h2 {
-  text-align: center;
-  margin-bottom: 25px;
+.product{
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 3px 12px rgba(0,0,0,.1);
+  padding-bottom:15px;
 }
 
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 20px;
+.product img{
+  width:100%;
+  height:230px;
+  object-fit:cover;
+  display:block;
 }
 
-.product {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-  padding-bottom: 18px;
+.product-info{
+  padding:15px;
 }
 
-.product img {
-  width: 100%;
-  height: 230px;
-  object-fit: cover;
-  display: block;
+.product h3{
+  margin-bottom:8px;
 }
 
-.product-info {
-  padding: 15px;
+.price{
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:12px;
 }
 
-.product h3 {
-  font-size: 18px;
-  margin-bottom: 8px;
+.product button,
+.checkout-btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#111;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.price {
-  color: #111;
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 12px;
+.product button:hover,
+.checkout-btn:hover{
+  background:#333;
 }
 
-.add-btn {
-  width: 100%;
-  background: #111;
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 7px;
-  cursor: pointer;
-  font-weight: bold;
+.cart-section{
+  display:none;
+  background:white;
+  margin-top:30px;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 3px 12px rgba(0,0,0,.1);
 }
 
-.add-btn:hover {
-  background: #333;
+.cart-section h2{
+  margin-bottom:15px;
 }
 
-.cart-panel {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100%;
-  max-width: 430px;
-  height: 100%;
-  background: white;
-  z-index: 2000;
-  box-shadow: -5px 0 20px rgba(0,0,0,0.25);
-  overflow-y: auto;
-  padding: 20px;
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px solid #ddd;
 }
 
-.cart-panel.active {
-  display: block;
+.cart-item-info{
+  flex:1;
 }
 
-.cart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+.quantity-controls{
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
-.close-cart {
-  background: #e74c3c;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 12px;
-  cursor: pointer;
+.quantity-controls button{
+  width:30px;
+  height:30px;
+  border:none;
+  border-radius:5px;
+  background:#111;
+  color:white;
+  cursor:pointer;
 }
 
-.cart-item {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  border-bottom: 1px solid #ddd;
-  padding: 12px 0;
+.remove-btn{
+  background:#c00 !important;
 }
 
-.cart-item img {
-  width: 65px;
-  height: 65px;
-  object-fit: cover;
-  border-radius: 7px;
+.total{
+  font-size:22px;
+  font-weight:bold;
+  text-align:right;
+  margin:20px 0;
 }
 
-.cart-item-info {
-  flex: 1;
+.form-group{
+  margin-bottom:15px;
 }
 
-.cart-item-info h4 {
-  font-size: 15px;
-  margin-bottom: 5px;
+.form-group label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:6px;
 }
 
-.quantity-controls {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin-top: 6px;
+.form-group input,
+.form-group textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:7px;
+  font-size:15px;
 }
 
-.quantity-controls button {
-  width: 28px;
-  height: 28px;
-  border: none;
-  border-radius: 5px;
-  background: #111;
-  color: white;
-  cursor: pointer;
+.form-group textarea{
+  min-height:90px;
+  resize:vertical;
 }
 
-.remove-btn {
-  background: #e74c3c;
-  color: white;
-  border: none;
-  padding: 6px 8px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 5px;
+.empty{
+  text-align:center;
+  padding:20px;
+  color:#666;
 }
 
-.cart-total {
-  font-size: 21px;
-  font-weight: bold;
-  margin: 20px 0;
-  padding-top: 15px;
-  border-top: 2px solid #111;
+.notice{
+  margin-top:15px;
+  padding:12px;
+  background:#f1f1f1;
+  border-radius:8px;
+  font-size:14px;
+  line-height:1.5;
 }
 
-.checkout-btn {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  background: #25d366;
-  color: white;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
+.success{
+  display:none;
+  margin-top:20px;
+  padding:18px;
+  background:#e9f8ed;
+  border:1px solid #83c995;
+  border-radius:10px;
 }
 
-.empty-cart {
-  text-align: center;
-  padding: 40px 10px;
-  color: #666;
+.success a{
+  display:inline-block;
+  margin-top:12px;
+  background:#25D366;
+  color:white;
+  text-decoration:none;
+  padding:12px 18px;
+  border-radius:8px;
+  font-weight:bold;
 }
 
-footer {
-  background: #111;
-  color: white;
-  text-align: center;
-  padding: 25px 15px;
-  margin-top: 40px;
+footer{
+  text-align:center;
+  background:#111;
+  color:white;
+  padding:25px 15px;
+  margin-top:40px;
+  line-height:1.7;
 }
 
-footer a {
-  color: #25d366;
-  text-decoration: none;
-}
+@media(max-width:600px){
+  .hero h1{
+    font-size:27px;
+  }
 
-.customer-form {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.65);
-  z-index: 3000;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-}
+  .cart-item{
+    flex-wrap:wrap;
+  }
 
-.customer-form.active {
-  display: flex;
-}
-
-.form-box {
-  background: white;
-  width: 100%;
-  max-width: 430px;
-  border-radius: 12px;
-  padding: 22px;
-  max-height: 90vh;
-  overflow-y: auto;
-}
-
-.form-box h2 {
-  margin-bottom: 8px;
-}
-
-.form-box p {
-  color: #666;
-  margin-bottom: 18px;
-  font-size: 14px;
-}
-
-.form-box label {
-  display: block;
-  margin-top: 12px;
-  margin-bottom: 6px;
-  font-weight: bold;
-}
-
-.form-box input,
-.form-box textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 7px;
-  font-size: 15px;
-}
-
-.form-box textarea {
-  min-height: 80px;
-  resize: vertical;
-}
-
-.form-total {
-  background: #f3f3f3;
-  padding: 13px;
-  margin-top: 15px;
-  border-radius: 7px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.pay-btn {
-  width: 100%;
-  background: #111;
-  color: white;
-  border: none;
-  padding: 14px;
-  margin-top: 15px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.cancel-btn {
-  width: 100%;
-  background: #ddd;
-  color: #222;
-  border: none;
-  padding: 12px;
-  margin-top: 8px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.order-message {
-  display: none;
-  text-align: center;
-  padding: 30px 10px;
-}
-
-.order-message h2 {
-  margin-bottom: 10px;
-}
-
-.whatsapp-btn {
-  display: inline-block;
-  background: #25d366;
-  color: white;
-  text-decoration: none;
-  padding: 12px 18px;
-  border-radius: 8px;
-  font-weight: bold;
-  margin-top: 15px;
+  .product img{
+    height:210px;
+  }
 }
 </style>
 </head>
@@ -378,726 +264,448 @@ footer a {
 <header>
   <div class="logo">Erin Enterprises</div>
 
-  <button class="cart-button" onclick="openCart()">
+  <button class="cart-btn" onclick="toggleCart()">
     🛒 Cart (<span id="cartCount">0</span>)
   </button>
 </header>
 
 <section class="hero">
   <h1>Welcome to Erin Enterprises</h1>
-
-  <p>
-    Quality products for children and adults.
-    Shop conveniently online.
-  </p>
-
-  <a href="#products" class="shop-btn">Shop Now</a>
+  <p>Quality products at affordable prices. Shop with us online.</p>
 </section>
 
-<section class="products" id="products">
+<div class="container">
 
-  <h2>Our Products</h2>
+  <div class="products">
 
-  <div class="product-grid">
-
-    <!-- PRODUCT 1 -->
     <div class="product">
       <img src="20260901_143149.jpg" alt="Cocoa Shea Butter">
-
       <div class="product-info">
         <h3>Cocoa Shea Butter</h3>
         <div class="price">₦5,500</div>
-
-        <button class="add-btn"
-          onclick="addToCart(
-            'Cocoa Shea Butter',
-            5500,
-            '20260901_143149.jpg'
-          )">
+        <button onclick="addToCart('Cocoa Shea Butter',5500,'20260901_143149.jpg')">
           Add to Cart
         </button>
       </div>
     </div>
 
-    <!-- PRODUCT 2 -->
     <div class="product">
       <img src="20260901_143125.jpg" alt="Vivon Kiddies">
-
       <div class="product-info">
         <h3>Vivon Kiddies</h3>
         <div class="price">₦5,500</div>
-
-        <button class="add-btn"
-          onclick="addToCart(
-            'Vivon Kiddies',
-            5500,
-            '20260901_143125.jpg'
-          )">
+        <button onclick="addToCart('Vivon Kiddies',5500,'20260901_143125.jpg')">
           Add to Cart
         </button>
       </div>
     </div>
 
-    <!-- PRODUCT 3 -->
     <div class="product">
       <img src="20260901_143232.jpg" alt="Dodo Skin Gold">
-
       <div class="product-info">
         <h3>Dodo Skin Gold</h3>
         <div class="price">₦3,500</div>
-
-        <button class="add-btn"
-          onclick="addToCart(
-            'Dodo Skin Gold',
-            3500,
-            '20260901_143232.jpg'
-          )">
+        <button onclick="addToCart('Dodo Skin Gold',3500,'20260901_143232.jpg')">
           Add to Cart
         </button>
       </div>
     </div>
 
-    <!-- PRODUCT 4 -->
     <div class="product">
       <img src="20260901_143254.jpg" alt="Dodo Black Soap">
-
       <div class="product-info">
         <h3>Dodo Black Soap</h3>
         <div class="price">₦1,500</div>
-
-        <button class="add-btn"
-          onclick="addToCart(
-            'Dodo Black Soap',
-            1500,
-            '20260901_143254.jpg'
-          )">
+        <button onclick="addToCart('Dodo Black Soap',1500,'20260901_143254.jpg')">
           Add to Cart
         </button>
       </div>
     </div>
 
-    <!-- PRODUCT 5 -->
     <div class="product">
-      <img src="20260913-WA0013.jpg"
-           alt="Children Shoes"
-           onerror="this.src='IMG-20260913-WA0013.jpg'">
-
+      <img src="IMG-20260913-WA0013.jpg" alt="Children Shoes">
       <div class="product-info">
         <h3>Children Shoes</h3>
         <div class="price">₦25,000</div>
-
-        <button class="add-btn"
-          onclick="addToCart(
-            'Children Shoes',
-            25000,
-            'IMG-20260913-WA0013.jpg'
-          )">
+        <button onclick="addToCart('Children Shoes',25000,'IMG-20260913-WA0013.jpg')">
           Add to Cart
         </button>
       </div>
     </div>
 
-    <!-- PRODUCT 6 -->
     <div class="product">
       <img src="20260901_142937.jpg" alt="P.Clinic">
-
       <div class="product-info">
         <h3>P.Clinic</h3>
         <div class="price">₦12,000</div>
-
-        <button class="add-btn"
-          onclick="addToCart(
-            'P.Clinic',
-            12000,
-            '20260901_142937.jpg'
-          )">
+        <button onclick="addToCart('P.Clinic',12000,'20260901_142937.jpg')">
           Add to Cart
         </button>
       </div>
     </div>
 
   </div>
-</section>
 
-<!-- CART -->
-<div class="cart-panel" id="cartPanel">
+  <section class="cart-section" id="cartSection">
 
-  <div class="cart-header">
-    <h2>Your Cart</h2>
+    <h2>🛒 Your Shopping Cart</h2>
 
-    <button class="close-cart" onclick="closeCart()">
-      Close
-    </button>
-  </div>
+    <div id="cartItems"></div>
 
-  <div id="cartItems"></div>
-
-  <div class="cart-total">
-    Total: ₦<span id="cartTotal">0</span>
-  </div>
-
-  <button class="checkout-btn" onclick="openCustomerForm()">
-    Proceed to Checkout
-  </button>
-
-</div>
-
-<!-- CUSTOMER FORM -->
-<div class="customer-form" id="customerForm">
-
-  <div class="form-box">
-
-    <h2>Customer Details</h2>
-
-    <p>
-      Enter your details before proceeding to secure payment.
-    </p>
-
-    <label for="customerName">Full Name</label>
-    <input
-      type="text"
-      id="customerName"
-      placeholder="Enter your full name"
-    >
-
-    <label for="customerEmail">Email Address</label>
-    <input
-      type="email"
-      id="customerEmail"
-      placeholder="Enter your email"
-    >
-
-    <label for="customerPhone">Phone Number</label>
-    <input
-      type="tel"
-      id="customerPhone"
-      placeholder="Enter your phone number"
-    >
-
-    <label for="customerAddress">Delivery Address</label>
-    <textarea
-      id="customerAddress"
-      placeholder="Enter your delivery address"
-    ></textarea>
-
-    <div class="form-total">
-      Amount to Pay:
-      ₦<span id="formTotal">0</span>
+    <div class="total">
+      Total: ₦<span id="cartTotal">0</span>
     </div>
 
-    <button class="pay-btn" onclick="payWithPaystack()">
+    <h2>Customer Information</h2>
+
+    <div class="form-group">
+      <label for="customerName">Full Name</label>
+      <input type="text" id="customerName" placeholder="Enter your full name">
+    </div>
+
+    <div class="form-group">
+      <label for="customerEmail">Email Address</label>
+      <input type="email" id="customerEmail" placeholder="Enter your email">
+    </div>
+
+    <div class="form-group">
+      <label for="customerPhone">Phone Number</label>
+      <input type="tel" id="customerPhone" placeholder="Enter your phone number">
+    </div>
+
+    <div class="form-group">
+      <label for="customerAddress">Delivery Address</label>
+      <textarea id="customerAddress" placeholder="Enter your delivery address"></textarea>
+    </div>
+
+    <button class="checkout-btn" onclick="payWithPaystack()">
       💳 Pay Now
     </button>
 
-    <button class="cancel-btn" onclick="closeCustomerForm()">
-      Cancel
-    </button>
-
-    <div class="order-message" id="orderMessage">
-
-      <h2>Payment Successful 🎉</h2>
-
-      <p>
-        Thank you for shopping with Erin Enterprises.
-      </p>
-
-      <a
-        class="whatsapp-btn"
-        id="whatsappOrder"
-        href="#"
-        target="_blank">
-        📱 Send Order on WhatsApp
-      </a>
-
+    <div class="notice">
+      Your payment is securely processed by Paystack.
+      After successful payment, your order details will be prepared for WhatsApp.
     </div>
 
-  </div>
+    <div class="success" id="successBox">
+      <h3>✅ Payment Successful!</h3>
+      <p>Your order has been received.</p>
+      <p>You can now send your order details to Erin Enterprises on WhatsApp.</p>
+
+      <a id="whatsappLink" href="#" target="_blank">
+        📱 Send Order on WhatsApp
+      </a>
+    </div>
+
+  </section>
+
 </div>
 
 <footer>
-
-  <p>
-    © 2026 Erin Enterprises. All rights reserved.
-  </p>
-
-  <p style="margin-top:10px;">
-    WhatsApp:
-    <a href="https://wa.me/2348125253898" target="_blank">
-      +234 812 525 3898
-    </a>
-  </p>
-
-  <p style="margin-top:8px;">
-    Email:
-    <a href="mailto:Erinsenterprisesvarieties@gmail.com">
-      Erinsenterprisesvarieties@gmail.com
-    </a>
-  </p>
-
+  <strong>Erin Enterprises</strong><br>
+  WhatsApp: +2348125253898<br>
+  Email: Erinsenterprisesvarieties@gmail.com
 </footer>
-
-<!-- PAYSTACK -->
-<script src="https://js.paystack.co/v2/inline.js"></script>
 
 <script>
 
-/* =========================
-   PAYSTACK PUBLIC KEY
-   ========================= */
+let cart = JSON.parse(localStorage.getItem("erinCart")) || [];
 
-const PAYSTACK_PUBLIC_KEY =
-"pk_live_caee99bf950a74d75facd70e10e40781dabe9f3c";
+function saveCart(){
+  localStorage.setItem("erinCart", JSON.stringify(cart));
+}
 
+function addToCart(name, price, image){
 
-/* =========================
-   CART
-   ========================= */
+  const existing = cart.find(item => item.name === name);
 
-let cart = JSON.parse(
-  localStorage.getItem("erinCart")
-) || [];
-
-
-/* =========================
-   ADD TO CART
-   ========================= */
-
-function addToCart(name, price, image) {
-
-  const existingProduct =
-    cart.find(item => item.name === name);
-
-  if (existingProduct) {
-
-    existingProduct.quantity += 1;
-
-  } else {
-
+  if(existing){
+    existing.quantity++;
+  }else{
     cart.push({
-      name: name,
-      price: price,
-      image: image,
-      quantity: 1
+      name:name,
+      price:price,
+      image:image,
+      quantity:1
     });
-
   }
 
   saveCart();
-
   updateCart();
 
-  openCart();
+  document.getElementById("cartSection").style.display = "block";
+
+  window.scrollTo({
+    top:document.getElementById("cartSection").offsetTop - 80,
+    behavior:"smooth"
+  });
 }
 
+function updateCart(){
 
-/* =========================
-   SAVE CART
-   ========================= */
+  const cartItems = document.getElementById("cartItems");
+  const cartCount = document.getElementById("cartCount");
+  const cartTotal = document.getElementById("cartTotal");
 
-function saveCart() {
-
-  localStorage.setItem(
-    "erinCart",
-    JSON.stringify(cart)
-  );
-
-}
-
-
-/* =========================
-   UPDATE CART
-   ========================= */
-
-function updateCart() {
-
-  const cartItems =
-    document.getElementById("cartItems");
-
-  const cartCount =
-    document.getElementById("cartCount");
-
-  const cartTotal =
-    document.getElementById("cartTotal");
+  cartItems.innerHTML = "";
 
   let total = 0;
   let count = 0;
 
-  cartItems.innerHTML = "";
-
-  if (cart.length === 0) {
+  if(cart.length === 0){
 
     cartItems.innerHTML =
-      '<div class="empty-cart">Your cart is empty.</div>';
+      '<div class="empty">Your cart is empty.</div>';
 
-  } else {
+  }else{
 
-    cart.forEach((item, index) => {
+    cart.forEach((item,index)=>{
 
-      total += item.price * item.quantity;
+      const itemTotal = item.price * item.quantity;
 
+      total += itemTotal;
       count += item.quantity;
 
-      const div =
-        document.createElement("div");
+      cartItems.innerHTML += `
+        <div class="cart-item">
 
-      div.className = "cart-item";
-
-      div.innerHTML = `
-
-        <img src="${item.image}" alt="${item.name}">
-
-        <div class="cart-item-info">
-
-          <h4>${item.name}</h4>
-
-          <div>
-            ₦${formatMoney(item.price)}
+          <div class="cart-item-info">
+            <strong>${item.name}</strong><br>
+            ₦${item.price.toLocaleString()}
           </div>
 
           <div class="quantity-controls">
 
-            <button onclick="changeQuantity(${index}, -1)">
+            <button onclick="changeQuantity(${index},-1)">
               −
             </button>
 
             <span>${item.quantity}</span>
 
-            <button onclick="changeQuantity(${index}, 1)">
+            <button onclick="changeQuantity(${index},1)">
               +
+            </button>
+
+            <button class="remove-btn" onclick="removeItem(${index})">
+              ×
             </button>
 
           </div>
 
-          <button
-            class="remove-btn"
-            onclick="removeFromCart(${index})">
-            Remove
-          </button>
+          <strong>
+            ₦${itemTotal.toLocaleString()}
+          </strong>
 
         </div>
       `;
-
-      cartItems.appendChild(div);
-
     });
-
   }
 
   cartCount.textContent = count;
-
-  cartTotal.textContent =
-    formatMoney(total);
-
+  cartTotal.textContent = total.toLocaleString();
 }
 
-
-/* =========================
-   CHANGE QUANTITY
-   ========================= */
-
-function changeQuantity(index, change) {
+function changeQuantity(index,change){
 
   cart[index].quantity += change;
 
-  if (cart[index].quantity <= 0) {
-
-    cart.splice(index, 1);
-
+  if(cart[index].quantity <= 0){
+    cart.splice(index,1);
   }
 
   saveCart();
-
   updateCart();
-
 }
 
+function removeItem(index){
 
-/* =========================
-   REMOVE PRODUCT
-   ========================= */
-
-function removeFromCart(index) {
-
-  cart.splice(index, 1);
+  cart.splice(index,1);
 
   saveCart();
-
   updateCart();
-
 }
 
+function toggleCart(){
 
-/* =========================
-   CART TOTAL
-   ========================= */
+  const section = document.getElementById("cartSection");
 
-function getCartTotal() {
+  if(section.style.display === "none" || section.style.display === ""){
+    section.style.display = "block";
+
+    section.scrollIntoView({
+      behavior:"smooth"
+    });
+
+  }else{
+    section.style.display = "none";
+  }
+}
+
+function getCartTotal(){
 
   return cart.reduce(
-    (total, item) =>
-      total + item.price * item.quantity,
+    (total,item) => total + (item.price * item.quantity),
     0
   );
-
 }
 
-
-/* =========================
-   MONEY FORMAT
-   ========================= */
-
-function formatMoney(amount) {
-
-  return amount.toLocaleString("en-NG");
-
-}
-
-
-/* =========================
-   OPEN CART
-   ========================= */
-
-function openCart() {
-
-  document
-    .getElementById("cartPanel")
-    .classList.add("active");
-
-}
-
-
-/* =========================
-   CLOSE CART
-   ========================= */
-
-function closeCart() {
-
-  document
-    .getElementById("cartPanel")
-    .classList.remove("active");
-
-}
-
-
-/* =========================
-   CUSTOMER FORM
-   ========================= */
-
-function openCustomerForm() {
-
-  if (cart.length === 0) {
-
-    alert("Your cart is empty.");
-
-    return;
-
-  }
-
-  const total =
-    getCartTotal();
-
-  document
-    .getElementById("formTotal")
-    .textContent =
-    formatMoney(total);
-
-  document
-    .getElementById("customerForm")
-    .classList.add("active");
-
-}
-
-
-function closeCustomerForm() {
-
-  document
-    .getElementById("customerForm")
-    .classList.remove("active");
-
-}
-
-
-/* =========================
-   PAYSTACK PAYMENT
-   ========================= */
-
-function payWithPaystack() {
+function getOrderText(reference){
 
   const name =
-    document
-      .getElementById("customerName")
-      .value
-      .trim();
-
-  const email =
-    document
-      .getElementById("customerEmail")
-      .value
-      .trim();
+    document.getElementById("customerName").value.trim();
 
   const phone =
-    document
-      .getElementById("customerPhone")
-      .value
-      .trim();
+    document.getElementById("customerPhone").value.trim();
 
   const address =
-    document
-      .getElementById("customerAddress")
-      .value
-      .trim();
+    document.getElementById("customerAddress").value.trim();
 
-  if (!name) {
+  let message =
+    "Hello Erin Enterprises,%0A%0A" +
+    "I have successfully made payment for my order.%0A%0A" +
 
-    alert("Please enter your full name.");
+    "Customer Name: " + encodeURIComponent(name) + "%0A" +
+    "Phone: " + encodeURIComponent(phone) + "%0A" +
+    "Delivery Address: " + encodeURIComponent(address) + "%0A%0A" +
 
-    return;
+    "ORDER DETAILS:%0A";
 
-  }
+  cart.forEach(item => {
 
-  if (!email) {
+    const subtotal = item.price * item.quantity;
 
-    alert("Please enter your email address.");
+    message +=
+      encodeURIComponent(item.name) +
+      " x " +
+      item.quantity +
+      " = ₦" +
+      subtotal.toLocaleString() +
+      "%0A";
+  });
 
-    return;
+  message +=
+    "%0ATotal Paid: ₦" +
+    getCartTotal().toLocaleString() +
+    "%0A%0A" +
 
-  }
+    "Paystack Reference: " +
+    encodeURIComponent(reference);
 
-  if (!phone) {
+  return message;
+}
 
-    alert("Please enter your phone number.");
+function payWithPaystack(){
 
-    return;
+  if(cart.length === 0){
 
-  }
-
-  if (!address) {
-
-    alert("Please enter your delivery address.");
-
-    return;
-
-  }
-
-  const total =
-    getCartTotal();
-
-  if (total <= 0) {
-
-    alert("Your cart is empty.");
+    alert("Your cart is empty. Please add a product first.");
 
     return;
-
   }
 
+  const name =
+    document.getElementById("customerName").value.trim();
 
-  const orderItems =
-    cart.map(item => {
+  const email =
+    document.getElementById("customerEmail").value.trim();
 
-      return `${item.name} x${item.quantity}`;
+  const phone =
+    document.getElementById("customerPhone").value.trim();
 
-    }).join(", ");
+  const address =
+    document.getElementById("customerAddress").value.trim();
 
+  if(!name || !email || !phone || !address){
 
-  const handler =
-    PaystackPop.setup({
+    alert("Please complete all customer information before payment.");
 
-      key: PAYSTACK_PUBLIC_KEY,
+    return;
+  }
 
-      email: email,
+  const total = getCartTotal();
 
-      amount: total * 100,
+  const products = cart.map(item => ({
+    name:item.name,
+    quantity:item.quantity,
+    price:item.price
+  }));
 
-      currency: "NGN",
+  const handler = PaystackPop.setup({
 
-      metadata: {
+    key:
+      "pk_live_caee99bf950a74d75facd70e10e40781dabe9f3c",
 
-        custom_fields: [
+    email:email,
 
-          {
-            display_name: "Customer Name",
-            variable_name: "customer_name",
-            value: name
-          },
+    amount:total * 100,
 
-          {
-            display_name: "Phone Number",
-            variable_name: "phone_number",
-            value: phone
-          },
+    currency:"NGN",
 
-          {
-            display_name: "Delivery Address",
-            variable_name: "delivery_address",
-            value: address
-          },
+    metadata:{
+      custom_fields:[
+        {
+          display_name:"Customer Name",
+          variable_name:"customer_name",
+          value:name
+        },
+        {
+          display_name:"Phone Number",
+          variable_name:"phone_number",
+          value:phone
+        },
+        {
+          display_name:"Delivery Address",
+          variable_name:"delivery_address",
+          value:address
+        },
+        {
+          display_name:"Products",
+          variable_name:"products",
+          value:JSON.stringify(products)
+        }
+      ]
+    },
 
-          {
-            display_name: "Products",
-            variable_name: "products",
-            value: orderItems
-          }
+    callback:function(response){
 
-        ]
+      const whatsappMessage =
+        getOrderText(response.reference);
 
-      },
+      const whatsappURL =
+        "https://wa.me/2348125253898?text=" +
+        whatsappMessage;
 
-      callback: function(response) {
+      document.getElementById("whatsappLink").href =
+        whatsappURL;
 
-        const whatsappText =
-          `Hello Erin Enterprises.%0A%0A` +
-          `I have successfully paid for my order.%0A%0A` +
-          `Customer: ${encodeURIComponent(name)}%0A` +
-          `Phone: ${encodeURIComponent(phone)}%0A` +
-          `Email: ${encodeURIComponent(email)}%0A` +
-          `Delivery Address: ${encodeURIComponent(address)}%0A%0A` +
-          `Products: ${encodeURIComponent(orderItems)}%0A` +
-          `Total Paid: ₦${formatMoney(total)}%0A` +
-          `Payment Reference: ${encodeURIComponent(response.reference)}`;
+      document.getElementById("successBox").style.display =
+        "block";
 
-        document
-          .getElementById("whatsappOrder")
-          .href =
-          `https://wa.me/2348125253898?text=${whatsappText}`;
+      localStorage.removeItem("erinCart");
 
+      cart = [];
 
-        document
-          .getElementById("orderMessage")
-          .style.display = "block";
+      updateCart();
 
+      document.getElementById("successBox").scrollIntoView({
+        behavior:"smooth"
+      });
 
-        alert(
-          "Payment successful! Your payment reference is " +
-          response.reference
-        );
+    },
 
+    onClose:function(){
 
-        cart = [];
+      alert(
+        "Payment window closed. No payment was completed."
+      );
 
-        saveCart();
+    }
 
-        updateCart();
-
-      },
-
-      onClose: function() {
-
-        alert(
-          "Payment window was closed."
-        );
-
-      }
-
-    });
+  });
 
   handler.openIframe();
 
 }
-
-
-/* =========================
-   INITIAL LOAD
-   ========================= */
 
 updateCart();
 
