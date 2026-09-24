@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Erin Enterprises | Shop Online</title>
+<title>Erin Enterprises | Online Shopping</title>
 
 <style>
 *{
@@ -14,28 +14,25 @@
 }
 
 body{
-  font-family:Arial, sans-serif;
+  font-family:Arial, Helvetica, sans-serif;
   background:#f5f5f5;
   color:#222;
 }
 
-/* HEADER */
 header{
   background:#111;
   color:white;
-  padding:15px;
+  padding:14px 18px;
   position:sticky;
   top:0;
   z-index:1000;
 }
 
-.top{
-  max-width:1100px;
-  margin:auto;
+.header-top{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:12px;
+  gap:10px;
 }
 
 .logo{
@@ -43,175 +40,194 @@ header{
   font-weight:bold;
 }
 
-.cart{
-  background:#fff;
-  color:#111;
+.logo span{
+  color:#ff6600;
+}
+
+.cart-button{
+  background:#ff6600;
+  color:white;
   border:none;
+  padding:10px 14px;
   border-radius:20px;
-  padding:9px 14px;
   font-weight:bold;
   cursor:pointer;
 }
 
-/* HERO */
+.search-box{
+  margin-top:12px;
+}
+
+.search-box input{
+  width:100%;
+  padding:13px 16px;
+  border:none;
+  border-radius:25px;
+  font-size:15px;
+  outline:none;
+}
+
 .hero{
-  background:white;
-  padding:25px 15px;
+  background:linear-gradient(135deg,#111,#333);
+  color:white;
+  padding:35px 20px;
   text-align:center;
 }
 
 .hero h1{
   font-size:30px;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 
 .hero p{
-  color:#666;
+  font-size:15px;
+  line-height:1.6;
 }
 
-/* SEARCH */
-.search{
-  max-width:700px;
-  margin:18px auto 0;
-  display:flex;
-  background:#f1f1f1;
-  border-radius:25px;
-  overflow:hidden;
-}
-
-.search input{
-  width:100%;
-  border:none;
-  outline:none;
-  background:transparent;
-  padding:13px 18px;
-  font-size:16px;
-}
-
-.search button{
-  border:none;
-  background:#ff6b00;
+.shop-now{
+  display:inline-block;
+  margin-top:18px;
+  background:#ff6600;
   color:white;
-  padding:0 20px;
-  cursor:pointer;
+  text-decoration:none;
+  padding:13px 25px;
+  border-radius:25px;
+  font-weight:bold;
 }
 
-/* CATEGORIES */
 .categories{
-  display:flex;
-  gap:10px;
+  padding:18px 12px;
+  background:white;
   overflow-x:auto;
-  padding:15px;
-  max-width:1100px;
-  margin:auto;
+  white-space:nowrap;
 }
 
 .category{
-  border:none;
-  background:white;
-  padding:10px 18px;
-  border-radius:22px;
-  white-space:nowrap;
+  display:inline-block;
+  padding:9px 16px;
+  margin-right:7px;
+  border-radius:20px;
+  background:#eee;
   cursor:pointer;
-  box-shadow:0 2px 6px rgba(0,0,0,.08);
+  font-size:14px;
 }
 
-.category:hover{
-  background:#ff6b00;
+.category.active{
+  background:#ff6600;
   color:white;
 }
 
-/* SECTION */
 .section-title{
-  max-width:1100px;
-  margin:10px auto;
-  padding:0 15px;
+  padding:22px 15px 10px;
+  font-size:21px;
+  font-weight:bold;
 }
 
-.section-title h2{
-  font-size:22px;
-}
-
-/* PRODUCTS */
 .products{
-  max-width:1100px;
-  margin:auto;
-  padding:10px 15px 30px;
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:14px;
+  gap:12px;
+  padding:12px;
 }
 
 .product{
   background:white;
   border-radius:12px;
   overflow:hidden;
-  position:relative;
   box-shadow:0 2px 8px rgba(0,0,0,.08);
+  position:relative;
 }
 
 .product-image{
+  width:100%;
   height:190px;
+  object-fit:cover;
   background:#eee;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#999;
-  font-size:14px;
+  display:block;
+}
+
+.heart{
+  position:absolute;
+  top:9px;
+  right:9px;
+  width:34px;
+  height:34px;
+  border:none;
+  border-radius:50%;
+  background:white;
+  font-size:20px;
+  cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
 }
 
 .product-info{
   padding:12px;
 }
 
-.product h3{
-  font-size:16px;
-  margin-bottom:8px;
+.product-name{
+  font-size:15px;
+  font-weight:bold;
+  min-height:38px;
 }
 
 .price{
-  font-size:18px;
+  color:#e85d00;
+  font-size:17px;
   font-weight:bold;
+  margin:8px 0;
+}
+
+.product-category{
+  color:#777;
+  font-size:12px;
   margin-bottom:10px;
 }
 
-.buy{
+.add-cart{
   width:100%;
   border:none;
-  background:#ff6b00;
+  background:#111;
   color:white;
   padding:10px;
   border-radius:7px;
+  cursor:pointer;
   font-weight:bold;
-  cursor:pointer;
 }
 
-.favourite{
-  position:absolute;
-  top:10px;
-  right:10px;
-  width:35px;
-  height:35px;
-  border:none;
-  border-radius:50%;
-  background:white;
-  font-size:20px;
-  cursor:pointer;
+.add-cart:hover{
+  background:#ff6600;
 }
 
-/* CART */
+.offer{
+  margin:20px 12px;
+  padding:22px;
+  border-radius:15px;
+  background:#ff6600;
+  color:white;
+  text-align:center;
+}
+
+.offer h2{
+  margin-bottom:7px;
+}
+
+.offer p{
+  font-size:14px;
+  line-height:1.5;
+}
+
 .cart-panel{
   position:fixed;
-  right:-100%;
   top:0;
-  width:100%;
+  right:-100%;
+  width:90%;
   max-width:400px;
   height:100%;
   background:white;
   z-index:2000;
-  box-shadow:-4px 0 15px rgba(0,0,0,.2);
-  padding:20px;
+  box-shadow:-4px 0 15px rgba(0,0,0,.25);
   transition:.3s;
+  padding:18px;
   overflow-y:auto;
 }
 
@@ -226,99 +242,145 @@ header{
   margin-bottom:20px;
 }
 
-.close{
+.close-cart{
   border:none;
   background:#eee;
-  border-radius:50%;
   width:35px;
   height:35px;
+  border-radius:50%;
   cursor:pointer;
+  font-size:18px;
 }
 
 .cart-item{
-  border-bottom:1px solid #ddd;
+  display:flex;
+  gap:10px;
   padding:12px 0;
+  border-bottom:1px solid #ddd;
 }
 
-.cart-item strong{
-  display:block;
-  margin-bottom:8px;
+.cart-item img{
+  width:65px;
+  height:65px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.cart-item-info{
+  flex:1;
+}
+
+.cart-item-name{
+  font-size:14px;
+  font-weight:bold;
+}
+
+.cart-item-price{
+  color:#e85d00;
+  font-weight:bold;
+  margin-top:5px;
 }
 
 .quantity{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:8px;
+  margin-top:7px;
 }
 
 .quantity button{
   border:none;
   background:#eee;
-  width:30px;
-  height:30px;
+  width:27px;
+  height:27px;
   border-radius:5px;
   cursor:pointer;
+  font-weight:bold;
 }
 
-.total{
-  font-size:21px;
+.cart-total{
+  font-size:20px;
   font-weight:bold;
   margin:20px 0;
 }
 
 .checkout{
-  display:block;
   width:100%;
-  padding:14px;
+  padding:13px;
   border:none;
   border-radius:8px;
   background:#25D366;
   color:white;
   font-weight:bold;
-  text-align:center;
-  text-decoration:none;
+  cursor:pointer;
   margin-bottom:10px;
 }
 
 .paystack{
-  display:block;
   width:100%;
-  padding:14px;
+  padding:13px;
   border:none;
   border-radius:8px;
-  background:#111;
+  background:#00c3a5;
   color:white;
   font-weight:bold;
-  text-align:center;
-  text-decoration:none;
+  cursor:pointer;
 }
 
-/* FOOTER */
+.empty-cart{
+  text-align:center;
+  color:#777;
+  padding:30px 0;
+}
+
 footer{
   background:#111;
   color:white;
+  padding:30px 18px;
+  margin-top:30px;
   text-align:center;
-  padding:30px 15px;
-  margin-top:20px;
+}
+
+footer h2{
+  margin-bottom:10px;
 }
 
 footer p{
-  margin:7px;
+  margin:7px 0;
+  font-size:14px;
 }
 
-footer a{
-  color:#25D366;
+.whatsapp{
+  display:inline-block;
+  margin-top:12px;
+  background:#25D366;
+  color:white;
+  padding:12px 20px;
+  border-radius:25px;
   text-decoration:none;
+  font-weight:bold;
 }
 
-/* DESKTOP */
+.no-products{
+  grid-column:1/-1;
+  text-align:center;
+  padding:30px;
+  color:#777;
+}
+
 @media(min-width:700px){
   .products{
     grid-template-columns:repeat(3,1fr);
+    max-width:1100px;
+    margin:auto;
   }
 
   .product-image{
-    height:240px;
+    height:230px;
+  }
+
+  .hero h1{
+    font-size:40px;
   }
 }
 </style>
@@ -327,382 +389,401 @@ footer a{
 <body>
 
 <header>
-  <div class="top">
-    <div class="logo">Erin Enterprises</div>
+  <div class="header-top">
+    <div class="logo">Erin <span>Enterprises</span></div>
 
-    <button class="cart" onclick="openCart()">
+    <button class="cart-button" onclick="openCart()">
       🛒 Cart (<span id="cartCount">0</span>)
     </button>
   </div>
-</header>
 
-<section class="hero">
-
-  <h1>Shop Erin Enterprises</h1>
-
-  <p>Quality products at great prices</p>
-
-  <div class="search">
+  <div class="search-box">
     <input
       type="text"
       id="searchInput"
       placeholder="Search products..."
-      onkeyup="searchProducts()"
+      oninput="searchProducts()"
     >
-
-    <button>🔍</button>
   </div>
+</header>
 
+<section class="hero">
+  <h1>Welcome to Erin Enterprises</h1>
+  <p>
+    Shop quality products for children and adults.
+    Find shoes, skincare products, clothing and more.
+  </p>
+
+  <a href="#products" class="shop-now">Shop Now</a>
 </section>
 
 <div class="categories">
-
-  <button class="category" onclick="filterProducts('all')">
-    All
-  </button>
-
-  <button class="category" onclick="filterProducts('beauty')">
-    Beauty
-  </button>
-
-  <button class="category" onclick="filterProducts('kiddies')">
-    Kiddies
-  </button>
-
-  <button class="category" onclick="filterProducts('soap')">
-    Soaps
-  </button>
-
+  <span class="category active" onclick="filterProducts('all',this)">All</span>
+  <span class="category" onclick="filterProducts('beauty',this)">Beauty</span>
+  <span class="category" onclick="filterProducts('kids',this)">Kids</span>
+  <span class="category" onclick="filterProducts('bodycare',this)">Body Care</span>
 </div>
 
-<div class="section-title">
-  <h2>🔥 Featured Products</h2>
+<div class="section-title" id="products">
+  Featured Products
 </div>
 
-<section class="products" id="products">
+<section class="products" id="productGrid"></section>
 
-  <div class="product" data-category="beauty" data-name="Vivon Cocoa Shea Butter">
-
-    <button class="favourite" onclick="favourite(this)">♡</button>
-
-    <div class="product-image">
-      Product Picture
-    </div>
-
-    <div class="product-info">
-
-      <h3>Vivon Cocoa Shea Butter</h3>
-
-      <div class="price">₦5,500</div>
-
-      <button class="buy"
-        onclick="addToCart('Vivon Cocoa Shea Butter',5500)">
-        🛒 Add to Cart
-      </button>
-
-    </div>
-  </div>
-
-
-  <div class="product" data-category="beauty" data-name="P Clinic">
-
-    <button class="favourite" onclick="favourite(this)">♡</button>
-
-    <div class="product-image">
-      Product Picture
-    </div>
-
-    <div class="product-info">
-
-      <h3>P Clinic</h3>
-
-      <div class="price">₦12,000</div>
-
-      <button class="buy"
-        onclick="addToCart('P Clinic',12000)">
-        🛒 Add to Cart
-      </button>
-
-    </div>
-  </div>
-
-
-  <div class="product" data-category="kiddies" data-name="Vivon Kiddies">
-
-    <button class="favourite" onclick="favourite(this)">♡</button>
-
-    <div class="product-image">
-      Product Picture
-    </div>
-
-    <div class="product-info">
-
-      <h3>Vivon Kiddies</h3>
-
-      <div class="price">₦5,500</div>
-
-      <button class="buy"
-        onclick="addToCart('Vivon Kiddies',5500)">
-        🛒 Add to Cart
-      </button>
-
-    </div>
-  </div>
-
-
-  <div class="product" data-category="soap" data-name="Dodo Skin Gold Vitamin C Soap">
-
-    <button class="favourite" onclick="favourite(this)">♡</button>
-
-    <div class="product-image">
-      Product Picture
-    </div>
-
-    <div class="product-info">
-
-      <h3>Dodo Skin Gold Vitamin C Soap</h3>
-
-      <div class="price">₦3,500</div>
-
-      <button class="buy"
-        onclick="addToCart('Dodo Skin Gold Vitamin C Soap',3500)">
-        🛒 Add to Cart
-      </button>
-
-    </div>
-  </div>
-
-
-  <div class="product" data-category="kiddies" data-name="Kiddies Shoes">
-
-    <button class="favourite" onclick="favourite(this)">♡</button>
-
-    <div class="product-image">
-      Product Picture
-    </div>
-
-    <div class="product-info">
-
-      <h3>Kiddies Shoes</h3>
-
-      <div class="price">₦25,000</div>
-
-      <button class="buy"
-        onclick="addToCart('Kiddies Shoes',25000)">
-        🛒 Add to Cart
-      </button>
-
-    </div>
-  </div>
-
-
-  <div class="product" data-category="soap" data-name="Dodo Black Soap">
-
-    <button class="favourite" onclick="favourite(this)">♡</button>
-
-    <div class="product-image">
-      Product Picture
-    </div>
-
-    <div class="product-info">
-
-      <h3>Dodo Black Soap</h3>
-
-      <div class="price">₦1,500</div>
-
-      <button class="buy"
-        onclick="addToCart('Dodo Black Soap',1500)">
-        🛒 Add to Cart
-      </button>
-
-    </div>
-  </div>
-
+<section class="offer">
+  <h2>🛍️ Shop With Erin Enterprises</h2>
+  <p>
+    Quality products, easy ordering and convenient online shopping.
+    Add your favourite products to your cart and order today!
+  </p>
 </section>
 
+<footer>
+  <h2>Erin Enterprises</h2>
+
+  <p>Quality products for everyone.</p>
+
+  <p>📞 WhatsApp: +2348125253898</p>
+
+  <p>📧 Erinsenterprisesvarieties@gmail.com</p>
+
+  <a
+    class="whatsapp"
+    href="https://wa.me/2348125253898"
+    target="_blank"
+  >
+    💬 Chat With Us on WhatsApp
+  </a>
+</footer>
 
 <!-- CART -->
-
 <div class="cart-panel" id="cartPanel">
 
   <div class="cart-header">
+    <h2>Your Cart</h2>
 
-    <h2>🛒 Your Cart</h2>
-
-    <button class="close" onclick="closeCart()">✕</button>
-
+    <button class="close-cart" onclick="closeCart()">✕</button>
   </div>
 
-  <div id="cartItems">
-    Your cart is empty.
-  </div>
+  <div id="cartItems"></div>
 
-  <div class="total">
+  <div class="cart-total">
     Total: ₦<span id="cartTotal">0</span>
   </div>
 
-  <a
-    class="checkout"
-    href="https://wa.me/2348125253898"
-    target="_blank">
+  <button class="checkout" onclick="orderWhatsApp()">
     💬 Order on WhatsApp
-  </a>
+  </button>
 
-  <a
-    class="paystack"
-    href="https://paystack.shop/pay/meocdhp5pf"
-    target="_blank">
+  <button class="paystack" onclick="payWithPaystack()">
     💳 Pay with Paystack
-  </a>
+  </button>
 
 </div>
 
-
-<footer>
-
-  <p><strong>Erin Enterprises</strong></p>
-
-  <p>Quality Products • Great Prices • Trusted Service</p>
-
-  <p>
-    WhatsApp:
-    <a href="https://wa.me/2348125253898">
-      +234 812 525 3898
-    </a>
-  </p>
-
-  <p>© 2026 Erin Enterprises</p>
-
-</footer>
-
-
 <script>
+
+const products = [
+
+  {
+    id:1,
+    name:"P Clinic",
+    price:12000,
+    category:"beauty",
+    image:"20260901_142937.jpg"
+  },
+
+  {
+    id:2,
+    name:"Dodo Skin Gold Vitamin C Soap",
+    price:3500,
+    category:"bodycare",
+    image:"20260901_143232.jpg"
+  },
+
+  {
+    id:3,
+    name:"Vivon Kiddies",
+    price:5500,
+    category:"kids",
+    image:"20260901_143125.jpg"
+  },
+
+  {
+    id:4,
+    name:"Dodo Black Soap",
+    price:1500,
+    category:"bodycare",
+    image:"20260901_143254.jpg"
+  },
+
+  {
+    id:5,
+    name:"Kiddies Shoes",
+    price:25000,
+    category:"kids",
+    image:"1789318927270.png"
+  },
+
+  {
+    id:6,
+    name:"Vivon Cocoa Shea Butter",
+    price:5500,
+    category:"bodycare",
+    image:"e57bbf61b042f6865c1f44e56f22936b770710bf"
+  }
+
+];
 
 let cart = [];
 
-function addToCart(name, price){
-
-  let existing = cart.find(item => item.name === name);
-
-  if(existing){
-    existing.quantity++;
-  }else{
-    cart.push({
-      name:name,
-      price:price,
-      quantity:1
-    });
-  }
-
-  updateCart();
-
-  alert(name + " added to cart!");
+function money(number){
+  return number.toLocaleString("en-NG");
 }
 
+function displayProducts(list){
 
-function updateCart(){
+  const grid = document.getElementById("productGrid");
 
-  let count = 0;
-  let total = 0;
+  grid.innerHTML = "";
 
-  cart.forEach(item => {
-    count += item.quantity;
-    total += item.price * item.quantity;
-  });
+  if(list.length === 0){
 
-  document.getElementById("cartCount").textContent = count;
-
-  document.getElementById("cartTotal").textContent =
-    total.toLocaleString();
-
-  let container = document.getElementById("cartItems");
-
-  if(cart.length === 0){
-
-    container.innerHTML = "Your cart is empty.";
+    grid.innerHTML =
+      '<div class="no-products">No products found.</div>';
 
     return;
   }
 
-  container.innerHTML = "";
+  list.forEach(product => {
 
-  cart.forEach((item,index) => {
+    const card = document.createElement("div");
 
-    let div = document.createElement("div");
+    card.className = "product";
 
-    div.className = "cart-item";
+    card.innerHTML = `
 
-    div.innerHTML = `
+      <button
+        class="heart"
+        onclick="toggleFavourite(this)"
+      >
+        ♡
+      </button>
 
-      <strong>${item.name}</strong>
+      <img
+        class="product-image"
+        src="${product.image}"
+        alt="${product.name}"
+        onerror="this.style.display='none'"
+      >
 
-      <div>₦${item.price.toLocaleString()}</div>
+      <div class="product-info">
 
-      <div class="quantity">
+        <div class="product-name">
+          ${product.name}
+        </div>
 
-        <button onclick="changeQuantity(${index},-1)">
-          −
-        </button>
+        <div class="product-category">
+          ${product.category}
+        </div>
 
-        <span>${item.quantity}</span>
+        <div class="price">
+          ₦${money(product.price)}
+        </div>
 
-        <button onclick="changeQuantity(${index},1)">
-          +
-        </button>
-
-        <button onclick="removeItem(${index})">
-          🗑️
+        <button
+          class="add-cart"
+          onclick="addToCart(${product.id})"
+        >
+          🛒 Add to Cart
         </button>
 
       </div>
     `;
 
-    container.appendChild(div);
+    grid.appendChild(card);
+
+  });
+}
+
+function addToCart(id){
+
+  const product = products.find(p => p.id === id);
+
+  const existing = cart.find(item => item.id === id);
+
+  if(existing){
+
+    existing.quantity++;
+
+  }else{
+
+    cart.push({
+      ...product,
+      quantity:1
+    });
+
+  }
+
+  updateCart();
+
+  openCart();
+}
+
+function updateCart(){
+
+  const cartItems = document.getElementById("cartItems");
+
+  const cartCount = document.getElementById("cartCount");
+
+  const cartTotal = document.getElementById("cartTotal");
+
+  cartItems.innerHTML = "";
+
+  let total = 0;
+
+  let count = 0;
+
+  if(cart.length === 0){
+
+    cartItems.innerHTML =
+      '<div class="empty-cart">Your cart is empty.</div>';
+
+  }
+
+  cart.forEach(item => {
+
+    total += item.price * item.quantity;
+
+    count += item.quantity;
+
+    const div = document.createElement("div");
+
+    div.className = "cart-item";
+
+    div.innerHTML = `
+
+      <img
+        src="${item.image}"
+        alt="${item.name}"
+      >
+
+      <div class="cart-item-info">
+
+        <div class="cart-item-name">
+          ${item.name}
+        </div>
+
+        <div class="cart-item-price">
+          ₦${money(item.price * item.quantity)}
+        </div>
+
+        <div class="quantity">
+
+          <button onclick="changeQuantity(${item.id},-1)">
+            −
+          </button>
+
+          <span>${item.quantity}</span>
+
+          <button onclick="changeQuantity(${item.id},1)">
+            +
+          </button>
+
+        </div>
+
+      </div>
+    `;
+
+    cartItems.appendChild(div);
 
   });
 
+  cartCount.textContent = count;
+
+  cartTotal.textContent = money(total);
 }
 
+function changeQuantity(id, amount){
 
-function changeQuantity(index,change){
+  const item = cart.find(product => product.id === id);
 
-  cart[index].quantity += change;
+  if(!item) return;
 
-  if(cart[index].quantity <= 0){
+  item.quantity += amount;
 
-    cart.splice(index,1);
+  if(item.quantity <= 0){
+
+    cart = cart.filter(product => product.id !== id);
 
   }
 
   updateCart();
 }
 
-
-function removeItem(index){
-
-  cart.splice(index,1);
-
-  updateCart();
-}
-
-
 function openCart(){
 
-  document.getElementById("cartPanel")
+  document
+    .getElementById("cartPanel")
     .classList.add("open");
 
 }
 
-
 function closeCart(){
 
-  document.getElementById("cartPanel")
+  document
+    .getElementById("cartPanel")
     .classList.remove("open");
 
 }
 
+function searchProducts(){
 
-function favourite(button){
+  const search =
+    document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase()
+      .trim();
+
+  const results = products.filter(product =>
+
+    product.name
+      .toLowerCase()
+      .includes(search)
+
+  );
+
+  displayProducts(results);
+}
+
+function filterProducts(category, element){
+
+  document
+    .querySelectorAll(".category")
+    .forEach(button =>
+      button.classList.remove("active")
+    );
+
+  element.classList.add("active");
+
+  if(category === "all"){
+
+    displayProducts(products);
+
+  }else{
+
+    displayProducts(
+      products.filter(
+        product => product.category === category
+      )
+    );
+
+  }
+
+}
+
+function toggleFavourite(button){
 
   if(button.textContent === "♡"){
 
@@ -716,60 +797,73 @@ function favourite(button){
 
 }
 
+function orderWhatsApp(){
 
-function searchProducts(){
+  if(cart.length === 0){
 
-  let search =
-    document.getElementById("searchInput")
-    .value
-    .toLowerCase();
+    alert("Your cart is empty.");
 
-  let products =
-    document.querySelectorAll(".product");
+    return;
+  }
 
-  products.forEach(product => {
+  let message =
+    "Hello Erin Enterprises, I want to order:%0A%0A";
 
-    let name =
-      product.dataset.name.toLowerCase();
+  let total = 0;
 
-    if(name.includes(search)){
+  cart.forEach(item => {
 
-      product.style.display = "";
+    const itemTotal =
+      item.price * item.quantity;
 
-    }else{
+    total += itemTotal;
 
-      product.style.display = "none";
-
-    }
-
-  });
-
-}
-
-
-function filterProducts(category){
-
-  let products =
-    document.querySelectorAll(".product");
-
-  products.forEach(product => {
-
-    if(category === "all" ||
-       product.dataset.category === category){
-
-      product.style.display = "";
-
-    }else{
-
-      product.style.display = "none";
-
-    }
+    message +=
+      "• " +
+      item.name +
+      " x" +
+      item.quantity +
+      " - ₦" +
+      money(itemTotal) +
+      "%0A";
 
   });
 
+  message +=
+    "%0ATotal: ₦" +
+    money(total);
+
+  message +=
+    "%0A%0APlease confirm my order.";
+
+  window.open(
+    "https://wa.me/2348125253898?text=" + message,
+    "_blank"
+  );
+
 }
+
+function payWithPaystack(){
+
+  if(cart.length === 0){
+
+    alert("Please add a product to your cart first.");
+
+    return;
+  }
+
+  window.open(
+    "https://paystack.shop/pay/meocdhp5pf",
+    "_blank"
+  );
+
+}
+
+displayProducts(products);
+
+updateCart();
 
 </script>
 
 </body>
-        </html>
+  </html>
