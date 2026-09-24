@@ -4,117 +4,322 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Erin Enterprises | Online Store</title>
+<title>Erin Enterprises | Shop Online</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-    color: #222;
+body{
+  font-family:Arial, sans-serif;
+  background:#f5f5f5;
+  color:#222;
 }
 
-header {
-    background: #111;
-    color: white;
-    padding: 20px;
-    text-align: center;
+/* HEADER */
+header{
+  background:#111;
+  color:white;
+  padding:15px;
+  position:sticky;
+  top:0;
+  z-index:1000;
 }
 
-header h1 {
-    font-size: 28px;
+.top{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
 }
 
-header p {
-    margin-top: 8px;
-    color: #ddd;
+.logo{
+  font-size:22px;
+  font-weight:bold;
 }
 
-.hero {
-    background: white;
-    text-align: center;
-    padding: 35px 20px;
+.cart{
+  background:#fff;
+  color:#111;
+  border:none;
+  border-radius:20px;
+  padding:9px 14px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.hero h2 {
-    font-size: 28px;
-    margin-bottom: 10px;
+/* HERO */
+.hero{
+  background:white;
+  padding:25px 15px;
+  text-align:center;
 }
 
-.hero p {
-    font-size: 16px;
-    color: #555;
+.hero h1{
+  font-size:30px;
+  margin-bottom:8px;
 }
 
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 25px;
-    max-width: 1200px;
-    margin: auto;
+.hero p{
+  color:#666;
 }
 
-.product {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
-    text-align: center;
-    padding-bottom: 20px;
+/* SEARCH */
+.search{
+  max-width:700px;
+  margin:18px auto 0;
+  display:flex;
+  background:#f1f1f1;
+  border-radius:25px;
+  overflow:hidden;
 }
 
-.product-image {
-    width: 100%;
-    height: 220px;
-    background: #eee;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #888;
-    font-size: 15px;
+.search input{
+  width:100%;
+  border:none;
+  outline:none;
+  background:transparent;
+  padding:13px 18px;
+  font-size:16px;
 }
 
-.product h3 {
-    margin: 15px 10px 8px;
+.search button{
+  border:none;
+  background:#ff6b00;
+  color:white;
+  padding:0 20px;
+  cursor:pointer;
 }
 
-.price {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 15px;
+/* CATEGORIES */
+.categories{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:15px;
+  max-width:1100px;
+  margin:auto;
 }
 
-.buy {
-    display: inline-block;
-    background: #25D366;
-    color: white;
-    text-decoration: none;
-    padding: 12px 22px;
-    border-radius: 25px;
-    font-weight: bold;
+.category{
+  border:none;
+  background:white;
+  padding:10px 18px;
+  border-radius:22px;
+  white-space:nowrap;
+  cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
 }
 
-.buy:hover {
-    opacity: 0.85;
+.category:hover{
+  background:#ff6b00;
+  color:white;
 }
 
-footer {
-    background: #111;
-    color: white;
-    text-align: center;
-    padding: 25px;
-    margin-top: 20px;
+/* SECTION */
+.section-title{
+  max-width:1100px;
+  margin:10px auto;
+  padding:0 15px;
 }
 
-footer a {
-    color: #25D366;
-    text-decoration: none;
+.section-title h2{
+  font-size:22px;
+}
+
+/* PRODUCTS */
+.products{
+  max-width:1100px;
+  margin:auto;
+  padding:10px 15px 30px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.product{
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  position:relative;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.product-image{
+  height:190px;
+  background:#eee;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#999;
+  font-size:14px;
+}
+
+.product-info{
+  padding:12px;
+}
+
+.product h3{
+  font-size:16px;
+  margin-bottom:8px;
+}
+
+.price{
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.buy{
+  width:100%;
+  border:none;
+  background:#ff6b00;
+  color:white;
+  padding:10px;
+  border-radius:7px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.favourite{
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:35px;
+  height:35px;
+  border:none;
+  border-radius:50%;
+  background:white;
+  font-size:20px;
+  cursor:pointer;
+}
+
+/* CART */
+.cart-panel{
+  position:fixed;
+  right:-100%;
+  top:0;
+  width:100%;
+  max-width:400px;
+  height:100%;
+  background:white;
+  z-index:2000;
+  box-shadow:-4px 0 15px rgba(0,0,0,.2);
+  padding:20px;
+  transition:.3s;
+  overflow-y:auto;
+}
+
+.cart-panel.open{
+  right:0;
+}
+
+.cart-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.close{
+  border:none;
+  background:#eee;
+  border-radius:50%;
+  width:35px;
+  height:35px;
+  cursor:pointer;
+}
+
+.cart-item{
+  border-bottom:1px solid #ddd;
+  padding:12px 0;
+}
+
+.cart-item strong{
+  display:block;
+  margin-bottom:8px;
+}
+
+.quantity{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.quantity button{
+  border:none;
+  background:#eee;
+  width:30px;
+  height:30px;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.total{
+  font-size:21px;
+  font-weight:bold;
+  margin:20px 0;
+}
+
+.checkout{
+  display:block;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:8px;
+  background:#25D366;
+  color:white;
+  font-weight:bold;
+  text-align:center;
+  text-decoration:none;
+  margin-bottom:10px;
+}
+
+.paystack{
+  display:block;
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:8px;
+  background:#111;
+  color:white;
+  font-weight:bold;
+  text-align:center;
+  text-decoration:none;
+}
+
+/* FOOTER */
+footer{
+  background:#111;
+  color:white;
+  text-align:center;
+  padding:30px 15px;
+  margin-top:20px;
+}
+
+footer p{
+  margin:7px;
+}
+
+footer a{
+  color:#25D366;
+  text-decoration:none;
+}
+
+/* DESKTOP */
+@media(min-width:700px){
+  .products{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .product-image{
+    height:240px;
+  }
 }
 </style>
 </head>
@@ -122,89 +327,449 @@ footer a {
 <body>
 
 <header>
-    <h1>Erin Enterprises</h1>
-    <p>Quality Products • Great Prices • Trusted Service</p>
+  <div class="top">
+    <div class="logo">Erin Enterprises</div>
+
+    <button class="cart" onclick="openCart()">
+      🛒 Cart (<span id="cartCount">0</span>)
+    </button>
+  </div>
 </header>
 
 <section class="hero">
-    <h2>Welcome to Erin Enterprises</h2>
-    <p>Shop our varieties of quality products for children and adults.</p>
-</section>
 
-<section class="products">
+  <h1>Shop Erin Enterprises</h1>
 
-    <div class="product">
-        <div class="product-image">
-            Product Picture
-        </div>
-        <h3>Vivon Cocoa Shea Butter</h3>
-        <div class="price">₦5,500</div>
-        <a class="buy" href="https://wa.me/2348125253898">
-            Order on WhatsApp
-        </a>
-    </div>
+  <p>Quality products at great prices</p>
 
-    <div class="product">
-        <div class="product-image">
-            Product Picture
-        </div>
-        <h3>P Clinic</h3>
-        <div class="price">₦12,000</div>
-        <a class="buy" href="https://wa.me/2348125253898">
-            Order on WhatsApp
-        </a>
-    </div>
+  <div class="search">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search products..."
+      onkeyup="searchProducts()"
+    >
 
-    <div class="product">
-        <div class="product-image">
-            Product Picture
-        </div>
-        <h3>Vivon Kiddies</h3>
-        <div class="price">₦5,500</div>
-        <a class="buy" href="https://wa.me/2348125253898">
-            Order on WhatsApp
-        </a>
-    </div>
-
-    <div class="product">
-        <div class="product-image">
-            Product Picture
-        </div>
-        <h3>Dodo Skin Gold Vitamin C Soap</h3>
-        <div class="price">₦3,500</div>
-        <a class="buy" href="https://wa.me/2348125253898">
-            Order on WhatsApp
-        </a>
-    </div>
-
-    <div class="product">
-        <div class="product-image">
-            Product Picture
-        </div>
-        <h3>Kiddies Shoes</h3>
-        <div class="price">₦25,000</div>
-        <a class="buy" href="https://wa.me/2348125253898">
-            Order on WhatsApp
-        </a>
-    </div>
-
-    <div class="product">
-        <div class="product-image">
-            Product Picture
-        </div>
-        <h3>Dodo Black Soap</h3>
-        <div class="price">₦1,500</div>
-        <a class="buy" href="https://wa.me/2348125253898">
-            Order on WhatsApp
-        </a>
-    </div>
+    <button>🔍</button>
+  </div>
 
 </section>
+
+<div class="categories">
+
+  <button class="category" onclick="filterProducts('all')">
+    All
+  </button>
+
+  <button class="category" onclick="filterProducts('beauty')">
+    Beauty
+  </button>
+
+  <button class="category" onclick="filterProducts('kiddies')">
+    Kiddies
+  </button>
+
+  <button class="category" onclick="filterProducts('soap')">
+    Soaps
+  </button>
+
+</div>
+
+<div class="section-title">
+  <h2>🔥 Featured Products</h2>
+</div>
+
+<section class="products" id="products">
+
+  <div class="product" data-category="beauty" data-name="Vivon Cocoa Shea Butter">
+
+    <button class="favourite" onclick="favourite(this)">♡</button>
+
+    <div class="product-image">
+      Product Picture
+    </div>
+
+    <div class="product-info">
+
+      <h3>Vivon Cocoa Shea Butter</h3>
+
+      <div class="price">₦5,500</div>
+
+      <button class="buy"
+        onclick="addToCart('Vivon Cocoa Shea Butter',5500)">
+        🛒 Add to Cart
+      </button>
+
+    </div>
+  </div>
+
+
+  <div class="product" data-category="beauty" data-name="P Clinic">
+
+    <button class="favourite" onclick="favourite(this)">♡</button>
+
+    <div class="product-image">
+      Product Picture
+    </div>
+
+    <div class="product-info">
+
+      <h3>P Clinic</h3>
+
+      <div class="price">₦12,000</div>
+
+      <button class="buy"
+        onclick="addToCart('P Clinic',12000)">
+        🛒 Add to Cart
+      </button>
+
+    </div>
+  </div>
+
+
+  <div class="product" data-category="kiddies" data-name="Vivon Kiddies">
+
+    <button class="favourite" onclick="favourite(this)">♡</button>
+
+    <div class="product-image">
+      Product Picture
+    </div>
+
+    <div class="product-info">
+
+      <h3>Vivon Kiddies</h3>
+
+      <div class="price">₦5,500</div>
+
+      <button class="buy"
+        onclick="addToCart('Vivon Kiddies',5500)">
+        🛒 Add to Cart
+      </button>
+
+    </div>
+  </div>
+
+
+  <div class="product" data-category="soap" data-name="Dodo Skin Gold Vitamin C Soap">
+
+    <button class="favourite" onclick="favourite(this)">♡</button>
+
+    <div class="product-image">
+      Product Picture
+    </div>
+
+    <div class="product-info">
+
+      <h3>Dodo Skin Gold Vitamin C Soap</h3>
+
+      <div class="price">₦3,500</div>
+
+      <button class="buy"
+        onclick="addToCart('Dodo Skin Gold Vitamin C Soap',3500)">
+        🛒 Add to Cart
+      </button>
+
+    </div>
+  </div>
+
+
+  <div class="product" data-category="kiddies" data-name="Kiddies Shoes">
+
+    <button class="favourite" onclick="favourite(this)">♡</button>
+
+    <div class="product-image">
+      Product Picture
+    </div>
+
+    <div class="product-info">
+
+      <h3>Kiddies Shoes</h3>
+
+      <div class="price">₦25,000</div>
+
+      <button class="buy"
+        onclick="addToCart('Kiddies Shoes',25000)">
+        🛒 Add to Cart
+      </button>
+
+    </div>
+  </div>
+
+
+  <div class="product" data-category="soap" data-name="Dodo Black Soap">
+
+    <button class="favourite" onclick="favourite(this)">♡</button>
+
+    <div class="product-image">
+      Product Picture
+    </div>
+
+    <div class="product-info">
+
+      <h3>Dodo Black Soap</h3>
+
+      <div class="price">₦1,500</div>
+
+      <button class="buy"
+        onclick="addToCart('Dodo Black Soap',1500)">
+        🛒 Add to Cart
+      </button>
+
+    </div>
+  </div>
+
+</section>
+
+
+<!-- CART -->
+
+<div class="cart-panel" id="cartPanel">
+
+  <div class="cart-header">
+
+    <h2>🛒 Your Cart</h2>
+
+    <button class="close" onclick="closeCart()">✕</button>
+
+  </div>
+
+  <div id="cartItems">
+    Your cart is empty.
+  </div>
+
+  <div class="total">
+    Total: ₦<span id="cartTotal">0</span>
+  </div>
+
+  <a
+    class="checkout"
+    href="https://wa.me/2348125253898"
+    target="_blank">
+    💬 Order on WhatsApp
+  </a>
+
+  <a
+    class="paystack"
+    href="https://paystack.shop/pay/meocdhp5pf"
+    target="_blank">
+    💳 Pay with Paystack
+  </a>
+
+</div>
+
 
 <footer>
-    <p>© 2026 Erin Enterprises. All Rights Reserved.</p>
-    <p>WhatsApp: <a href="https://wa.me/2348125253898">+234 812 525 3898</a></p>
+
+  <p><strong>Erin Enterprises</strong></p>
+
+  <p>Quality Products • Great Prices • Trusted Service</p>
+
+  <p>
+    WhatsApp:
+    <a href="https://wa.me/2348125253898">
+      +234 812 525 3898
+    </a>
+  </p>
+
+  <p>© 2026 Erin Enterprises</p>
+
 </footer>
 
+
+<script>
+
+let cart = [];
+
+function addToCart(name, price){
+
+  let existing = cart.find(item => item.name === name);
+
+  if(existing){
+    existing.quantity++;
+  }else{
+    cart.push({
+      name:name,
+      price:price,
+      quantity:1
+    });
+  }
+
+  updateCart();
+
+  alert(name + " added to cart!");
+}
+
+
+function updateCart(){
+
+  let count = 0;
+  let total = 0;
+
+  cart.forEach(item => {
+    count += item.quantity;
+    total += item.price * item.quantity;
+  });
+
+  document.getElementById("cartCount").textContent = count;
+
+  document.getElementById("cartTotal").textContent =
+    total.toLocaleString();
+
+  let container = document.getElementById("cartItems");
+
+  if(cart.length === 0){
+
+    container.innerHTML = "Your cart is empty.";
+
+    return;
+  }
+
+  container.innerHTML = "";
+
+  cart.forEach((item,index) => {
+
+    let div = document.createElement("div");
+
+    div.className = "cart-item";
+
+    div.innerHTML = `
+
+      <strong>${item.name}</strong>
+
+      <div>₦${item.price.toLocaleString()}</div>
+
+      <div class="quantity">
+
+        <button onclick="changeQuantity(${index},-1)">
+          −
+        </button>
+
+        <span>${item.quantity}</span>
+
+        <button onclick="changeQuantity(${index},1)">
+          +
+        </button>
+
+        <button onclick="removeItem(${index})">
+          🗑️
+        </button>
+
+      </div>
+    `;
+
+    container.appendChild(div);
+
+  });
+
+}
+
+
+function changeQuantity(index,change){
+
+  cart[index].quantity += change;
+
+  if(cart[index].quantity <= 0){
+
+    cart.splice(index,1);
+
+  }
+
+  updateCart();
+}
+
+
+function removeItem(index){
+
+  cart.splice(index,1);
+
+  updateCart();
+}
+
+
+function openCart(){
+
+  document.getElementById("cartPanel")
+    .classList.add("open");
+
+}
+
+
+function closeCart(){
+
+  document.getElementById("cartPanel")
+    .classList.remove("open");
+
+}
+
+
+function favourite(button){
+
+  if(button.textContent === "♡"){
+
+    button.textContent = "♥";
+
+  }else{
+
+    button.textContent = "♡";
+
+  }
+
+}
+
+
+function searchProducts(){
+
+  let search =
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase();
+
+  let products =
+    document.querySelectorAll(".product");
+
+  products.forEach(product => {
+
+    let name =
+      product.dataset.name.toLowerCase();
+
+    if(name.includes(search)){
+
+      product.style.display = "";
+
+    }else{
+
+      product.style.display = "none";
+
+    }
+
+  });
+
+}
+
+
+function filterProducts(category){
+
+  let products =
+    document.querySelectorAll(".product");
+
+  products.forEach(product => {
+
+    if(category === "all" ||
+       product.dataset.category === category){
+
+      product.style.display = "";
+
+    }else{
+
+      product.style.display = "none";
+
+    }
+
+  });
+
+}
+
+</script>
+
 </body>
-    </html>
+        </html>
