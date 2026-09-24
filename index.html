@@ -400,3 +400,566 @@ footer{
     grid-template-columns:repeat(4,1fr);
   }
 }
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="logo">Erin Enterprises</div>
+
+    <button class="cart" onclick="openCart()">
+      🛒 Cart (<span id="cartCount">0</span>)
+    </button>
+  </div>
+
+  <div class="search-box">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search products..."
+      onkeyup="searchProducts()"
+    >
+    <button onclick="searchProducts()">🔍</button>
+  </div>
+</header>
+
+<nav>
+  <a href="#home">Home</a>
+  <a href="#products">Products</a>
+  <a href="#deals">Deals</a>
+  <a href="#about">About Us</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section class="hero" id="home">
+  <h1>Welcome to Erin Enterprises 🛍️</h1>
+
+  <p>
+    Your trusted online store for quality children's shoes,
+    bags, clothes, adult clothing, skincare products and more.
+  </p>
+
+  <a href="#products" class="shop-btn">🛒 Shop Now</a>
+</section>
+
+<div class="container">
+
+  <h2 class="section-title">Shop by Category</h2>
+
+  <div class="categories">
+    <div class="category" onclick="filterProducts('all')">
+      <span>🛍️</span>
+      <small>All</small>
+    </div>
+
+    <div class="category" onclick="filterProducts('kiddies')">
+      <span>👟</span>
+      <small>Kiddies</small>
+    </div>
+
+    <div class="category" onclick="filterProducts('clothes')">
+      <span>👕</span>
+      <small>Clothes</small>
+    </div>
+
+    <div class="category" onclick="filterProducts('bags')">
+      <span>👜</span>
+      <small>Bags</small>
+    </div>
+
+    <div class="category" onclick="filterProducts('beauty')">
+      <span>🧴</span>
+      <small>Beauty</small>
+    </div>
+  </div>
+
+</div>
+
+<div class="container" id="products">
+
+  <h2 class="section-title">Featured Products</h2>
+
+  <div class="products" id="productGrid">
+
+    <div class="product" data-category="beauty" data-name="Vivon Cocoa Shea Butter">
+      <button class="favorite" onclick="favorite(this)">♡</button>
+
+      <div class="product-image">🧴</div>
+
+      <div class="product-info">
+        <h3>Vivon Cocoa Shea Butter</h3>
+        <p class="product-description">
+          Quality skincare product for smooth and nourished skin.
+        </p>
+
+        <div class="price">₦5,500</div>
+
+        <div class="product-buttons">
+          <button class="add-btn" onclick="addToCart('Vivon Cocoa Shea Butter',5500)">
+            Add Cart
+          </button>
+
+          <button class="buy-btn" onclick="buyNow('Vivon Cocoa Shea Butter',5500)">
+            Buy Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="product" data-category="beauty" data-name="P Clinic">
+      <button class="favorite" onclick="favorite(this)">♡</button>
+
+      <div class="product-image">🧴</div>
+
+      <div class="product-info">
+        <h3>P Clinic</h3>
+        <p class="product-description">
+          Quality beauty and skincare product.
+        </p>
+
+        <div class="price">₦12,000</div>
+
+        <div class="product-buttons">
+          <button class="add-btn" onclick="addToCart('P Clinic',12000)">
+            Add Cart
+          </button>
+
+          <button class="buy-btn" onclick="buyNow('P Clinic',12000)">
+            Buy Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="product" data-category="kiddies" data-name="Vivon Kiddies">
+      <button class="favorite" onclick="favorite(this)">♡</button>
+
+      <div class="product-image">🧴</div>
+
+      <div class="product-info">
+        <h3>Vivon Kiddies</h3>
+        <p class="product-description">
+          Gentle product suitable for kiddies.
+        </p>
+
+        <div class="price">₦5,500</div>
+
+        <div class="product-buttons">
+          <button class="add-btn" onclick="addToCart('Vivon Kiddies',5500)">
+            Add Cart
+          </button>
+
+          <button class="buy-btn" onclick="buyNow('Vivon Kiddies',5500)">
+            Buy Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="product" data-category="beauty" data-name="Dodo Skin Gold Vitamin C Soap">
+      <button class="favorite" onclick="favorite(this)">♡</button>
+
+      <div class="product-image">🧼</div>
+
+      <div class="product-info">
+        <h3>Dodo Skin Gold Vitamin C Soap</h3>
+        <p class="product-description">
+          Vitamin C skincare soap.
+        </p>
+
+        <div class="price">₦3,500</div>
+
+        <div class="product-buttons">
+          <button class="add-btn" onclick="addToCart('Dodo Skin Gold Vitamin C Soap',3500)">
+            Add Cart
+          </button>
+
+          <button class="buy-btn" onclick="buyNow('Dodo Skin Gold Vitamin C Soap',3500)">
+            Buy Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="product" data-category="kiddies" data-name="Kiddies Shoes">
+      <button class="favorite" onclick="favorite(this)">♡</button>
+
+      <div class="product-image">👟</div>
+
+      <div class="product-info">
+        <h3>Kiddies Shoes</h3>
+        <p class="product-description">
+          Stylish and comfortable shoes for children.
+        </p>
+
+        <div class="price">₦25,000</div>
+
+        <div class="product-buttons">
+          <button class="add-btn" onclick="addToCart('Kiddies Shoes',25000)">
+            Add Cart
+          </button>
+
+          <button class="buy-btn" onclick="buyNow('Kiddies Shoes',25000)">
+            Buy Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="product" data-category="beauty" data-name="Dodo Black Soap">
+      <button class="favorite" onclick="favorite(this)">♡</button>
+
+      <div class="product-image">🧼</div>
+
+      <div class="product-info">
+        <h3>Dodo Black Soap</h3>
+        <p class="product-description">
+          Traditional black soap for everyday skincare.
+        </p>
+
+        <div class="price">₦1,500</div>
+
+        <div class="product-buttons">
+          <button class="add-btn" onclick="addToCart('Dodo Black Soap',1500)">
+            Add Cart
+          </button>
+
+          <button class="buy-btn" onclick="buyNow('Dodo Black Soap',1500)">
+            Buy Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="container" id="deals">
+
+  <div class="deal">
+    <h2>🔥 Special Deals</h2>
+
+    <p>
+      Shop quality products from Erin Enterprises.
+      New products are added regularly.
+    </p>
+
+    <a href="#products" class="shop-btn">Shop Deals</a>
+  </div>
+
+</div>
+
+
+<div class="container" id="about">
+
+  <h2 class="section-title">About Erin Enterprises</h2>
+
+  <div class="about">
+
+    <p>
+      Erin Enterprises is an online shopping store offering
+      a variety of quality products for the whole family.
+    </p>
+
+    <br>
+
+    <p>
+      We offer children's shoes, bags, clothes, adult clothing,
+      skincare products and more.
+    </p>
+
+    <br>
+
+    <p>
+      Our goal is to make shopping simple, convenient and accessible
+      for our customers.
+    </p>
+
+  </div>
+
+</div>
+
+
+<div class="container contact" id="contact">
+
+  <h2 class="section-title">Contact Us</h2>
+
+  <p>
+    📱 WhatsApp:
+    <a href="https://wa.me/2348125253898" target="_blank">
+      +234 812 525 3898
+    </a>
+  </p>
+
+  <br>
+
+  <p>
+    📧 Email:
+    <a href="mailto:Erinsenterprisesvarieties@gmail.com">
+      Erinsenterprisesvarieties@gmail.com
+    </a>
+  </p>
+
+</div>
+
+
+<footer>
+
+  <strong>Erin Enterprises</strong>
+
+  <br>
+
+  Quality Products • Great Service • Easy Shopping
+
+  <br><br>
+
+  © 2026 Erin Enterprises. All Rights Reserved.
+
+</footer>
+
+
+<div class="bottom-nav">
+
+  <a href="#home">
+    <span>🏠</span>
+    Home
+  </a>
+
+  <a href="#products">
+    <span>🛍️</span>
+    Shop
+  </a>
+
+  <a href="#contact">
+    <span>💬</span>
+    Contact
+  </a>
+
+  <a href="#" onclick="openCart();return false;">
+    <span>🛒</span>
+    Cart
+  </a>
+
+</div>
+
+
+<div class="cart-panel" id="cartPanel">
+
+  <div class="cart-header">
+
+    <h2>🛒 Your Cart</h2>
+
+    <button class="close-cart" onclick="closeCart()">
+      ✕
+    </button>
+
+  </div>
+
+  <div id="cartItems"></div>
+
+  <div class="cart-total">
+    Total: ₦<span id="cartTotal">0</span>
+  </div>
+
+  <a
+    class="checkout"
+    href="https://paystack.shop/pay/meocdhp5pf"
+    target="_blank"
+  >
+    Proceed to Payment
+  </a>
+
+</div>
+
+
+<script>
+
+let cart = [];
+
+function addToCart(name, price){
+
+  cart.push({
+    name:name,
+    price:price
+  });
+
+  updateCart();
+
+  alert(name + " has been added to your cart.");
+
+}
+
+
+function updateCart(){
+
+  document.getElementById("cartCount").textContent = cart.length;
+
+  let items = document.getElementById("cartItems");
+
+  let total = 0;
+
+  if(cart.length === 0){
+
+    items.innerHTML =
+      '<div class="empty">Your cart is empty 🛒</div>';
+
+  }else{
+
+    items.innerHTML = "";
+
+    cart.forEach(function(item,index){
+
+      total += item.price;
+
+      items.innerHTML += `
+        <div class="cart-item">
+
+          <strong>${item.name}</strong>
+
+          <br>
+
+          ₦${item.price.toLocaleString()}
+
+          <br><br>
+
+          <button onclick="removeFromCart(${index})">
+            Remove
+          </button>
+
+        </div>
+      `;
+
+    });
+
+  }
+
+  document.getElementById("cartTotal").textContent =
+    total.toLocaleString();
+
+}
+
+
+function removeFromCart(index){
+
+  cart.splice(index,1);
+
+  updateCart();
+
+}
+
+
+function openCart(){
+
+  document.getElementById("cartPanel").classList.add("active");
+
+  updateCart();
+
+}
+
+
+function closeCart(){
+
+  document.getElementById("cartPanel").classList.remove("active");
+
+}
+
+
+function buyNow(name,price){
+
+  let message =
+    "Hello Erin Enterprises, I want to buy " +
+    name +
+    " for ₦" +
+    price.toLocaleString();
+
+  let whatsapp =
+    "https://wa.me/2348125253898?text=" +
+    encodeURIComponent(message);
+
+  window.open(whatsapp,"_blank");
+
+}
+
+
+function favorite(button){
+
+  if(button.textContent === "♡"){
+
+    button.textContent = "♥";
+
+  }else{
+
+    button.textContent = "♡";
+
+  }
+
+}
+
+
+function searchProducts(){
+
+  let search =
+    document.getElementById("searchInput").value.toLowerCase();
+
+  let products =
+    document.querySelectorAll(".product");
+
+  products.forEach(function(product){
+
+    let name =
+      product.dataset.name.toLowerCase();
+
+    if(name.includes(search)){
+
+      product.style.display = "";
+
+    }else{
+
+      product.style.display = "none";
+
+    }
+
+  });
+
+}
+
+
+function filterProducts(category){
+
+  let products =
+    document.querySelectorAll(".product");
+
+  products.forEach(function(product){
+
+    if(
+      category === "all" ||
+      product.dataset.category === category
+    ){
+
+      product.style.display = "";
+
+    }else{
+
+      product.style.display = "none";
+
+    }
+
+  });
+
+}
+
+
+updateCart();
+
+</script>
+
+</body>
+      </html>
