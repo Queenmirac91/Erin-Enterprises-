@@ -6,280 +6,274 @@
 
 <title>Erin Enterprises | Online Store</title>
 
-<script src="https://js.paystack.co/v2/inline.js"></script>
-
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-  font-family:Arial,sans-serif;
-  background:#f5f5f5;
-  color:#222;
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #222;
 }
 
-header{
-  background:#111;
-  color:white;
-  padding:18px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  position:sticky;
-  top:0;
-  z-index:1000;
+/* HEADER */
+header {
+  background: #111;
+  color: white;
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.logo{
-  font-size:22px;
-  font-weight:bold;
+.logo {
+  font-size: 22px;
+  font-weight: bold;
 }
 
-.cart-btn{
-  background:#fff;
-  color:#111;
-  border:none;
-  padding:10px 15px;
-  border-radius:8px;
-  font-weight:bold;
-  cursor:pointer;
+.cart-button {
+  background: #fff;
+  color: #111;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.hero{
-  background:#222;
-  color:white;
-  text-align:center;
-  padding:45px 20px;
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #111, #444);
+  color: white;
+  text-align: center;
+  padding: 55px 20px;
 }
 
-.hero h1{
-  font-size:32px;
-  margin-bottom:10px;
+.hero h1 {
+  font-size: 38px;
+  margin-bottom: 12px;
 }
 
-.hero p{
-  font-size:16px;
+.hero p {
+  font-size: 17px;
+  margin-bottom: 22px;
 }
 
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:25px 15px;
+.shop-btn {
+  display: inline-block;
+  background: white;
+  color: #111;
+  padding: 13px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
 }
 
-.products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
+/* PRODUCTS */
+.products-section {
+  padding: 35px 15px;
+  max-width: 1200px;
+  margin: auto;
 }
 
-.product{
-  background:white;
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow:0 3px 12px rgba(0,0,0,.1);
-  padding-bottom:15px;
+.section-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
 }
 
-.product img{
-  width:100%;
-  height:230px;
-  object-fit:cover;
-  display:block;
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 20px;
 }
 
-.product-info{
-  padding:15px;
+.product {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
 }
 
-.product h3{
-  margin-bottom:8px;
+.product-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  background: #eee;
 }
 
-.price{
-  font-size:18px;
-  font-weight:bold;
-  margin-bottom:12px;
+.product-info {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-.option-group{
-  margin-bottom:12px;
+.product h3 {
+  font-size: 17px;
+  margin-bottom: 8px;
 }
 
-.option-group label{
-  display:block;
-  font-weight:bold;
-  margin-bottom:6px;
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
 }
 
-.option-group select{
-  width:100%;
-  padding:11px;
-  border:1px solid #ccc;
-  border-radius:7px;
-  background:white;
-  font-size:15px;
+.add-btn {
+  margin-top: auto;
+  width: 100%;
+  border: none;
+  background: #111;
+  color: white;
+  padding: 11px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-.product button,
-.checkout-btn{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  background:#111;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
+.add-btn:hover {
+  background: #333;
 }
 
-.product button:hover,
-.checkout-btn:hover{
-  background:#333;
+/* CART */
+.cart-panel {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: min(400px, 100%);
+  height: 100%;
+  background: white;
+  z-index: 2000;
+  box-shadow: -4px 0 15px rgba(0,0,0,0.2);
+  transition: 0.3s;
+  padding: 20px;
+  overflow-y: auto;
 }
 
-.cart-section{
-  display:none;
-  background:white;
-  margin-top:30px;
-  padding:20px;
-  border-radius:12px;
-  box-shadow:0 3px 12px rgba(0,0,0,.1);
+.cart-panel.open {
+  right: 0;
 }
 
-.cart-section h2{
-  margin-bottom:15px;
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.cart-item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  padding:12px 0;
-  border-bottom:1px solid #ddd;
+.close-cart {
+  border: none;
+  background: #eee;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
-.cart-item-info{
-  flex:1;
+.cart-item {
+  border-bottom: 1px solid #ddd;
+  padding: 12px 0;
 }
 
-.cart-options{
-  margin-top:5px;
-  font-size:14px;
-  color:#555;
-  line-height:1.6;
+.cart-item-name {
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-.quantity-controls{
-  display:flex;
-  align-items:center;
-  gap:8px;
+.cart-item-price {
+  margin-bottom: 8px;
 }
 
-.quantity-controls button{
-  width:30px;
-  height:30px;
-  border:none;
-  border-radius:5px;
-  background:#111;
-  color:white;
-  cursor:pointer;
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.remove-btn{
-  background:#c00 !important;
+.quantity-controls button {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: #111;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.total{
-  font-size:22px;
-  font-weight:bold;
-  text-align:right;
-  margin:20px 0;
+.remove-btn {
+  background: #b00020 !important;
 }
 
-.form-group{
-  margin-bottom:15px;
+.cart-total {
+  font-size: 21px;
+  font-weight: bold;
+  margin: 20px 0;
 }
 
-.form-group label{
-  display:block;
-  font-weight:bold;
-  margin-bottom:6px;
+.checkout-btn {
+  width: 100%;
+  background: #25D366;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-.form-group input,
-.form-group textarea{
-  width:100%;
-  padding:12px;
-  border:1px solid #ccc;
-  border-radius:7px;
-  font-size:15px;
+.empty-cart {
+  text-align: center;
+  padding: 30px 10px;
+  color: #777;
 }
 
-.form-group textarea{
-  min-height:90px;
-  resize:vertical;
+/* FOOTER */
+footer {
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 30px 15px;
+  margin-top: 30px;
 }
 
-.empty{
-  text-align:center;
-  padding:20px;
-  color:#666;
+footer p {
+  margin: 7px 0;
 }
 
-.notice{
-  margin-top:15px;
-  padding:12px;
-  background:#f1f1f1;
-  border-radius:8px;
-  font-size:14px;
-  line-height:1.5;
-}
-
-.success{
-  display:none;
-  margin-top:20px;
-  padding:18px;
-  background:#e9f8ed;
-  border:1px solid #83c995;
-  border-radius:10px;
-}
-
-.success a{
-  display:inline-block;
-  margin-top:12px;
-  background:#25D366;
-  color:white;
-  text-decoration:none;
-  padding:12px 18px;
-  border-radius:8px;
-  font-weight:bold;
-}
-
-footer{
-  text-align:center;
-  background:#111;
-  color:white;
-  padding:25px 15px;
-  margin-top:40px;
-  line-height:1.7;
-}
-
-@media(max-width:600px){
-  .hero h1{
-    font-size:27px;
+/* MOBILE */
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 30px;
   }
 
-  .cart-item{
-    flex-wrap:wrap;
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
-  .product img{
-    height:210px;
+  .product-image {
+    height: 170px;
+  }
+
+  .product-info {
+    padding: 11px;
+  }
+
+  .product h3 {
+    font-size: 15px;
+  }
+
+  .price {
+    font-size: 16px;
   }
 }
 </style>
@@ -290,1142 +284,581 @@ footer{
 <header>
   <div class="logo">Erin Enterprises</div>
 
-  <button class="cart-btn" onclick="toggleCart()">
+  <button class="cart-button" onclick="openCart()">
     🛒 Cart (<span id="cartCount">0</span>)
   </button>
 </header>
 
 <section class="hero">
   <h1>Welcome to Erin Enterprises</h1>
-  <p>Quality products at affordable prices. Shop with us online.</p>
+  <p>Quality products at affordable prices.</p>
+  <a href="#products" class="shop-btn">Shop Now</a>
 </section>
 
-<div class="container">
+<section class="products-section" id="products">
 
-  <div class="products">
+  <h2 class="section-title">Our Products</h2>
 
-    <!-- COCOA SHEA BUTTER -->
-    <div class="product">
-      <img src="20260901_143149.jpg" alt="Cocoa Shea Butter">
+  <div class="products" id="productList"></div>
 
-      <div class="product-info">
-        <h3>Cocoa Shea Butter</h3>
-        <div class="price">₦5,500</div>
+</section>
 
-        <button onclick="addToCart('Cocoa Shea Butter',5500,'20260901_143149.jpg')">
-          Add to Cart
-        </button>
-      </div>
-    </div>
+<!-- CART -->
+<div class="cart-panel" id="cartPanel">
 
-
-    <!-- VIVON KIDDIES -->
-    <div class="product">
-      <img src="20260901_143125.jpg" alt="Vivon Kiddies">
-
-      <div class="product-info">
-        <h3>Vivon Kiddies</h3>
-        <div class="price">₦5,500</div>
-
-        <button onclick="addToCart('Vivon Kiddies',5500,'20260901_143125.jpg')">
-          Add to Cart
-        </button>
-      </div>
-    </div>
-
-
-    <!-- DODO SKIN GOLD -->
-    <div class="product">
-      <img src="20260901_143232.jpg" alt="Dodo Skin Gold">
-
-      <div class="product-info">
-        <h3>Dodo Skin Gold</h3>
-        <div class="price">₦3,500</div>
-
-        <button onclick="addToCart('Dodo Skin Gold',3500,'20260901_143232.jpg')">
-          Add to Cart
-        </button>
-      </div>
-    </div>
-
-
-    <!-- DODO BLACK SOAP -->
-    <div class="product">
-      <img src="20260901_143254.jpg" alt="Dodo Black Soap">
-
-      <div class="product-info">
-        <h3>Dodo Black Soap</h3>
-        <div class="price">₦1,500</div>
-
-        <button onclick="addToCart('Dodo Black Soap',1500,'20260901_143254.jpg')">
-          Add to Cart
-        </button>
-      </div>
-    </div>
-
-
-    <!-- CHILDREN SHOES -->
-    <div class="product">
-
-      <img src="IMG-20260913-WA0013.jpg" alt="Children Shoes">
-
-      <div class="product-info">
-
-        <h3>Children Shoes</h3>
-
-        <div class="price">₦25,000</div>
-
-
-        <div class="option-group">
-
-          <label for="shoeSize">
-            Select Size
-          </label>
-
-          <select id="shoeSize">
-
-            <option value="">
-              -- Choose Size --
-            </option>
-
-            <option value="28">28</option>
-            <option value="29">29</option>
-            <option value="30">30</option>
-            <option value="31">31</option>
-            <option value="32">32</option>
-            <option value="33">33</option>
-            <option value="34">34</option>
-            <option value="35">35</option>
-
-          </select>
-
-        </div>
-
-
-        <div class="option-group">
-
-          <label for="shoeColour">
-            Select Colour
-          </label>
-
-          <select id="shoeColour">
-
-            <option value="">
-              -- Choose Colour --
-            </option>
-
-            <option value="Black">Black</option>
-            <option value="White">White</option>
-            <option value="Blue">Blue</option>
-            <option value="Pink">Pink</option>
-            <option value="Red">Red</option>
-            <option value="Brown">Brown</option>
-
-          </select>
-
-        </div>
-
-
-        <button onclick="addShoeToCart()">
-          Add to Cart
-        </button>
-
-      </div>
-    </div>
-
-
-    <!-- P.CLINIC -->
-    <div class="product">
-
-      <img src="20260901_142937.jpg" alt="P.Clinic">
-
-      <div class="product-info">
-
-        <h3>P.Clinic</h3>
-
-        <div class="price">₦12,000</div>
-
-        <button onclick="addToCart('P.Clinic',12000,'20260901_142937.jpg')">
-          Add to Cart
-        </button>
-
-      </div>
-    </div>
-
+  <div class="cart-header">
+    <h2>Your Cart</h2>
+    <button class="close-cart" onclick="closeCart()">✕</button>
   </div>
 
+  <div id="cartItems"></div>
 
-  <!-- CART -->
+  <div class="cart-total">
+    Total: ₦<span id="cartTotal">0</span>
+  </div>
 
-  <section class="cart-section" id="cartSection">
-
-    <h2>🛒 Your Shopping Cart</h2>
-
-    <div id="cartItems"></div>
-
-    <div class="total">
-      Total: ₦<span id="cartTotal">0</span>
-    </div>
-
-
-    <h2>Customer Information</h2>
-
-
-    <div class="form-group">
-
-      <label for="customerName">
-        Full Name
-      </label>
-
-      <input
-        type="text"
-        id="customerName"
-        placeholder="Enter your full name"
-      >
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label for="customerEmail">
-        Email Address
-      </label>
-
-      <input
-        type="email"
-        id="customerEmail"
-        placeholder="Enter your email"
-      >
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label for="customerPhone">
-        Phone Number
-      </label>
-
-      <input
-        type="tel"
-        id="customerPhone"
-        placeholder="Enter your phone number"
-      >
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label for="customerAddress">
-        Delivery Address
-      </label>
-
-      <textarea
-        id="customerAddress"
-        placeholder="Enter your delivery address"
-      ></textarea>
-
-    </div>
-
-
-    <button class="checkout-btn" onclick="payWithPaystack()">
-      💳 Pay Now
-    </button>
-
-
-    <div class="notice">
-
-      Your payment is securely processed by Paystack.
-      After successful payment, your order details will be prepared for WhatsApp.
-
-    </div>
-
-
-    <div class="success" id="successBox">
-
-      <h3>✅ Payment Successful!</h3>
-
-      <p>Your order has been received.</p>
-
-      <p>
-        You can now send your order details to Erin Enterprises on WhatsApp.
-      </p>
-
-      <a id="whatsappLink" href="#" target="_blank">
-        📱 Send Order on WhatsApp
-      </a>
-
-    </div>
-
-  </section>
+  <button class="checkout-btn" onclick="orderOnWhatsApp()">
+    Order on WhatsApp
+  </button>
 
 </div>
 
-
 <footer>
-
-  <strong>Erin Enterprises</strong><br>
-
-  WhatsApp: +2348125253898<br>
-
-  Email: Erinsenterprisesvarieties@gmail.com
-
+  <h3>Erin Enterprises</h3>
+  <p>Varieties of quality products for everyone.</p>
+  <p>📱 WhatsApp: +234 812 525 3898</p>
+  <p>© 2026 Erin Enterprises. All rights reserved.</p>
 </footer>
-
 
 <script>
 
-let cart =
-  JSON.parse(localStorage.getItem("erinCart")) || [];
+/* =========================
+   PRODUCT LIST
+========================= */
+
+const products = [
+
+  {
+    name: "Dodo Skin Gold",
+    price: 2500,
+    image: "20260901_143232.jpg"
+  },
+
+  {
+    name: "Wig Stand",
+    price: 1000,
+    image: ""
+  },
+
+  {
+    name: "Whitening Cream",
+    price: 3500,
+    image: ""
+  },
+
+  {
+    name: "Charcoal Whitening Teeth",
+    price: 2500,
+    image: ""
+  },
+
+  {
+    name: "Body Mix Perfume",
+    price: 2500,
+    image: ""
+  },
+
+  {
+    name: "Eyebrows Sharpener",
+    price: 2000,
+    image: ""
+  },
+
+  {
+    name: "Pipe Cleaner",
+    price: 4000,
+    image: ""
+  },
+
+  {
+    name: "Dish Washer Powder",
+    price: 4000,
+    image: ""
+  },
+
+  {
+    name: "Children Shoes (Sizes 29 & 30)",
+    price: 9000,
+    image: ""
+  },
+
+  {
+    name: "Gold Angel Perfume",
+    price: 6000,
+    image: ""
+  },
+
+  {
+    name: "Dermaliss White Lotion",
+    price: 3500,
+    image: ""
+  },
+
+  {
+    name: "Dr Paris Cream",
+    price: 12000,
+    image: ""
+  },
+
+  {
+    name: "SP Toothpaste",
+    price: 6500,
+    image: ""
+  },
+
+  {
+    name: "Reachable Chopper",
+    price: 6000,
+    image: ""
+  },
+
+  {
+    name: "Hand Cream",
+    price: 1000,
+    image: ""
+  },
+
+  {
+    name: "Thrift Clothes",
+    price: 2500,
+    image: ""
+  },
+
+  {
+    name: "Sulphur Active Hair Cream",
+    price: 2500,
+    image: ""
+  },
+
+  {
+    name: "Magic Black Hair Cream",
+    price: 2000,
+    image: ""
+  },
+
+  {
+    name: "Vitamin C Cream",
+    price: 2500,
+    image: ""
+  },
+
+  {
+    name: "Pearl Cream",
+    price: 8000,
+    image: ""
+  },
+
+  {
+    name: "Yellow Pawpaw Cream",
+    price: 5500,
+    image: ""
+  },
+
+  {
+    name: "Asantee Body Cream",
+    price: 3000,
+    image: ""
+  },
+
+  {
+    name: "Knife Sharpener",
+    price: 3000,
+    image: ""
+  },
+
+  {
+    name: "Aloe Vera Cream",
+    price: 3500,
+    image: ""
+  },
+
+  {
+    name: "Dental Oral Kits",
+    price: 3000,
+    image: ""
+  },
+
+  {
+    name: "Mosquito Shocker",
+    price: 8000,
+    image: ""
+  },
+
+  {
+    name: "Vivon Cocoa Shea Butter",
+    price: 5500,
+    image: "20260901_143149.jpg"
+  },
+
+  {
+    name: "P. Clinic",
+    price: 12000,
+    image: "20260901_142937.jpg"
+  },
+
+  {
+    name: "Vivon Kiddies",
+    price: 5500,
+    image: "20260901_143125.jpg"
+  },
+
+  {
+    name: "Dodo Black Soap",
+    price: 1500,
+    image: "20260901_143254.jpg"
+  },
+
+  {
+    name: "Kiddies Shoes",
+    price: 25000,
+    image: "IMG-20260913-WA0013.jpg"
+  }
+
+];
 
 
-function saveCart(){
+/* =========================
+   CART
+========================= */
 
-  localStorage.setItem(
-    "erinCart",
-    JSON.stringify(cart)
-  );
+let cart = [];
+
+
+/* =========================
+   DISPLAY PRODUCTS
+========================= */
+
+function displayProducts() {
+
+  const productList = document.getElementById("productList");
+
+  productList.innerHTML = "";
+
+  products.forEach((product, index) => {
+
+    let imageHTML;
+
+    if (product.image) {
+
+      imageHTML = `
+        <img
+          src="${product.image}"
+          class="product-image"
+          alt="${product.name}"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        >
+        <div
+          class="product-image"
+          style="display:none; align-items:center; justify-content:center; font-weight:bold;"
+        >
+          Erin Enterprises
+        </div>
+      `;
+
+    } else {
+
+      imageHTML = `
+        <div
+          class="product-image"
+          style="display:flex; align-items:center; justify-content:center; font-weight:bold;"
+        >
+          Erin Enterprises
+        </div>
+      `;
+
+    }
+
+    productList.innerHTML += `
+
+      <div class="product">
+
+        ${imageHTML}
+
+        <div class="product-info">
+
+          <h3>${product.name}</h3>
+
+          <div class="price">
+            ₦${product.price.toLocaleString()}
+          </div>
+
+          <button
+            class="add-btn"
+            onclick="addToCart(${index})"
+          >
+            Add to Cart
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
 
 }
 
 
-function addToCart(
-  name,
-  price,
-  image,
-  options = {}
-){
+/* =========================
+   ADD TO CART
+========================= */
 
-  /*
-    Each product can now have its own options.
+function addToCart(index) {
 
-    Examples:
-    options = {size:"32", colour:"Black"}
-    options = {colour:"Pink"}
-    options = {size:"XL"}
-  */
+  const product = products[index];
 
-  const optionKey =
-    JSON.stringify(options);
-
-
-  /*
-    Products with different options are treated
-    as separate cart items.
-  */
-
-  const existing = cart.find(item =>
-
-    item.name === name &&
-    JSON.stringify(item.options || {}) === optionKey
-
+  const existing = cart.find(
+    item => item.name === product.name
   );
 
-
-  if(existing){
+  if (existing) {
 
     existing.quantity++;
 
-  }else{
+  } else {
 
     cart.push({
-
-      name:name,
-
-      price:price,
-
-      image:image,
-
-      quantity:1,
-
-      options:options
-
+      name: product.name,
+      price: product.price,
+      quantity: 1
     });
 
   }
 
-
-  saveCart();
-
   updateCart();
 
-
-  document.getElementById(
-    "cartSection"
-  ).style.display = "block";
-
-
-  window.scrollTo({
-
-    top:
-      document.getElementById(
-        "cartSection"
-      ).offsetTop - 80,
-
-    behavior:"smooth"
-
-  });
+  openCart();
 
 }
 
 
-/*
-  CHILDREN SHOES
-  Requires both Size and Colour.
-*/
+/* =========================
+   UPDATE CART
+========================= */
 
-function addShoeToCart(){
+function updateCart() {
 
-  const size =
-    document.getElementById(
-      "shoeSize"
-    ).value;
+  const cartItems = document.getElementById("cartItems");
 
+  const cartCount = document.getElementById("cartCount");
 
-  const colour =
-    document.getElementById(
-      "shoeColour"
-    ).value;
-
-
-  if(!size){
-
-    alert(
-      "Please select a shoe size before adding this product."
-    );
-
-    return;
-
-  }
-
-
-  if(!colour){
-
-    alert(
-      "Please select a shoe colour before adding this product."
-    );
-
-    return;
-
-  }
-
-
-  addToCart(
-
-    "Children Shoes",
-
-    25000,
-
-    "IMG-20260913-WA0013.jpg",
-
-    {
-      size:size,
-      colour:colour
-    }
-
-  );
-
-}
-
-
-/*
-  Display product options in cart.
-*/
-
-function getOptionsHTML(item){
-
-  const options =
-    item.options || {};
-
-
-  let html = "";
-
-
-  if(options.size){
-
-    html +=
-      "📏 Size: " +
-      escapeHTML(options.size) +
-      "<br>";
-
-  }
-
-
-  if(options.colour){
-
-    html +=
-      "🎨 Colour: " +
-      escapeHTML(options.colour) +
-      "<br>";
-
-  }
-
-
-  /*
-    This allows us to add future options such as:
-
-    Material
-    Style
-    Length
-    Type
-    Age
-    Pattern
-    etc.
-  */
-
-  Object.keys(options).forEach(key => {
-
-    if(
-      key !== "size" &&
-      key !== "colour"
-    ){
-
-      html +=
-        escapeHTML(
-          key.charAt(0).toUpperCase() +
-          key.slice(1)
-        ) +
-        ": " +
-        escapeHTML(options[key]) +
-        "<br>";
-
-    }
-
-  });
-
-
-  if(html){
-
-    return `
-      <div class="cart-options">
-        ${html}
-      </div>
-    `;
-
-  }
-
-
-  return "";
-
-}
-
-
-/*
-  Prevent HTML from being inserted
-  into the cart when displaying options.
-*/
-
-function escapeHTML(value){
-
-  return String(value)
-
-    .replace(/&/g,"&amp;")
-
-    .replace(/</g,"&lt;")
-
-    .replace(/>/g,"&gt;")
-
-    .replace(/"/g,"&quot;")
-
-    .replace(/'/g,"&#039;");
-
-}
-
-
-function updateCart(){
-
-  const cartItems =
-    document.getElementById(
-      "cartItems"
-    );
-
-
-  const cartCount =
-    document.getElementById(
-      "cartCount"
-    );
-
-
-  const cartTotal =
-    document.getElementById(
-      "cartTotal"
-    );
-
+  const cartTotal = document.getElementById("cartTotal");
 
   cartItems.innerHTML = "";
-
 
   let total = 0;
 
   let count = 0;
 
+  if (cart.length === 0) {
 
-  if(cart.length === 0){
+    cartItems.innerHTML = `
+      <div class="empty-cart">
+        Your cart is empty.
+      </div>
+    `;
 
-    cartItems.innerHTML =
-      '<div class="empty">Your cart is empty.</div>';
+  }
 
-  }else{
+  cart.forEach((item, index) => {
 
-    cart.forEach((item,index)=>{
+    total += item.price * item.quantity;
 
-      const itemTotal =
-        item.price *
-        item.quantity;
+    count += item.quantity;
 
+    cartItems.innerHTML += `
 
-      total += itemTotal;
+      <div class="cart-item">
 
-      count += item.quantity;
+        <div class="cart-item-name">
+          ${item.name}
+        </div>
 
+        <div class="cart-item-price">
+          ₦${item.price.toLocaleString()}
+        </div>
 
-      cartItems.innerHTML += `
+        <div class="quantity-controls">
 
-        <div class="cart-item">
+          <button onclick="decreaseQuantity(${index})">
+            −
+          </button>
 
-          <div class="cart-item-info">
+          <span>${item.quantity}</span>
 
-            <strong>
-              ${escapeHTML(item.name)}
-            </strong>
+          <button onclick="increaseQuantity(${index})">
+            +
+          </button>
 
-            <div>
-              ₦${item.price.toLocaleString()}
-            </div>
-
-            ${getOptionsHTML(item)}
-
-          </div>
-
-
-          <div class="quantity-controls">
-
-            <button
-              onclick="changeQuantity(${index},-1)"
-            >
-              −
-            </button>
-
-
-            <span>
-              ${item.quantity}
-            </span>
-
-
-            <button
-              onclick="changeQuantity(${index},1)"
-            >
-              +
-            </button>
-
-
-            <button
-              class="remove-btn"
-              onclick="removeItem(${index})"
-            >
-              ×
-            </button>
-
-          </div>
-
-
-          <strong>
-            ₦${itemTotal.toLocaleString()}
-          </strong>
+          <button
+            class="remove-btn"
+            onclick="removeFromCart(${index})"
+          >
+            Remove
+          </button>
 
         </div>
 
-      `;
+      </div>
 
-    });
+    `;
+
+  });
+
+  cartCount.textContent = count;
+
+  cartTotal.textContent = total.toLocaleString();
+
+}
+
+
+/* =========================
+   INCREASE QUANTITY
+========================= */
+
+function increaseQuantity(index) {
+
+  cart[index].quantity++;
+
+  updateCart();
+
+}
+
+
+/* =========================
+   DECREASE QUANTITY
+========================= */
+
+function decreaseQuantity(index) {
+
+  if (cart[index].quantity > 1) {
+
+    cart[index].quantity--;
+
+  } else {
+
+    cart.splice(index, 1);
 
   }
 
+  updateCart();
 
-  cartCount.textContent =
-    count;
+}
 
 
-  cartTotal.textContent =
+/* =========================
+   REMOVE ITEM
+========================= */
+
+function removeFromCart(index) {
+
+  cart.splice(index, 1);
+
+  updateCart();
+
+}
+
+
+/* =========================
+   OPEN CART
+========================= */
+
+function openCart() {
+
+  document
+    .getElementById("cartPanel")
+    .classList.add("open");
+
+}
+
+
+/* =========================
+   CLOSE CART
+========================= */
+
+function closeCart() {
+
+  document
+    .getElementById("cartPanel")
+    .classList.remove("open");
+
+}
+
+
+/* =========================
+   WHATSAPP ORDER
+========================= */
+
+function orderOnWhatsApp() {
+
+  if (cart.length === 0) {
+
+    alert("Your cart is empty.");
+
+    return;
+
+  }
+
+  let message =
+    "Hello Erin Enterprises! I would like to order:%0A%0A";
+
+  let total = 0;
+
+  cart.forEach(item => {
+
+    const itemTotal =
+      item.price * item.quantity;
+
+    total += itemTotal;
+
+    message +=
+      "• " +
+      item.name +
+      " x" +
+      item.quantity +
+      " — ₦" +
+      itemTotal.toLocaleString() +
+      "%0A";
+
+  });
+
+  message +=
+    "%0ATotal: ₦" +
     total.toLocaleString();
 
-}
+  const whatsappNumber =
+    "2348125253898";
 
+  const whatsappURL =
+    "https://wa.me/" +
+    whatsappNumber +
+    "?text=" +
+    message;
 
-function changeQuantity(
-  index,
-  change
-){
-
-  cart[index].quantity +=
-    change;
-
-
-  if(
-    cart[index].quantity <= 0
-  ){
-
-    cart.splice(index,1);
-
-  }
-
-
-  saveCart();
-
-  updateCart();
-
-}
-
-
-function removeItem(index){
-
-  cart.splice(index,1);
-
-  saveCart();
-
-  updateCart();
-
-}
-
-
-function toggleCart(){
-
-  const section =
-    document.getElementById(
-      "cartSection"
-    );
-
-
-  if(
-    section.style.display === "none" ||
-    section.style.display === ""
-  ){
-
-    section.style.display =
-      "block";
-
-
-    section.scrollIntoView({
-
-      behavior:"smooth"
-
-    });
-
-  }else{
-
-    section.style.display =
-      "none";
-
-  }
-
-}
-
-
-function getCartTotal(){
-
-  return cart.reduce(
-
-    (total,item) =>
-
-      total +
-      (
-        item.price *
-        item.quantity
-      ),
-
-    0
-
+  window.open(
+    whatsappURL,
+    "_blank"
   );
 
 }
 
 
-/*
-  Prepare WhatsApp order message.
-*/
-
-function getOrderText(reference){
-
-  const name =
-    document.getElementById(
-      "customerName"
-    ).value.trim();
-
-
-  const phone =
-    document.getElementById(
-      "customerPhone"
-    ).value.trim();
-
-
-  const address =
-    document.getElementById(
-      "customerAddress"
-    ).value.trim();
-
-
-  let message =
-
-    "Hello Erin Enterprises,%0A%0A" +
-
-    "I have successfully made payment for my order.%0A%0A" +
-
-    "Customer Name: " +
-    encodeURIComponent(name) +
-    "%0A" +
-
-    "Phone: " +
-    encodeURIComponent(phone) +
-    "%0A" +
-
-    "Delivery Address: " +
-    encodeURIComponent(address) +
-    "%0A%0A" +
-
-    "ORDER DETAILS:%0A";
-
-
-  cart.forEach(item => {
-
-    const subtotal =
-      item.price *
-      item.quantity;
-
-
-    message +=
-
-      encodeURIComponent(
-        item.name
-      ) +
-
-      " x " +
-
-      item.quantity;
-
-
-    /*
-      Add Size.
-    */
-
-    if(
-      item.options &&
-      item.options.size
-    ){
-
-      message +=
-
-        " | Size: " +
-
-        encodeURIComponent(
-          item.options.size
-        );
-
-    }
-
-
-    /*
-      Add Colour.
-    */
-
-    if(
-      item.options &&
-      item.options.colour
-    ){
-
-      message +=
-
-        " | Colour: " +
-
-        encodeURIComponent(
-          item.options.colour
-        );
-
-    }
-
-
-    /*
-      Add any future custom options.
-    */
-
-    if(item.options){
-
-      Object.keys(
-        item.options
-      ).forEach(key => {
-
-        if(
-          key !== "size" &&
-          key !== "colour"
-        ){
-
-          message +=
-
-            " | " +
-
-            encodeURIComponent(
-              key
-            ) +
-
-            ": " +
-
-            encodeURIComponent(
-              item.options[key]
-            );
-
-        }
-
-      });
-
-    }
-
-
-    message +=
-
-      " = ₦" +
-
-      subtotal.toLocaleString() +
-
-      "%0A";
-
-  });
-
-
-  message +=
-
-    "%0ATotal Paid: ₦" +
-
-    getCartTotal()
-      .toLocaleString() +
-
-    "%0A%0A" +
-
-    "Paystack Reference: " +
-
-    encodeURIComponent(
-      reference
-    );
-
-
-  return message;
-
-}
-
-
-function payWithPaystack(){
-
-  if(cart.length === 0){
-
-    alert(
-      "Your cart is empty. Please add a product first."
-    );
-
-    return;
-
-  }
-
-
-  const name =
-    document.getElementById(
-      "customerName"
-    ).value.trim();
-
-
-  const email =
-    document.getElementById(
-      "customerEmail"
-    ).value.trim();
-
-
-  const phone =
-    document.getElementById(
-      "customerPhone"
-    ).value.trim();
-
-
-  const address =
-    document.getElementById(
-      "customerAddress"
-    ).value.trim();
-
-
-  if(
-    !name ||
-    !email ||
-    !phone ||
-    !address
-  ){
-
-    alert(
-      "Please complete all customer information before payment."
-    );
-
-    return;
-
-  }
-
-
-  const total =
-    getCartTotal();
-
-
-  const products =
-    cart.map(item => ({
-
-      name:item.name,
-
-      quantity:item.quantity,
-
-      price:item.price,
-
-      options:item.options || {}
-
-    }));
-
-
-  const handler =
-    PaystackPop.setup({
-
-      key:
-        "pk_live_caee99bf950a74d75facd70e10e40781dabe9f3c",
-
-
-      email:email,
-
-
-      amount:
-        total * 100,
-
-
-      currency:"NGN",
-
-
-      metadata:{
-
-        custom_fields:[
-
-          {
-
-            display_name:
-              "Customer Name",
-
-            variable_name:
-              "customer_name",
-
-            value:name
-
-          },
-
-
-          {
-
-            display_name:
-              "Phone Number",
-
-            variable_name:
-              "phone_number",
-
-            value:phone
-
-          },
-
-
-          {
-
-            display_name:
-              "Delivery Address",
-
-            variable_name:
-              "delivery_address",
-
-            value:address
-
-          },
-
-
-          {
-
-            display_name:
-              "Products",
-
-            variable_name:
-              "products",
-
-            value:
-              JSON.stringify(
-                products
-              )
-
-          }
-
-        ]
-
-      },
-
-
-      callback:function(response){
-
-        const whatsappMessage =
-          getOrderText(
-            response.reference
-          );
-
-
-        const whatsappURL =
-          "https://wa.me/2348125253898?text=" +
-          whatsappMessage;
-
-
-        document.getElementById(
-          "whatsappLink"
-        ).href =
-          whatsappURL;
-
-
-        document.getElementById(
-          "successBox"
-        ).style.display =
-          "block";
-
-
-        localStorage.removeItem(
-          "erinCart"
-        );
-
-
-        cart = [];
-
-
-        updateCart();
-
-
-        document.getElementById(
-          "successBox"
-        ).scrollIntoView({
-
-          behavior:"smooth"
-
-        });
-
-      },
-
-
-      onClose:function(){
-
-        alert(
-          "Payment window closed. No payment was completed."
-        );
-
-      }
-
-    });
-
-
-  handler.openIframe();
-
-}
-
+/* =========================
+   START WEBSITE
+========================= */
+
+displayProducts();
 
 updateCart();
 
