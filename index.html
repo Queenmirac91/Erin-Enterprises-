@@ -105,6 +105,25 @@ header{
   margin-bottom:12px;
 }
 
+.option-group{
+  margin-bottom:12px;
+}
+
+.option-group label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.option-group select{
+  width:100%;
+  padding:11px;
+  border:1px solid #ccc;
+  border-radius:7px;
+  background:white;
+  font-size:15px;
+}
+
 .product button,
 .checkout-btn{
   width:100%;
@@ -146,6 +165,13 @@ header{
 
 .cart-item-info{
   flex:1;
+}
+
+.cart-options{
+  margin-top:5px;
+  font-size:14px;
+  color:#555;
+  line-height:1.6;
 }
 
 .quantity-controls{
@@ -278,73 +304,158 @@ footer{
 
   <div class="products">
 
+    <!-- COCOA SHEA BUTTER -->
     <div class="product">
       <img src="20260901_143149.jpg" alt="Cocoa Shea Butter">
+
       <div class="product-info">
         <h3>Cocoa Shea Butter</h3>
         <div class="price">₦5,500</div>
+
         <button onclick="addToCart('Cocoa Shea Butter',5500,'20260901_143149.jpg')">
           Add to Cart
         </button>
       </div>
     </div>
 
+
+    <!-- VIVON KIDDIES -->
     <div class="product">
       <img src="20260901_143125.jpg" alt="Vivon Kiddies">
+
       <div class="product-info">
         <h3>Vivon Kiddies</h3>
         <div class="price">₦5,500</div>
+
         <button onclick="addToCart('Vivon Kiddies',5500,'20260901_143125.jpg')">
           Add to Cart
         </button>
       </div>
     </div>
 
+
+    <!-- DODO SKIN GOLD -->
     <div class="product">
       <img src="20260901_143232.jpg" alt="Dodo Skin Gold">
+
       <div class="product-info">
         <h3>Dodo Skin Gold</h3>
         <div class="price">₦3,500</div>
+
         <button onclick="addToCart('Dodo Skin Gold',3500,'20260901_143232.jpg')">
           Add to Cart
         </button>
       </div>
     </div>
 
+
+    <!-- DODO BLACK SOAP -->
     <div class="product">
       <img src="20260901_143254.jpg" alt="Dodo Black Soap">
+
       <div class="product-info">
         <h3>Dodo Black Soap</h3>
         <div class="price">₦1,500</div>
+
         <button onclick="addToCart('Dodo Black Soap',1500,'20260901_143254.jpg')">
           Add to Cart
         </button>
       </div>
     </div>
 
+
+    <!-- CHILDREN SHOES -->
     <div class="product">
+
       <img src="IMG-20260913-WA0013.jpg" alt="Children Shoes">
+
       <div class="product-info">
+
         <h3>Children Shoes</h3>
+
         <div class="price">₦25,000</div>
-        <button onclick="addToCart('Children Shoes',25000,'IMG-20260913-WA0013.jpg')">
+
+
+        <div class="option-group">
+
+          <label for="shoeSize">
+            Select Size
+          </label>
+
+          <select id="shoeSize">
+
+            <option value="">
+              -- Choose Size --
+            </option>
+
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+            <option value="32">32</option>
+            <option value="33">33</option>
+            <option value="34">34</option>
+            <option value="35">35</option>
+
+          </select>
+
+        </div>
+
+
+        <div class="option-group">
+
+          <label for="shoeColour">
+            Select Colour
+          </label>
+
+          <select id="shoeColour">
+
+            <option value="">
+              -- Choose Colour --
+            </option>
+
+            <option value="Black">Black</option>
+            <option value="White">White</option>
+            <option value="Blue">Blue</option>
+            <option value="Pink">Pink</option>
+            <option value="Red">Red</option>
+            <option value="Brown">Brown</option>
+
+          </select>
+
+        </div>
+
+
+        <button onclick="addShoeToCart()">
           Add to Cart
         </button>
+
       </div>
     </div>
 
+
+    <!-- P.CLINIC -->
     <div class="product">
+
       <img src="20260901_142937.jpg" alt="P.Clinic">
+
       <div class="product-info">
+
         <h3>P.Clinic</h3>
+
         <div class="price">₦12,000</div>
+
         <button onclick="addToCart('P.Clinic',12000,'20260901_142937.jpg')">
           Add to Cart
         </button>
+
       </div>
     </div>
 
   </div>
+
+
+  <!-- CART -->
 
   <section class="cart-section" id="cartSection">
 
@@ -356,101 +467,400 @@ footer{
       Total: ₦<span id="cartTotal">0</span>
     </div>
 
+
     <h2>Customer Information</h2>
 
-    <div class="form-group">
-      <label for="customerName">Full Name</label>
-      <input type="text" id="customerName" placeholder="Enter your full name">
-    </div>
 
     <div class="form-group">
-      <label for="customerEmail">Email Address</label>
-      <input type="email" id="customerEmail" placeholder="Enter your email">
+
+      <label for="customerName">
+        Full Name
+      </label>
+
+      <input
+        type="text"
+        id="customerName"
+        placeholder="Enter your full name"
+      >
+
     </div>
 
-    <div class="form-group">
-      <label for="customerPhone">Phone Number</label>
-      <input type="tel" id="customerPhone" placeholder="Enter your phone number">
-    </div>
 
     <div class="form-group">
-      <label for="customerAddress">Delivery Address</label>
-      <textarea id="customerAddress" placeholder="Enter your delivery address"></textarea>
+
+      <label for="customerEmail">
+        Email Address
+      </label>
+
+      <input
+        type="email"
+        id="customerEmail"
+        placeholder="Enter your email"
+      >
+
     </div>
+
+
+    <div class="form-group">
+
+      <label for="customerPhone">
+        Phone Number
+      </label>
+
+      <input
+        type="tel"
+        id="customerPhone"
+        placeholder="Enter your phone number"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label for="customerAddress">
+        Delivery Address
+      </label>
+
+      <textarea
+        id="customerAddress"
+        placeholder="Enter your delivery address"
+      ></textarea>
+
+    </div>
+
 
     <button class="checkout-btn" onclick="payWithPaystack()">
       💳 Pay Now
     </button>
 
+
     <div class="notice">
+
       Your payment is securely processed by Paystack.
       After successful payment, your order details will be prepared for WhatsApp.
+
     </div>
 
+
     <div class="success" id="successBox">
+
       <h3>✅ Payment Successful!</h3>
+
       <p>Your order has been received.</p>
-      <p>You can now send your order details to Erin Enterprises on WhatsApp.</p>
+
+      <p>
+        You can now send your order details to Erin Enterprises on WhatsApp.
+      </p>
 
       <a id="whatsappLink" href="#" target="_blank">
         📱 Send Order on WhatsApp
       </a>
+
     </div>
 
   </section>
 
 </div>
 
+
 <footer>
+
   <strong>Erin Enterprises</strong><br>
+
   WhatsApp: +2348125253898<br>
+
   Email: Erinsenterprisesvarieties@gmail.com
+
 </footer>
+
 
 <script>
 
-let cart = JSON.parse(localStorage.getItem("erinCart")) || [];
+let cart =
+  JSON.parse(localStorage.getItem("erinCart")) || [];
+
 
 function saveCart(){
-  localStorage.setItem("erinCart", JSON.stringify(cart));
+
+  localStorage.setItem(
+    "erinCart",
+    JSON.stringify(cart)
+  );
+
 }
 
-function addToCart(name, price, image){
 
-  const existing = cart.find(item => item.name === name);
+function addToCart(
+  name,
+  price,
+  image,
+  options = {}
+){
+
+  /*
+    Each product can now have its own options.
+
+    Examples:
+    options = {size:"32", colour:"Black"}
+    options = {colour:"Pink"}
+    options = {size:"XL"}
+  */
+
+  const optionKey =
+    JSON.stringify(options);
+
+
+  /*
+    Products with different options are treated
+    as separate cart items.
+  */
+
+  const existing = cart.find(item =>
+
+    item.name === name &&
+    JSON.stringify(item.options || {}) === optionKey
+
+  );
+
 
   if(existing){
+
     existing.quantity++;
+
   }else{
+
     cart.push({
+
       name:name,
+
       price:price,
+
       image:image,
-      quantity:1
+
+      quantity:1,
+
+      options:options
+
     });
+
   }
 
+
   saveCart();
+
   updateCart();
 
-  document.getElementById("cartSection").style.display = "block";
+
+  document.getElementById(
+    "cartSection"
+  ).style.display = "block";
+
 
   window.scrollTo({
-    top:document.getElementById("cartSection").offsetTop - 80,
+
+    top:
+      document.getElementById(
+        "cartSection"
+      ).offsetTop - 80,
+
     behavior:"smooth"
+
   });
+
 }
+
+
+/*
+  CHILDREN SHOES
+  Requires both Size and Colour.
+*/
+
+function addShoeToCart(){
+
+  const size =
+    document.getElementById(
+      "shoeSize"
+    ).value;
+
+
+  const colour =
+    document.getElementById(
+      "shoeColour"
+    ).value;
+
+
+  if(!size){
+
+    alert(
+      "Please select a shoe size before adding this product."
+    );
+
+    return;
+
+  }
+
+
+  if(!colour){
+
+    alert(
+      "Please select a shoe colour before adding this product."
+    );
+
+    return;
+
+  }
+
+
+  addToCart(
+
+    "Children Shoes",
+
+    25000,
+
+    "IMG-20260913-WA0013.jpg",
+
+    {
+      size:size,
+      colour:colour
+    }
+
+  );
+
+}
+
+
+/*
+  Display product options in cart.
+*/
+
+function getOptionsHTML(item){
+
+  const options =
+    item.options || {};
+
+
+  let html = "";
+
+
+  if(options.size){
+
+    html +=
+      "📏 Size: " +
+      escapeHTML(options.size) +
+      "<br>";
+
+  }
+
+
+  if(options.colour){
+
+    html +=
+      "🎨 Colour: " +
+      escapeHTML(options.colour) +
+      "<br>";
+
+  }
+
+
+  /*
+    This allows us to add future options such as:
+
+    Material
+    Style
+    Length
+    Type
+    Age
+    Pattern
+    etc.
+  */
+
+  Object.keys(options).forEach(key => {
+
+    if(
+      key !== "size" &&
+      key !== "colour"
+    ){
+
+      html +=
+        escapeHTML(
+          key.charAt(0).toUpperCase() +
+          key.slice(1)
+        ) +
+        ": " +
+        escapeHTML(options[key]) +
+        "<br>";
+
+    }
+
+  });
+
+
+  if(html){
+
+    return `
+      <div class="cart-options">
+        ${html}
+      </div>
+    `;
+
+  }
+
+
+  return "";
+
+}
+
+
+/*
+  Prevent HTML from being inserted
+  into the cart when displaying options.
+*/
+
+function escapeHTML(value){
+
+  return String(value)
+
+    .replace(/&/g,"&amp;")
+
+    .replace(/</g,"&lt;")
+
+    .replace(/>/g,"&gt;")
+
+    .replace(/"/g,"&quot;")
+
+    .replace(/'/g,"&#039;");
+
+}
+
 
 function updateCart(){
 
-  const cartItems = document.getElementById("cartItems");
-  const cartCount = document.getElementById("cartCount");
-  const cartTotal = document.getElementById("cartTotal");
+  const cartItems =
+    document.getElementById(
+      "cartItems"
+    );
+
+
+  const cartCount =
+    document.getElementById(
+      "cartCount"
+    );
+
+
+  const cartTotal =
+    document.getElementById(
+      "cartTotal"
+    );
+
 
   cartItems.innerHTML = "";
 
+
   let total = 0;
+
   let count = 0;
+
 
   if(cart.length === 0){
 
@@ -461,251 +871,561 @@ function updateCart(){
 
     cart.forEach((item,index)=>{
 
-      const itemTotal = item.price * item.quantity;
+      const itemTotal =
+        item.price *
+        item.quantity;
+
 
       total += itemTotal;
+
       count += item.quantity;
 
+
       cartItems.innerHTML += `
+
         <div class="cart-item">
 
           <div class="cart-item-info">
-            <strong>${item.name}</strong><br>
-            ₦${item.price.toLocaleString()}
+
+            <strong>
+              ${escapeHTML(item.name)}
+            </strong>
+
+            <div>
+              ₦${item.price.toLocaleString()}
+            </div>
+
+            ${getOptionsHTML(item)}
+
           </div>
+
 
           <div class="quantity-controls">
 
-            <button onclick="changeQuantity(${index},-1)">
+            <button
+              onclick="changeQuantity(${index},-1)"
+            >
               −
             </button>
 
-            <span>${item.quantity}</span>
 
-            <button onclick="changeQuantity(${index},1)">
+            <span>
+              ${item.quantity}
+            </span>
+
+
+            <button
+              onclick="changeQuantity(${index},1)"
+            >
               +
             </button>
 
-            <button class="remove-btn" onclick="removeItem(${index})">
+
+            <button
+              class="remove-btn"
+              onclick="removeItem(${index})"
+            >
               ×
             </button>
 
           </div>
+
 
           <strong>
             ₦${itemTotal.toLocaleString()}
           </strong>
 
         </div>
+
       `;
+
     });
+
   }
 
-  cartCount.textContent = count;
-  cartTotal.textContent = total.toLocaleString();
+
+  cartCount.textContent =
+    count;
+
+
+  cartTotal.textContent =
+    total.toLocaleString();
+
 }
 
-function changeQuantity(index,change){
 
-  cart[index].quantity += change;
+function changeQuantity(
+  index,
+  change
+){
 
-  if(cart[index].quantity <= 0){
+  cart[index].quantity +=
+    change;
+
+
+  if(
+    cart[index].quantity <= 0
+  ){
+
     cart.splice(index,1);
+
   }
+
 
   saveCart();
+
   updateCart();
+
 }
+
 
 function removeItem(index){
 
   cart.splice(index,1);
 
   saveCart();
+
   updateCart();
+
 }
+
 
 function toggleCart(){
 
-  const section = document.getElementById("cartSection");
+  const section =
+    document.getElementById(
+      "cartSection"
+    );
 
-  if(section.style.display === "none" || section.style.display === ""){
-    section.style.display = "block";
+
+  if(
+    section.style.display === "none" ||
+    section.style.display === ""
+  ){
+
+    section.style.display =
+      "block";
+
 
     section.scrollIntoView({
+
       behavior:"smooth"
+
     });
 
   }else{
-    section.style.display = "none";
+
+    section.style.display =
+      "none";
+
   }
+
 }
+
 
 function getCartTotal(){
 
   return cart.reduce(
-    (total,item) => total + (item.price * item.quantity),
+
+    (total,item) =>
+
+      total +
+      (
+        item.price *
+        item.quantity
+      ),
+
     0
+
   );
+
 }
+
+
+/*
+  Prepare WhatsApp order message.
+*/
 
 function getOrderText(reference){
 
   const name =
-    document.getElementById("customerName").value.trim();
+    document.getElementById(
+      "customerName"
+    ).value.trim();
+
 
   const phone =
-    document.getElementById("customerPhone").value.trim();
+    document.getElementById(
+      "customerPhone"
+    ).value.trim();
+
 
   const address =
-    document.getElementById("customerAddress").value.trim();
+    document.getElementById(
+      "customerAddress"
+    ).value.trim();
+
 
   let message =
+
     "Hello Erin Enterprises,%0A%0A" +
+
     "I have successfully made payment for my order.%0A%0A" +
 
-    "Customer Name: " + encodeURIComponent(name) + "%0A" +
-    "Phone: " + encodeURIComponent(phone) + "%0A" +
-    "Delivery Address: " + encodeURIComponent(address) + "%0A%0A" +
+    "Customer Name: " +
+    encodeURIComponent(name) +
+    "%0A" +
+
+    "Phone: " +
+    encodeURIComponent(phone) +
+    "%0A" +
+
+    "Delivery Address: " +
+    encodeURIComponent(address) +
+    "%0A%0A" +
 
     "ORDER DETAILS:%0A";
 
+
   cart.forEach(item => {
 
-    const subtotal = item.price * item.quantity;
+    const subtotal =
+      item.price *
+      item.quantity;
+
 
     message +=
-      encodeURIComponent(item.name) +
+
+      encodeURIComponent(
+        item.name
+      ) +
+
       " x " +
-      item.quantity +
+
+      item.quantity;
+
+
+    /*
+      Add Size.
+    */
+
+    if(
+      item.options &&
+      item.options.size
+    ){
+
+      message +=
+
+        " | Size: " +
+
+        encodeURIComponent(
+          item.options.size
+        );
+
+    }
+
+
+    /*
+      Add Colour.
+    */
+
+    if(
+      item.options &&
+      item.options.colour
+    ){
+
+      message +=
+
+        " | Colour: " +
+
+        encodeURIComponent(
+          item.options.colour
+        );
+
+    }
+
+
+    /*
+      Add any future custom options.
+    */
+
+    if(item.options){
+
+      Object.keys(
+        item.options
+      ).forEach(key => {
+
+        if(
+          key !== "size" &&
+          key !== "colour"
+        ){
+
+          message +=
+
+            " | " +
+
+            encodeURIComponent(
+              key
+            ) +
+
+            ": " +
+
+            encodeURIComponent(
+              item.options[key]
+            );
+
+        }
+
+      });
+
+    }
+
+
+    message +=
+
       " = ₦" +
+
       subtotal.toLocaleString() +
+
       "%0A";
+
   });
 
+
   message +=
+
     "%0ATotal Paid: ₦" +
-    getCartTotal().toLocaleString() +
+
+    getCartTotal()
+      .toLocaleString() +
+
     "%0A%0A" +
 
     "Paystack Reference: " +
-    encodeURIComponent(reference);
+
+    encodeURIComponent(
+      reference
+    );
+
 
   return message;
+
 }
+
 
 function payWithPaystack(){
 
   if(cart.length === 0){
 
-    alert("Your cart is empty. Please add a product first.");
+    alert(
+      "Your cart is empty. Please add a product first."
+    );
 
     return;
+
   }
+
 
   const name =
-    document.getElementById("customerName").value.trim();
+    document.getElementById(
+      "customerName"
+    ).value.trim();
+
 
   const email =
-    document.getElementById("customerEmail").value.trim();
+    document.getElementById(
+      "customerEmail"
+    ).value.trim();
+
 
   const phone =
-    document.getElementById("customerPhone").value.trim();
+    document.getElementById(
+      "customerPhone"
+    ).value.trim();
+
 
   const address =
-    document.getElementById("customerAddress").value.trim();
+    document.getElementById(
+      "customerAddress"
+    ).value.trim();
 
-  if(!name || !email || !phone || !address){
 
-    alert("Please complete all customer information before payment.");
+  if(
+    !name ||
+    !email ||
+    !phone ||
+    !address
+  ){
+
+    alert(
+      "Please complete all customer information before payment."
+    );
 
     return;
+
   }
 
-  const total = getCartTotal();
 
-  const products = cart.map(item => ({
-    name:item.name,
-    quantity:item.quantity,
-    price:item.price
-  }));
+  const total =
+    getCartTotal();
 
-  const handler = PaystackPop.setup({
 
-    key:
-      "pk_live_caee99bf950a74d75facd70e10e40781dabe9f3c",
+  const products =
+    cart.map(item => ({
 
-    email:email,
+      name:item.name,
 
-    amount:total * 100,
+      quantity:item.quantity,
 
-    currency:"NGN",
+      price:item.price,
 
-    metadata:{
-      custom_fields:[
-        {
-          display_name:"Customer Name",
-          variable_name:"customer_name",
-          value:name
-        },
-        {
-          display_name:"Phone Number",
-          variable_name:"phone_number",
-          value:phone
-        },
-        {
-          display_name:"Delivery Address",
-          variable_name:"delivery_address",
-          value:address
-        },
-        {
-          display_name:"Products",
-          variable_name:"products",
-          value:JSON.stringify(products)
-        }
-      ]
-    },
+      options:item.options || {}
 
-    callback:function(response){
+    }));
 
-      const whatsappMessage =
-        getOrderText(response.reference);
 
-      const whatsappURL =
-        "https://wa.me/2348125253898?text=" +
-        whatsappMessage;
+  const handler =
+    PaystackPop.setup({
 
-      document.getElementById("whatsappLink").href =
-        whatsappURL;
+      key:
+        "pk_live_caee99bf950a74d75facd70e10e40781dabe9f3c",
 
-      document.getElementById("successBox").style.display =
-        "block";
 
-      localStorage.removeItem("erinCart");
+      email:email,
 
-      cart = [];
 
-      updateCart();
+      amount:
+        total * 100,
 
-      document.getElementById("successBox").scrollIntoView({
-        behavior:"smooth"
-      });
 
-    },
+      currency:"NGN",
 
-    onClose:function(){
 
-      alert(
-        "Payment window closed. No payment was completed."
-      );
+      metadata:{
 
-    }
+        custom_fields:[
 
-  });
+          {
+
+            display_name:
+              "Customer Name",
+
+            variable_name:
+              "customer_name",
+
+            value:name
+
+          },
+
+
+          {
+
+            display_name:
+              "Phone Number",
+
+            variable_name:
+              "phone_number",
+
+            value:phone
+
+          },
+
+
+          {
+
+            display_name:
+              "Delivery Address",
+
+            variable_name:
+              "delivery_address",
+
+            value:address
+
+          },
+
+
+          {
+
+            display_name:
+              "Products",
+
+            variable_name:
+              "products",
+
+            value:
+              JSON.stringify(
+                products
+              )
+
+          }
+
+        ]
+
+      },
+
+
+      callback:function(response){
+
+        const whatsappMessage =
+          getOrderText(
+            response.reference
+          );
+
+
+        const whatsappURL =
+          "https://wa.me/2348125253898?text=" +
+          whatsappMessage;
+
+
+        document.getElementById(
+          "whatsappLink"
+        ).href =
+          whatsappURL;
+
+
+        document.getElementById(
+          "successBox"
+        ).style.display =
+          "block";
+
+
+        localStorage.removeItem(
+          "erinCart"
+        );
+
+
+        cart = [];
+
+
+        updateCart();
+
+
+        document.getElementById(
+          "successBox"
+        ).scrollIntoView({
+
+          behavior:"smooth"
+
+        });
+
+      },
+
+
+      onClose:function(){
+
+        alert(
+          "Payment window closed. No payment was completed."
+        );
+
+      }
+
+    });
+
 
   handler.openIframe();
 
 }
+
 
 updateCart();
 
