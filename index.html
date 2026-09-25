@@ -14,7 +14,7 @@
 }
 
 body{
-  font-family:Arial, sans-serif;
+  font-family:Arial,sans-serif;
   background:#f5f5f5;
   color:#222;
 }
@@ -37,7 +37,7 @@ header{
 }
 
 .cart-btn{
-  background:#fff;
+  background:white;
   color:#111;
   border:none;
   padding:10px 16px;
@@ -60,6 +60,7 @@ header{
 
 .hero p{
   font-size:18px;
+  margin-top:6px;
 }
 
 .container{
@@ -109,7 +110,6 @@ header{
   justify-content:center;
   color:#777;
   text-align:center;
-  padding:15px;
 }
 
 .product-info{
@@ -221,7 +221,6 @@ header{
   text-align:center;
   background:#25D366;
   color:white;
-  text-decoration:none;
   border:none;
   padding:14px;
   border-radius:8px;
@@ -287,6 +286,7 @@ footer a{
 
 <header>
   <div class="logo">Erin Enterprises</div>
+
   <button class="cart-btn" onclick="openCart()">
     🛒 Cart (<span id="cartCount">0</span>)
   </button>
@@ -310,7 +310,10 @@ footer a{
 
   <div class="cart-header">
     <h2>🛒 Your Cart</h2>
-    <button class="close-cart" onclick="closeCart()">✕</button>
+
+    <button class="close-cart" onclick="closeCart()">
+      ✕
+    </button>
   </div>
 
   <div id="cartItems"></div>
@@ -326,10 +329,16 @@ footer a{
 </div>
 
 <footer>
+
   <p>© 2026 Erin Enterprises. All Rights Reserved.</p>
-  <p>WhatsApp: <a href="https://wa.me/2348125253898" target="_blank">
-    +234 812 525 3898
-  </a></p>
+
+  <p>
+    WhatsApp:
+    <a href="https://wa.me/2348125253898" target="_blank">
+      +234 812 525 3898
+    </a>
+  </p>
+
 </footer>
 
 <script>
@@ -339,7 +348,7 @@ const products = [
   {
     name:"Dodo Skin Gold",
     price:2500,
-    image:image:"20260921_115408.jpg"
+    image:"20260921_115408.jpg"
   },
 
   {
@@ -535,7 +544,9 @@ function displayProducts(){
 
   products.forEach((product,index)=>{
 
-    const card = document.createElement("div");
+    const card =
+      document.createElement("div");
+
     card.className = "product";
 
     card.innerHTML = `
@@ -543,7 +554,8 @@ function displayProducts(){
       <img
         src="${product.image}"
         alt="${product.name}"
-        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        onerror="this.style.display='none';
+        this.nextElementSibling.style.display='flex';"
       >
 
       <div class="no-image" style="display:none;">
@@ -620,12 +632,14 @@ function updateCart(){
 
   cart.forEach((item,cartIndex)=>{
 
-    const product = products[item.index];
+    const product =
+      products[item.index];
 
     const itemTotal =
       product.price * item.quantity;
 
     total += itemTotal;
+
     count += item.quantity;
 
     const div =
@@ -643,13 +657,15 @@ function updateCart(){
 
       <div class="cart-controls">
 
-        <button onclick="changeQuantity(${cartIndex},-1)">
+        <button
+          onclick="changeQuantity(${cartIndex},-1)">
           −
         </button>
 
         <span>${item.quantity}</span>
 
-        <button onclick="changeQuantity(${cartIndex},1)">
+        <button
+          onclick="changeQuantity(${cartIndex},1)">
           +
         </button>
 
@@ -777,4 +793,4 @@ updateCart();
 </script>
 
 </body>
-  </html>
+</html>
