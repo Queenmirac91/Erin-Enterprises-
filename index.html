@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Erin Enterprises | Online Store</title>
-
-<style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Erin Enterprises | Online Store</title><!-- PAYSTACK --><script src="https://js.paystack.co/v2/inline.js"></script><style>
 *{
   box-sizing:border-box;
   margin:0;
@@ -69,8 +64,6 @@ header{
   padding:25px 15px;
 }
 
-/* SEARCH */
-
 .search-box{
   margin:10px auto 20px;
   max-width:600px;
@@ -88,8 +81,6 @@ header{
 .search-box input:focus{
   border-color:#111;
 }
-
-/* CATEGORIES */
 
 .categories{
   display:flex;
@@ -114,8 +105,6 @@ header{
   background:#111;
   color:white;
 }
-
-/* PRODUCTS */
 
 .section-title{
   text-align:center;
@@ -223,8 +212,6 @@ header{
   display:none;
 }
 
-/* CART */
-
 .cart-panel{
   position:fixed;
   right:-430px;
@@ -297,8 +284,6 @@ header{
   margin:20px 0;
 }
 
-/* CUSTOMER FORM */
-
 .customer-form{
   margin-top:20px;
   border-top:1px solid #ddd;
@@ -325,6 +310,25 @@ header{
   resize:vertical;
 }
 
+/* PAYSTACK BUTTON */
+
+.paystack-btn{
+  width:100%;
+  background:#0a8f4d;
+  color:white;
+  border:none;
+  padding:14px;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+  font-size:16px;
+  margin-bottom:10px;
+}
+
+.paystack-btn:hover{
+  background:#087a41;
+}
+
 .whatsapp-btn{
   width:100%;
   background:#25D366;
@@ -343,8 +347,6 @@ header{
   padding:30px 0;
 }
 
-/* FOOTER */
-
 footer{
   margin-top:40px;
   background:#111;
@@ -362,8 +364,6 @@ footer a{
   text-decoration:none;
   font-weight:bold;
 }
-
-/* MOBILE */
 
 @media(max-width:500px){
 
@@ -405,196 +405,129 @@ footer a{
     width:100%;
   }
 }
-</style>
-</head>
-
-<body>
-
-<header>
-
-  <div class="logo">
+</style></head><body><header>  <div class="logo">
     Erin Enterprises
-  </div>
-
-  <button class="cart-btn" onclick="openCart()">
+  </div>  <button class="cart-btn" onclick="openCart()">
     🛒 Cart (<span id="cartCount">0</span>)
-  </button>
+  </button></header><section class="hero">  <h1>Welcome to Erin Enterprises</h1>  <p>Quality products at affordable prices.</p>  <p>Shop online and order easily through WhatsApp.</p></section><div class="container">  <div class="search-box"><input
+  type="text"
+  id="searchInput"
+  placeholder="🔎 Search for a product..."
+  oninput="filterProducts()"
+>
 
-</header>
+  </div>  <div class="categories"><button
+  class="category-btn active"
+  onclick="selectCategory('All',this)">
+  All
+</button>
 
+<button
+  class="category-btn"
+  onclick="selectCategory('Beauty',this)">
+  Beauty
+</button>
 
-<section class="hero">
+<button
+  class="category-btn"
+  onclick="selectCategory('Hair',this)">
+  Hair
+</button>
 
-  <h1>Welcome to Erin Enterprises</h1>
+<button
+  class="category-btn"
+  onclick="selectCategory('Health',this)">
+  Health
+</button>
 
-  <p>Quality products at affordable prices.</p>
+<button
+  class="category-btn"
+  onclick="selectCategory('Home',this)">
+  Home
+</button>
 
-  <p>Shop online and order easily through WhatsApp.</p>
+<button
+  class="category-btn"
+  onclick="selectCategory('Fashion',this)">
+  Fashion
+</button>
 
-</section>
+<button
+  class="category-btn"
+  onclick="selectCategory('Electronics',this)">
+  Electronics
+</button>
 
-
-<div class="container">
-
-  <!-- SEARCH -->
-
-  <div class="search-box">
-
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="🔎 Search for a product..."
-      oninput="filterProducts()"
-    >
-
-  </div>
-
-
-  <!-- CATEGORIES -->
-
-  <div class="categories">
-
-    <button
-      class="category-btn active"
-      onclick="selectCategory('All',this)">
-      All
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="selectCategory('Beauty',this)">
-      Beauty
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="selectCategory('Hair',this)">
-      Hair
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="selectCategory('Health',this)">
-      Health
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="selectCategory('Home',this)">
-      Home
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="selectCategory('Fashion',this)">
-      Fashion
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="selectCategory('Electronics',this)">
-      Electronics
-    </button>
-
-  </div>
-
-
-  <h2 class="section-title">
+  </div>  <h2 class="section-title">
     Our Products
-  </h2>
-
-
-  <div class="products" id="products"></div>
-
-
-  <div class="no-results" id="noResults">
+  </h2>  <div class="products" id="products"></div>  <div class="no-results" id="noResults">
     No products found.
-  </div>
+  </div></div><div class="cart-panel" id="cartPanel">  <div class="cart-header"><h2>🛒 Your Cart</h2>
 
-</div>
+<button
+  class="close-cart"
+  onclick="closeCart()">
+  ✕
+</button>
 
-
-<!-- CART -->
-
-<div class="cart-panel" id="cartPanel">
-
-  <div class="cart-header">
-
-    <h2>🛒 Your Cart</h2>
-
-    <button
-      class="close-cart"
-      onclick="closeCart()">
-      ✕
-    </button>
-
-  </div>
-
-
-  <div id="cartItems"></div>
-
-
-  <div class="cart-total">
+  </div>  <div id="cartItems"></div>  <div class="cart-total">
     Total: ₦<span id="cartTotal">0</span>
-  </div>
+  </div>  <div class="customer-form"><h3>Customer Details</h3>
 
+<input
+  type="text"
+  id="customerName"
+  placeholder="Your full name"
+>
 
-  <!-- CUSTOMER DETAILS -->
+<input
+  type="tel"
+  id="customerPhone"
+  placeholder="Your phone number"
+>
 
-  <div class="customer-form">
+<!-- PAYSTACK EMAIL -->
+<input
+  type="email"
+  id="customerEmail"
+  placeholder="Your email address"
+>
 
-    <h3>Customer Details</h3>
+<textarea
+  id="customerAddress"
+  placeholder="Delivery address"
+></textarea>
 
-    <input
-      type="text"
-      id="customerName"
-      placeholder="Your full name"
-    >
+  </div>  <!-- PAYSTACK PAYMENT --><button
+class="paystack-btn"
+onclick="payWithPaystack()">
 
-    <input
-      type="tel"
-      id="customerPhone"
-      placeholder="Your phone number"
-    >
+💳 Pay with Paystack
 
-    <textarea
-      id="customerAddress"
-      placeholder="Delivery address"
-    ></textarea>
+  </button>  <!-- EXISTING WHATSAPP CHECKOUT --><button
+class="whatsapp-btn"
+onclick="checkoutWhatsApp()">
 
-  </div>
+💬 Order via WhatsApp
 
-
-  <button
-    class="whatsapp-btn"
-    onclick="checkoutWhatsApp()">
-
-    💬 Order via WhatsApp
-
-  </button>
-
-</div>
-
-
-<footer>
-
-  <p>
+  </button></div><footer>  <p>
     © 2026 Erin Enterprises. All Rights Reserved.
-  </p>
-
-  <p>
+  </p>  <p>
     WhatsApp:
     <a
       href="https://wa.me/2348125253898"
       target="_blank">
       +234 812 525 3898
     </a>
-  </p>
+  </p></footer><script>
 
-</footer>
+/* =========================
+   PAYSTACK
+========================= */
 
+const PAYSTACK_PUBLIC_KEY =
+  "pk_live_caee99bf950a74d75facd70e10e40781dabe9f3c";
 
-<script>
 
 /* =========================
    PRODUCTS
@@ -855,7 +788,6 @@ function displayProducts(list = products){
 
   noResults.style.display = "none";
 
-
   list.forEach(product => {
 
     const index =
@@ -865,7 +797,6 @@ function displayProducts(list = products){
       document.createElement("div");
 
     card.className = "product";
-
 
     card.innerHTML = `
 
@@ -935,7 +866,6 @@ function filterProducts(){
       .toLowerCase()
       .trim();
 
-
   const filtered =
     products.filter(product => {
 
@@ -953,7 +883,6 @@ function filterProducts(){
 
     });
 
-
   displayProducts(filtered);
 
 }
@@ -963,7 +892,6 @@ function selectCategory(category,button){
 
   selectedCategory = category;
 
-
   document
     .querySelectorAll(".category-btn")
     .forEach(btn => {
@@ -971,7 +899,6 @@ function selectCategory(category,button){
       btn.classList.remove("active");
 
     });
-
 
   button.classList.add("active");
 
@@ -989,7 +916,6 @@ function addToCart(index){
   const existing =
     cart.find(item => item.index === index);
 
-
   if(existing){
 
     existing.quantity++;
@@ -1002,7 +928,6 @@ function addToCart(index){
     });
 
   }
-
 
   updateCart();
 
@@ -1018,7 +943,6 @@ function buyNow(index){
   const existing =
     cart.find(item => item.index === index);
 
-
   if(existing){
 
     existing.quantity++;
@@ -1031,7 +955,6 @@ function buyNow(index){
     });
 
   }
-
 
   updateCart();
 
@@ -1055,13 +978,10 @@ function updateCart(){
   const cartTotal =
     document.getElementById("cartTotal");
 
-
   cartItems.innerHTML = "";
-
 
   let total = 0;
   let count = 0;
-
 
   if(cart.length === 0){
 
@@ -1070,28 +990,22 @@ function updateCart(){
 
   }
 
-
   cart.forEach((item,cartIndex)=>{
 
     const product =
       products[item.index];
 
-
     const itemTotal =
       product.price * item.quantity;
-
 
     total += itemTotal;
 
     count += item.quantity;
 
-
     const div =
       document.createElement("div");
 
-
     div.className = "cart-item";
-
 
     div.innerHTML = `
 
@@ -1132,11 +1046,9 @@ function updateCart(){
 
     `;
 
-
     cartItems.appendChild(div);
 
   });
-
 
   cartCount.textContent = count;
 
@@ -1154,13 +1066,11 @@ function changeQuantity(cartIndex,change){
 
   cart[cartIndex].quantity += change;
 
-
   if(cart[cartIndex].quantity <= 0){
 
     cart.splice(cartIndex,1);
 
   }
-
 
   updateCart();
 
@@ -1207,10 +1117,10 @@ function closeCart(){
 
 
 /* =========================
-   WHATSAPP CHECKOUT
+   PAYSTACK PAYMENT
 ========================= */
 
-function checkoutWhatsApp(){
+function payWithPaystack(){
 
   if(cart.length === 0){
 
@@ -1220,13 +1130,11 @@ function checkoutWhatsApp(){
 
   }
 
-
   const name =
     document
       .getElementById("customerName")
       .value
       .trim();
-
 
   const phone =
     document
@@ -1234,13 +1142,17 @@ function checkoutWhatsApp(){
       .value
       .trim();
 
+  const email =
+    document
+      .getElementById("customerEmail")
+      .value
+      .trim();
 
   const address =
     document
       .getElementById("customerAddress")
       .value
       .trim();
-
 
   if(!name){
 
@@ -1250,7 +1162,6 @@ function checkoutWhatsApp(){
 
   }
 
-
   if(!phone){
 
     alert("Please enter your phone number.");
@@ -1259,6 +1170,13 @@ function checkoutWhatsApp(){
 
   }
 
+  if(!email){
+
+    alert("Please enter your email address.");
+
+    return;
+
+  }
 
   if(!address){
 
@@ -1268,37 +1186,153 @@ function checkoutWhatsApp(){
 
   }
 
+  if(!email.includes("@")){
+
+    alert("Please enter a valid email address.");
+
+    return;
+
+  }
+
+  let total = 0;
+
+  cart.forEach(item => {
+
+    const product =
+      products[item.index];
+
+    total +=
+      product.price * item.quantity;
+
+  });
+
+
+  /*
+    Paystack uses the smallest currency unit.
+    For NGN, ₦1 = 100 kobo.
+  */
+
+  const amountInKobo =
+    total * 100;
+
+
+  const popup =
+    new PaystackPop();
+
+
+  popup.newTransaction({
+
+    key:PAYSTACK_PUBLIC_KEY,
+
+    email:email,
+
+    amount:amountInKobo,
+
+    currency:"NGN",
+
+    firstName:name,
+
+    phone:phone,
+
+    metadata:{
+
+      customer_name:name,
+
+      customer_phone:phone,
+
+      delivery_address:address,
+
+      order_total:total,
+
+      store:"Erin Enterprises"
+
+    },
+
+    onSuccess:(transaction)=>{
+
+      alert(
+        "Payment successful!\n\n" +
+        "Reference: " +
+        transaction.reference
+      );
+
+
+      sendPaidOrderToWhatsApp(
+        name,
+        phone,
+        email,
+        address,
+        total,
+        transaction.reference
+      );
+
+    },
+
+    onCancel:()=>{
+
+      alert(
+        "Payment was cancelled."
+      );
+
+    },
+
+    onError:(error)=>{
+
+      alert(
+        "Payment could not be completed. " +
+        (error && error.message
+          ? error.message
+          : "Please try again.")
+      );
+
+    }
+
+  });
+
+}
+
+
+/* =========================
+   PAID ORDER → WHATSAPP
+========================= */
+
+function sendPaidOrderToWhatsApp(
+  name,
+  phone,
+  email,
+  address,
+  total,
+  reference
+){
 
   let message =
     "Hello Erin Enterprises!%0A%0A";
 
   message +=
-    "*NEW ORDER*%0A%0A";
-
+    "*PAID ORDER*%0A%0A";
 
   message +=
     "*Customer Name:* " +
     encodeURIComponent(name) +
     "%0A";
 
-
   message +=
     "*Phone:* " +
     encodeURIComponent(phone) +
     "%0A";
 
+  message +=
+    "*Email:* " +
+    encodeURIComponent(email) +
+    "%0A";
 
   message +=
     "*Delivery Address:* " +
     encodeURIComponent(address) +
     "%0A%0A";
 
-
   message +=
     "*ORDER ITEMS:*%0A";
-
-
-  let total = 0;
 
 
   cart.forEach(item => {
@@ -1306,13 +1340,8 @@ function checkoutWhatsApp(){
     const product =
       products[item.index];
 
-
     const itemTotal =
       product.price * item.quantity;
-
-
-    total += itemTotal;
-
 
     message +=
       "• " +
@@ -1327,19 +1356,145 @@ function checkoutWhatsApp(){
 
 
   message +=
-    "%0A*TOTAL: ₦" +
+    "%0A*TOTAL PAID: ₦" +
     total.toLocaleString() +
     "*";
 
+  message +=
+    "%0A*Paystack Reference:* " +
+    encodeURIComponent(reference);
 
   message +=
-    "%0A%0APlease confirm my order. Thank you.";
+    "%0A%0APayment completed through Paystack.";
 
 
   const whatsappURL =
     "https://wa.me/2348125253898?text=" +
     message;
 
+
+  window.open(
+    whatsappURL,
+    "_blank"
+  );
+
+}
+
+
+/* =========================
+   EXISTING WHATSAPP CHECKOUT
+========================= */
+
+function checkoutWhatsApp(){
+
+  if(cart.length === 0){
+
+    alert("Your cart is empty.");
+
+    return;
+
+  }
+
+  const name =
+    document
+      .getElementById("customerName")
+      .value
+      .trim();
+
+  const phone =
+    document
+      .getElementById("customerPhone")
+      .value
+      .trim();
+
+  const address =
+    document
+      .getElementById("customerAddress")
+      .value
+      .trim();
+
+  if(!name){
+
+    alert("Please enter your name.");
+
+    return;
+
+  }
+
+  if(!phone){
+
+    alert("Please enter your phone number.");
+
+    return;
+
+  }
+
+  if(!address){
+
+    alert("Please enter your delivery address.");
+
+    return;
+
+  }
+
+  let message =
+    "Hello Erin Enterprises!%0A%0A";
+
+  message +=
+    "*NEW ORDER*%0A%0A";
+
+  message +=
+    "*Customer Name:* " +
+    encodeURIComponent(name) +
+    "%0A";
+
+  message +=
+    "*Phone:* " +
+    encodeURIComponent(phone) +
+    "%0A";
+
+  message +=
+    "*Delivery Address:* " +
+    encodeURIComponent(address) +
+    "%0A%0A";
+
+  message +=
+    "*ORDER ITEMS:*%0A";
+
+  let total = 0;
+
+  cart.forEach(item => {
+
+    const product =
+      products[item.index];
+
+    const itemTotal =
+      product.price * item.quantity;
+
+    total += itemTotal;
+
+    message +=
+      "• " +
+      encodeURIComponent(product.name) +
+      " x" +
+      item.quantity +
+      " = ₦" +
+      itemTotal.toLocaleString() +
+      "%0A";
+
+  });
+
+  message +=
+    "%0A*TOTAL: ₦" +
+    total.toLocaleString() +
+    "*";
+
+  message +=
+    "%0A%0APlease confirm my order. Thank you.";
+
+  const whatsappURL =
+    "https://wa.me/2348125253898?text=" +
+    message;
 
   window.open(
     whatsappURL,
@@ -1357,7 +1512,5 @@ displayProducts();
 
 updateCart();
 
-</script>
-
-</body>
-      </html>
+</script></body>
+  </html>
