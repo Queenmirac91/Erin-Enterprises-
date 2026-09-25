@@ -22,7 +22,7 @@ body{
 header{
   background:#111;
   color:white;
-  padding:18px 20px;
+  padding:16px 20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -50,7 +50,7 @@ header{
   background:linear-gradient(135deg,#111,#444);
   color:white;
   text-align:center;
-  padding:55px 20px;
+  padding:50px 20px;
 }
 
 .hero h1{
@@ -59,19 +59,67 @@ header{
 }
 
 .hero p{
-  font-size:18px;
-  margin-top:6px;
+  font-size:17px;
+  margin:7px 0;
 }
 
 .container{
   max-width:1200px;
   margin:auto;
-  padding:30px 15px;
+  padding:25px 15px;
 }
+
+/* SEARCH */
+
+.search-box{
+  margin:10px auto 20px;
+  max-width:600px;
+}
+
+.search-box input{
+  width:100%;
+  padding:14px 18px;
+  border:1px solid #ccc;
+  border-radius:10px;
+  font-size:16px;
+  outline:none;
+}
+
+.search-box input:focus{
+  border-color:#111;
+}
+
+/* CATEGORIES */
+
+.categories{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-bottom:25px;
+}
+
+.category-btn{
+  border:none;
+  background:white;
+  border:1px solid #ddd;
+  padding:9px 14px;
+  border-radius:20px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.category-btn.active,
+.category-btn:hover{
+  background:#111;
+  color:white;
+}
+
+/* PRODUCTS */
 
 .section-title{
   text-align:center;
-  margin-bottom:25px;
+  margin-bottom:20px;
   font-size:28px;
 }
 
@@ -109,7 +157,6 @@ header{
   align-items:center;
   justify-content:center;
   color:#777;
-  text-align:center;
 }
 
 .product-info{
@@ -118,36 +165,71 @@ header{
 
 .product h3{
   font-size:17px;
-  margin-bottom:8px;
+  margin-bottom:6px;
+}
+
+.category-label{
+  display:inline-block;
+  font-size:12px;
+  background:#eee;
+  padding:4px 8px;
+  border-radius:10px;
+  margin-bottom:10px;
 }
 
 .price{
-  color:#111;
+  font-size:19px;
   font-weight:bold;
-  font-size:18px;
   margin-bottom:12px;
 }
 
-.add-btn{
-  width:100%;
-  padding:11px;
+.product-buttons{
+  display:flex;
+  gap:8px;
+}
+
+.add-btn,
+.buy-btn{
+  flex:1;
+  padding:11px 5px;
   border:none;
   border-radius:7px;
-  background:#111;
-  color:white;
   cursor:pointer;
   font-weight:bold;
+}
+
+.add-btn{
+  background:#111;
+  color:white;
+}
+
+.buy-btn{
+  background:#25D366;
+  color:white;
 }
 
 .add-btn:hover{
   background:#333;
 }
 
+.buy-btn:hover{
+  background:#1ebe5d;
+}
+
+.no-results{
+  text-align:center;
+  padding:40px;
+  color:#777;
+  display:none;
+}
+
+/* CART */
+
 .cart-panel{
   position:fixed;
-  right:-400px;
+  right:-430px;
   top:0;
-  width:380px;
+  width:410px;
   max-width:100%;
   height:100%;
   background:white;
@@ -183,14 +265,14 @@ header{
 }
 
 .cart-item h4{
-  margin-bottom:8px;
+  margin-bottom:7px;
 }
 
 .cart-controls{
   display:flex;
   align-items:center;
   gap:8px;
-  margin-top:8px;
+  margin-top:10px;
 }
 
 .cart-controls button{
@@ -206,7 +288,7 @@ header{
 .remove-btn{
   background:#c00 !important;
   width:auto !important;
-  padding:0 8px;
+  padding:0 9px;
 }
 
 .cart-total{
@@ -215,10 +297,36 @@ header{
   margin:20px 0;
 }
 
-.whatsapp-btn{
-  display:block;
+/* CUSTOMER FORM */
+
+.customer-form{
+  margin-top:20px;
+  border-top:1px solid #ddd;
+  padding-top:20px;
+}
+
+.customer-form h3{
+  margin-bottom:12px;
+}
+
+.customer-form input,
+.customer-form textarea{
   width:100%;
-  text-align:center;
+  padding:12px;
+  margin-bottom:10px;
+  border:1px solid #ccc;
+  border-radius:7px;
+  font-size:15px;
+  font-family:Arial,sans-serif;
+}
+
+.customer-form textarea{
+  min-height:80px;
+  resize:vertical;
+}
+
+.whatsapp-btn{
+  width:100%;
   background:#25D366;
   color:white;
   border:none;
@@ -226,6 +334,7 @@ header{
   border-radius:8px;
   font-weight:bold;
   cursor:pointer;
+  font-size:16px;
 }
 
 .empty-cart{
@@ -233,6 +342,8 @@ header{
   color:#777;
   padding:30px 0;
 }
+
+/* FOOTER */
 
 footer{
   margin-top:40px;
@@ -242,19 +353,22 @@ footer{
   padding:25px 15px;
 }
 
+footer p{
+  margin:7px;
+}
+
 footer a{
   color:#25D366;
   text-decoration:none;
   font-weight:bold;
 }
 
+/* MOBILE */
+
 @media(max-width:500px){
+
   .hero h1{
     font-size:28px;
-  }
-
-  .cart-panel{
-    width:100%;
   }
 
   .products{
@@ -272,11 +386,23 @@ footer a{
   }
 
   .product h3{
-    font-size:15px;
+    font-size:14px;
   }
 
   .price{
     font-size:16px;
+  }
+
+  .product-buttons{
+    flex-direction:column;
+  }
+
+  .product-buttons button{
+    width:100%;
+  }
+
+  .cart-panel{
+    width:100%;
   }
 }
 </style>
@@ -285,280 +411,476 @@ footer a{
 <body>
 
 <header>
-  <div class="logo">Erin Enterprises</div>
+
+  <div class="logo">
+    Erin Enterprises
+  </div>
 
   <button class="cart-btn" onclick="openCart()">
     🛒 Cart (<span id="cartCount">0</span>)
   </button>
+
 </header>
 
+
 <section class="hero">
+
   <h1>Welcome to Erin Enterprises</h1>
+
   <p>Quality products at affordable prices.</p>
-  <p>Shop easily and order directly through WhatsApp.</p>
+
+  <p>Shop online and order easily through WhatsApp.</p>
+
 </section>
+
 
 <div class="container">
 
-  <h2 class="section-title">Our Products</h2>
+  <!-- SEARCH -->
+
+  <div class="search-box">
+
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="🔎 Search for a product..."
+      oninput="filterProducts()"
+    >
+
+  </div>
+
+
+  <!-- CATEGORIES -->
+
+  <div class="categories">
+
+    <button
+      class="category-btn active"
+      onclick="selectCategory('All',this)">
+      All
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="selectCategory('Beauty',this)">
+      Beauty
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="selectCategory('Hair',this)">
+      Hair
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="selectCategory('Health',this)">
+      Health
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="selectCategory('Home',this)">
+      Home
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="selectCategory('Fashion',this)">
+      Fashion
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="selectCategory('Electronics',this)">
+      Electronics
+    </button>
+
+  </div>
+
+
+  <h2 class="section-title">
+    Our Products
+  </h2>
+
 
   <div class="products" id="products"></div>
 
+
+  <div class="no-results" id="noResults">
+    No products found.
+  </div>
+
 </div>
+
+
+<!-- CART -->
 
 <div class="cart-panel" id="cartPanel">
 
   <div class="cart-header">
+
     <h2>🛒 Your Cart</h2>
 
-    <button class="close-cart" onclick="closeCart()">
+    <button
+      class="close-cart"
+      onclick="closeCart()">
       ✕
     </button>
+
   </div>
 
+
   <div id="cartItems"></div>
+
 
   <div class="cart-total">
     Total: ₦<span id="cartTotal">0</span>
   </div>
 
-  <button class="whatsapp-btn" onclick="checkoutWhatsApp()">
-    Order via WhatsApp
+
+  <!-- CUSTOMER DETAILS -->
+
+  <div class="customer-form">
+
+    <h3>Customer Details</h3>
+
+    <input
+      type="text"
+      id="customerName"
+      placeholder="Your full name"
+    >
+
+    <input
+      type="tel"
+      id="customerPhone"
+      placeholder="Your phone number"
+    >
+
+    <textarea
+      id="customerAddress"
+      placeholder="Delivery address"
+    ></textarea>
+
+  </div>
+
+
+  <button
+    class="whatsapp-btn"
+    onclick="checkoutWhatsApp()">
+
+    💬 Order via WhatsApp
+
   </button>
 
 </div>
 
+
 <footer>
 
-  <p>© 2026 Erin Enterprises. All Rights Reserved.</p>
+  <p>
+    © 2026 Erin Enterprises. All Rights Reserved.
+  </p>
 
   <p>
     WhatsApp:
-    <a href="https://wa.me/2348125253898" target="_blank">
+    <a
+      href="https://wa.me/2348125253898"
+      target="_blank">
       +234 812 525 3898
     </a>
   </p>
 
 </footer>
 
+
 <script>
+
+/* =========================
+   PRODUCTS
+========================= */
 
 const products = [
 
   {
     name:"Dodo Skin Gold",
     price:2500,
-    image:"20260921_115408.jpg"
+    image:"20260921_115408.jpg",
+    category:"Beauty"
   },
 
   {
     name:"Wig Stand",
     price:1000,
-    image:"20260921_115710.jpg"
+    image:"20260921_115710.jpg",
+    category:"Hair"
   },
 
   {
     name:"Whitening Cream",
     price:3500,
-    image:"20260921_115803.jpg"
+    image:"20260921_115803.jpg",
+    category:"Beauty"
   },
 
   {
     name:"Charcoal Whitening Teeth",
     price:2500,
-    image:"20260921_115527.jpg"
+    image:"20260921_115527.jpg",
+    category:"Health"
   },
 
   {
     name:"Body Mix Perfume",
     price:2500,
-    image:"20260921_115746.jpg"
+    image:"20260921_115746.jpg",
+    category:"Beauty"
   },
 
   {
     name:"Eyebrows Sharpener",
     price:2000,
-    image:"20260921_115455.jpg"
+    image:"20260921_115455.jpg",
+    category:"Beauty"
   },
 
   {
     name:"Pipe Cleaner",
     price:4000,
-    image:"20260921_115557.jpg"
+    image:"20260921_115557.jpg",
+    category:"Home"
   },
 
   {
     name:"Dish Washer Powder",
     price:4000,
-    image:"20260921_115725.jpg"
+    image:"20260921_115725.jpg",
+    category:"Home"
   },
 
   {
     name:"Children Shoes (Sizes 29 & 30)",
     price:9000,
-    image:"IMG-20260708-WA0104.jpg"
+    image:"IMG-20260708-WA0104.jpg",
+    category:"Fashion"
   },
 
   {
     name:"Gold Angel Perfume",
     price:6000,
-    image:"20260921_115754.jpg"
+    image:"20260921_115754.jpg",
+    category:"Beauty"
   },
 
   {
     name:"Dermaliss White Lotion",
     price:3500,
-    image:"20260921_115742.jpg"
+    image:"20260921_115742.jpg",
+    category:"Beauty"
   },
 
   {
     name:"Dr Paris Cream",
     price:12000,
-    image:"20260901_143051.jpg"
+    image:"20260901_143051.jpg",
+    category:"Beauty"
   },
 
   {
     name:"SP Toothpaste",
     price:6500,
-    image:"20260921_115546.jpg"
+    image:"20260921_115546.jpg",
+    category:"Health"
   },
 
   {
     name:"Rechargeable Chopper",
     price:6000,
-    image:"20260921_115624.jpg"
+    image:"20260921_115624.jpg",
+    category:"Home"
   },
 
   {
     name:"Hand Cream",
     price:1000,
-    image:"20260921_115518.jpg"
+    image:"20260921_115518.jpg",
+    category:"Beauty"
   },
 
   {
     name:"Thrift Clothes",
     price:2500,
-    image:"1688_image_share_9c8e4f0d5a9bfe7edbdb4a79ed4ce007.jpg"
+    image:"1688_image_share_9c8e4f0d5a9bfe7edbdb4a79ed4ce007.jpg",
+    category:"Fashion"
   },
 
   {
     name:"Sulphur Active Hair Cream",
     price:2500,
-    image:"20260921_115432.jpg"
+    image:"20260921_115432.jpg",
+    category:"Hair"
   },
 
   {
     name:"Magic Black Hair Cream",
     price:2000,
-    image:"20260921_115839.jpg"
+    image:"20260921_115839.jpg",
+    category:"Hair"
   },
 
   {
     name:"Vitamin C Cream",
     price:2500,
-    image:"20260901_143158.jpg"
+    image:"20260901_143158.jpg",
+    category:"Beauty"
   },
 
   {
     name:"Pearl Cream",
     price:8000,
-    image:"20260901_143019.jpg"
+    image:"20260901_143019.jpg",
+    category:"Beauty"
   },
 
   {
     name:"Yellow Pawpaw Cream",
     price:5500,
-    image:"20260901_143137.jpg"
+    image:"20260901_143137.jpg",
+    category:"Beauty"
   },
 
   {
     name:"Asantee Body Cream",
     price:3000,
-    image:"20260901_143214.jpg"
+    image:"20260901_143214.jpg",
+    category:"Beauty"
   },
 
   {
     name:"Knife Sharpener",
     price:3000,
-    image:"20260921_115631.jpg"
+    image:"20260921_115631.jpg",
+    category:"Home"
   },
 
   {
     name:"Aloe Vera Cream",
     price:3500,
-    image:"20260921_115736.jpg"
+    image:"20260921_115736.jpg",
+    category:"Beauty"
   },
 
   {
     name:"Dental Oral Care",
     price:3000,
-    image:"20260921_115703.jpg"
+    image:"20260921_115703.jpg",
+    category:"Health"
   },
 
   {
     name:"Mosquito Shocker",
     price:8000,
-    image:"20260921_115607.jpg"
+    image:"20260921_115607.jpg",
+    category:"Home"
   },
 
   {
     name:"Vivon Cocoa Shea Butter",
     price:5500,
-    image:"20260901_143149.jpg"
+    image:"20260901_143149.jpg",
+    category:"Beauty"
   },
 
   {
     name:"P. Clinic",
     price:12000,
-    image:"20260901_142937.jpg"
+    image:"20260901_142937.jpg",
+    category:"Beauty"
   },
 
   {
     name:"Vivon Kiddies",
     price:5500,
-    image:"20260901_143125.jpg"
+    image:"20260901_143125.jpg",
+    category:"Beauty"
   },
 
   {
     name:"Dodo Black Soap",
     price:1500,
-    image:"20260901_143254.jpg"
+    image:"20260901_143254.jpg",
+    category:"Beauty"
   },
 
   {
     name:"Kiddies Shoes",
     price:25000,
-    image:"IMG-20260913-WA0013.jpg"
+    image:"IMG-20260913-WA0013.jpg",
+    category:"Fashion"
   }
 
 ];
 
+
+/* =========================
+   CART
+========================= */
+
 let cart = [];
 
-function displayProducts(){
+let selectedCategory = "All";
 
-  const productsContainer =
+
+/* =========================
+   DISPLAY PRODUCTS
+========================= */
+
+function displayProducts(list = products){
+
+  const container =
     document.getElementById("products");
 
-  productsContainer.innerHTML = "";
+  const noResults =
+    document.getElementById("noResults");
 
-  products.forEach((product,index)=>{
+  container.innerHTML = "";
+
+  if(list.length === 0){
+
+    noResults.style.display = "block";
+
+    return;
+
+  }
+
+  noResults.style.display = "none";
+
+
+  list.forEach(product => {
+
+    const index =
+      products.indexOf(product);
 
     const card =
       document.createElement("div");
 
     card.className = "product";
 
+
     card.innerHTML = `
 
       <img
         src="${product.image}"
         alt="${product.name}"
-        onerror="this.style.display='none';
-        this.nextElementSibling.style.display='flex';"
+        onerror="
+          this.style.display='none';
+          this.nextElementSibling.style.display='flex';
+        "
       >
 
-      <div class="no-image" style="display:none;">
+      <div
+        class="no-image"
+        style="display:none;">
         📷 Image unavailable
       </div>
 
@@ -566,29 +888,107 @@ function displayProducts(){
 
         <h3>${product.name}</h3>
 
+        <span class="category-label">
+          ${product.category}
+        </span>
+
         <div class="price">
           ₦${product.price.toLocaleString()}
         </div>
 
-        <button
-          class="add-btn"
-          onclick="addToCart(${index})">
-          Add to Cart
-        </button>
+        <div class="product-buttons">
+
+          <button
+            class="add-btn"
+            onclick="addToCart(${index})">
+            🛒 Add
+          </button>
+
+          <button
+            class="buy-btn"
+            onclick="buyNow(${index})">
+            Buy Now
+          </button>
+
+        </div>
 
       </div>
     `;
 
-    productsContainer.appendChild(card);
+    container.appendChild(card);
 
   });
 
 }
 
+
+/* =========================
+   SEARCH + CATEGORY
+========================= */
+
+function filterProducts(){
+
+  const search =
+    document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const filtered =
+    products.filter(product => {
+
+      const matchesSearch =
+        product.name
+          .toLowerCase()
+          .includes(search);
+
+      const matchesCategory =
+        selectedCategory === "All" ||
+        product.category === selectedCategory;
+
+      return matchesSearch &&
+             matchesCategory;
+
+    });
+
+
+  displayProducts(filtered);
+
+}
+
+
+function selectCategory(category,button){
+
+  selectedCategory = category;
+
+
+  document
+    .querySelectorAll(".category-btn")
+    .forEach(btn => {
+
+      btn.classList.remove("active");
+
+    });
+
+
+  button.classList.add("active");
+
+  filterProducts();
+
+}
+
+
+/* =========================
+   ADD TO CART
+========================= */
+
 function addToCart(index){
 
   const existing =
     cart.find(item => item.index === index);
+
 
   if(existing){
 
@@ -603,9 +1003,46 @@ function addToCart(index){
 
   }
 
+
   updateCart();
 
 }
+
+
+/* =========================
+   BUY NOW
+========================= */
+
+function buyNow(index){
+
+  const existing =
+    cart.find(item => item.index === index);
+
+
+  if(existing){
+
+    existing.quantity++;
+
+  }else{
+
+    cart.push({
+      index:index,
+      quantity:1
+    });
+
+  }
+
+
+  updateCart();
+
+  openCart();
+
+}
+
+
+/* =========================
+   UPDATE CART
+========================= */
 
 function updateCart(){
 
@@ -618,10 +1055,13 @@ function updateCart(){
   const cartTotal =
     document.getElementById("cartTotal");
 
+
   cartItems.innerHTML = "";
+
 
   let total = 0;
   let count = 0;
+
 
   if(cart.length === 0){
 
@@ -630,22 +1070,28 @@ function updateCart(){
 
   }
 
+
   cart.forEach((item,cartIndex)=>{
 
     const product =
       products[item.index];
 
+
     const itemTotal =
       product.price * item.quantity;
+
 
     total += itemTotal;
 
     count += item.quantity;
 
+
     const div =
       document.createElement("div");
 
+
     div.className = "cart-item";
+
 
     div.innerHTML = `
 
@@ -662,7 +1108,9 @@ function updateCart(){
           −
         </button>
 
-        <span>${item.quantity}</span>
+        <span>
+          ${item.quantity}
+        </span>
 
         <button
           onclick="changeQuantity(${cartIndex},1)">
@@ -677,15 +1125,18 @@ function updateCart(){
 
       </div>
 
-      <div style="margin-top:8px;font-weight:bold;">
+      <div
+        style="margin-top:8px;font-weight:bold;">
         ₦${itemTotal.toLocaleString()}
       </div>
 
     `;
 
+
     cartItems.appendChild(div);
 
   });
+
 
   cartCount.textContent = count;
 
@@ -694,9 +1145,15 @@ function updateCart(){
 
 }
 
+
+/* =========================
+   QUANTITY
+========================= */
+
 function changeQuantity(cartIndex,change){
 
   cart[cartIndex].quantity += change;
+
 
   if(cart[cartIndex].quantity <= 0){
 
@@ -704,9 +1161,15 @@ function changeQuantity(cartIndex,change){
 
   }
 
+
   updateCart();
 
 }
+
+
+/* =========================
+   REMOVE
+========================= */
 
 function removeFromCart(cartIndex){
 
@@ -716,6 +1179,11 @@ function removeFromCart(cartIndex){
 
 }
 
+
+/* =========================
+   OPEN CART
+========================= */
+
 function openCart(){
 
   document
@@ -724,6 +1192,11 @@ function openCart(){
 
 }
 
+
+/* =========================
+   CLOSE CART
+========================= */
+
 function closeCart(){
 
   document
@@ -731,6 +1204,11 @@ function closeCart(){
     .classList.remove("open");
 
 }
+
+
+/* =========================
+   WHATSAPP CHECKOUT
+========================= */
 
 function checkoutWhatsApp(){
 
@@ -742,24 +1220,103 @@ function checkoutWhatsApp(){
 
   }
 
+
+  const name =
+    document
+      .getElementById("customerName")
+      .value
+      .trim();
+
+
+  const phone =
+    document
+      .getElementById("customerPhone")
+      .value
+      .trim();
+
+
+  const address =
+    document
+      .getElementById("customerAddress")
+      .value
+      .trim();
+
+
+  if(!name){
+
+    alert("Please enter your name.");
+
+    return;
+
+  }
+
+
+  if(!phone){
+
+    alert("Please enter your phone number.");
+
+    return;
+
+  }
+
+
+  if(!address){
+
+    alert("Please enter your delivery address.");
+
+    return;
+
+  }
+
+
   let message =
-    "Hello Erin Enterprises! I would like to order:%0A%0A";
+    "Hello Erin Enterprises!%0A%0A";
+
+  message +=
+    "*NEW ORDER*%0A%0A";
+
+
+  message +=
+    "*Customer Name:* " +
+    encodeURIComponent(name) +
+    "%0A";
+
+
+  message +=
+    "*Phone:* " +
+    encodeURIComponent(phone) +
+    "%0A";
+
+
+  message +=
+    "*Delivery Address:* " +
+    encodeURIComponent(address) +
+    "%0A%0A";
+
+
+  message +=
+    "*ORDER ITEMS:*%0A";
+
 
   let total = 0;
 
-  cart.forEach(item=>{
+
+  cart.forEach(item => {
 
     const product =
       products[item.index];
 
+
     const itemTotal =
       product.price * item.quantity;
 
+
     total += itemTotal;
+
 
     message +=
       "• " +
-      product.name +
+      encodeURIComponent(product.name) +
       " x" +
       item.quantity +
       " = ₦" +
@@ -768,17 +1325,21 @@ function checkoutWhatsApp(){
 
   });
 
+
   message +=
-    "%0A*Total: ₦" +
+    "%0A*TOTAL: ₦" +
     total.toLocaleString() +
     "*";
+
 
   message +=
     "%0A%0APlease confirm my order. Thank you.";
 
+
   const whatsappURL =
     "https://wa.me/2348125253898?text=" +
     message;
+
 
   window.open(
     whatsappURL,
@@ -787,10 +1348,16 @@ function checkoutWhatsApp(){
 
 }
 
+
+/* =========================
+   START STORE
+========================= */
+
 displayProducts();
+
 updateCart();
 
 </script>
 
 </body>
-</html>
+      </html>
