@@ -1,7 +1,16 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Erin Enterprises | Online Store</title><!-- PAYSTACK --><script src="https://js.paystack.co/v2/inline.js"></script><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Erin Enterprises | Online Store</title>
+
+<!-- PAYSTACK -->
+<script src="https://js.paystack.co/v2/inline.js"></script>
+
+<style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -172,6 +181,33 @@ header{
   margin-bottom:12px;
 }
 
+/* PRODUCT OPTIONS */
+
+.product-options{
+  margin-bottom:12px;
+}
+
+.option-group{
+  margin-bottom:9px;
+}
+
+.option-group label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+.option-group select,
+.option-group input{
+  width:100%;
+  padding:9px;
+  border:1px solid #ccc;
+  border-radius:6px;
+  font-size:14px;
+  background:white;
+}
+
 .product-buttons{
   display:flex;
   gap:8px;
@@ -253,6 +289,14 @@ header{
 
 .cart-item h4{
   margin-bottom:7px;
+}
+
+.selected-options{
+  background:#f5f5f5;
+  padding:8px;
+  border-radius:6px;
+  margin-top:8px;
+  font-size:13px;
 }
 
 .cart-controls{
@@ -405,121 +449,204 @@ footer a{
     width:100%;
   }
 }
-</style></head><body><header>  <div class="logo">
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
     Erin Enterprises
-  </div>  <button class="cart-btn" onclick="openCart()">
+  </div>
+
+  <button class="cart-btn" onclick="openCart()">
     🛒 Cart (<span id="cartCount">0</span>)
-  </button></header><section class="hero">  <h1>Welcome to Erin Enterprises</h1>  <p>Quality products at affordable prices.</p>  <p>Shop online and order easily through WhatsApp.</p></section><div class="container">  <div class="search-box"><input
-  type="text"
-  id="searchInput"
-  placeholder="🔎 Search for a product..."
-  oninput="filterProducts()"
->
+  </button>
 
-  </div>  <div class="categories"><button
-  class="category-btn active"
-  onclick="selectCategory('All',this)">
-  All
-</button>
+</header>
 
-<button
-  class="category-btn"
-  onclick="selectCategory('Beauty',this)">
-  Beauty
-</button>
 
-<button
-  class="category-btn"
-  onclick="selectCategory('Hair',this)">
-  Hair
-</button>
+<section class="hero">
 
-<button
-  class="category-btn"
-  onclick="selectCategory('Health',this)">
-  Health
-</button>
+  <h1>Welcome to Erin Enterprises</h1>
 
-<button
-  class="category-btn"
-  onclick="selectCategory('Home',this)">
-  Home
-</button>
+  <p>Quality products at affordable prices.</p>
 
-<button
-  class="category-btn"
-  onclick="selectCategory('Fashion',this)">
-  Fashion
-</button>
+  <p>Shop online and order easily through WhatsApp.</p>
 
-<button
-  class="category-btn"
-  onclick="selectCategory('Electronics',this)">
-  Electronics
-</button>
+</section>
 
-  </div>  <h2 class="section-title">
+
+<div class="container">
+
+  <div class="search-box">
+
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="🔎 Search for a product..."
+      oninput="filterProducts()"
+    >
+
+  </div>
+
+
+  <div class="categories">
+
+    <button
+      class="category-btn active"
+      onclick="selectCategory('All',this)">
+      All
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="selectCategory('Beauty',this)">
+      Beauty
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="selectCategory('Hair',this)">
+      Hair
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="selectCategory('Health',this)">
+      Health
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="selectCategory('Home',this)">
+      Home
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="selectCategory('Fashion',this)">
+      Fashion
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="selectCategory('Electronics',this)">
+      Electronics
+    </button>
+
+  </div>
+
+
+  <h2 class="section-title">
     Our Products
-  </h2>  <div class="products" id="products"></div>  <div class="no-results" id="noResults">
+  </h2>
+
+
+  <div class="products" id="products"></div>
+
+
+  <div class="no-results" id="noResults">
     No products found.
-  </div></div><div class="cart-panel" id="cartPanel">  <div class="cart-header"><h2>🛒 Your Cart</h2>
+  </div>
 
-<button
-  class="close-cart"
-  onclick="closeCart()">
-  ✕
-</button>
+</div>
 
-  </div>  <div id="cartItems"></div>  <div class="cart-total">
+
+<div class="cart-panel" id="cartPanel">
+
+  <div class="cart-header">
+
+    <h2>🛒 Your Cart</h2>
+
+    <button
+      class="close-cart"
+      onclick="closeCart()">
+      ✕
+    </button>
+
+  </div>
+
+
+  <div id="cartItems"></div>
+
+
+  <div class="cart-total">
     Total: ₦<span id="cartTotal">0</span>
-  </div>  <div class="customer-form"><h3>Customer Details</h3>
+  </div>
 
-<input
-  type="text"
-  id="customerName"
-  placeholder="Your full name"
->
 
-<input
-  type="tel"
-  id="customerPhone"
-  placeholder="Your phone number"
->
+  <div class="customer-form">
 
-<!-- PAYSTACK EMAIL -->
-<input
-  type="email"
-  id="customerEmail"
-  placeholder="Your email address"
->
+    <h3>Customer Details</h3>
 
-<textarea
-  id="customerAddress"
-  placeholder="Delivery address"
-></textarea>
+    <input
+      type="text"
+      id="customerName"
+      placeholder="Your full name"
+    >
 
-  </div>  <!-- PAYSTACK PAYMENT --><button
-class="paystack-btn"
-onclick="payWithPaystack()">
+    <input
+      type="tel"
+      id="customerPhone"
+      placeholder="Your phone number"
+    >
 
-💳 Pay with Paystack
+    <input
+      type="email"
+      id="customerEmail"
+      placeholder="Your email address"
+    >
 
-  </button>  <!-- EXISTING WHATSAPP CHECKOUT --><button
-class="whatsapp-btn"
-onclick="checkoutWhatsApp()">
+    <textarea
+      id="customerAddress"
+      placeholder="Delivery address"
+    ></textarea>
 
-💬 Order via WhatsApp
+  </div>
 
-  </button></div><footer>  <p>
+
+  <button
+    class="paystack-btn"
+    onclick="payWithPaystack()">
+
+    💳 Pay with Paystack
+
+  </button>
+
+
+  <button
+    class="whatsapp-btn"
+    onclick="checkoutWhatsApp()">
+
+    💬 Order via WhatsApp
+
+  </button>
+
+</div>
+
+
+<footer>
+
+  <p>
     © 2026 Erin Enterprises. All Rights Reserved.
-  </p>  <p>
+  </p>
+
+  <p>
     WhatsApp:
     <a
       href="https://wa.me/2348125253898"
       target="_blank">
       +234 812 525 3898
     </a>
-  </p></footer><script>
+  </p>
+
+</footer>
+
+
+<script>
 
 /* =========================
    PAYSTACK
@@ -595,7 +722,21 @@ const products = [
     name:"Children Shoes (Sizes 29 & 30)",
     price:9000,
     image:"IMG-20260708-WA0104.jpg",
-    category:"Fashion"
+    category:"Fashion",
+
+    options:{
+      size:{
+        type:"select",
+        label:"Size",
+        values:["29","30"]
+      },
+
+      colour:{
+        type:"text",
+        label:"Colour",
+        placeholder:"Enter colour"
+      }
+    }
   },
 
   {
@@ -644,7 +785,21 @@ const products = [
     name:"Thrift Clothes",
     price:2500,
     image:"1688_image_share_9c8e4f0d5a9bfe7edbdb4a79ed4ce007.jpg",
-    category:"Fashion"
+    category:"Fashion",
+
+    options:{
+      size:{
+        type:"text",
+        label:"Size",
+        placeholder:"Enter size"
+      },
+
+      colour:{
+        type:"text",
+        label:"Colour",
+        placeholder:"Enter colour"
+      }
+    }
   },
 
   {
@@ -749,7 +904,21 @@ const products = [
     name:"Kiddies Shoes",
     price:25000,
     image:"IMG-20260913-WA0013.jpg",
-    category:"Fashion"
+    category:"Fashion",
+
+    options:{
+      size:{
+        type:"text",
+        label:"Size",
+        placeholder:"Enter shoe size"
+      },
+
+      colour:{
+        type:"text",
+        label:"Colour",
+        placeholder:"Enter colour"
+      }
+    }
   }
 
 ];
@@ -762,6 +931,140 @@ const products = [
 let cart = [];
 
 let selectedCategory = "All";
+
+
+/* =========================
+   CREATE PRODUCT OPTIONS
+========================= */
+
+function createOptions(product,index){
+
+  if(!product.options){
+    return "";
+  }
+
+  let html =
+    '<div class="product-options">';
+
+  Object.keys(product.options).forEach(optionKey => {
+
+    const option =
+      product.options[optionKey];
+
+    html +=
+      '<div class="option-group">';
+
+    html +=
+      '<label>' +
+      option.label +
+      '</label>';
+
+    if(option.type === "select"){
+
+      html +=
+        '<select id="option-' +
+        index +
+        '-' +
+        optionKey +
+        '">';
+
+      html +=
+        '<option value="">Select ' +
+        option.label.toLowerCase() +
+        '</option>';
+
+      option.values.forEach(value => {
+
+        html +=
+          '<option value="' +
+          value +
+          '">' +
+          value +
+          '</option>';
+
+      });
+
+      html += '</select>';
+
+    }else{
+
+      html +=
+        '<input ' +
+        'type="text" ' +
+        'id="option-' +
+        index +
+        '-' +
+        optionKey +
+        '" ' +
+        'placeholder="' +
+        option.placeholder +
+        '">';
+
+    }
+
+    html +=
+      '</div>';
+
+  });
+
+  html +=
+    '</div>';
+
+  return html;
+}
+
+
+/* =========================
+   GET SELECTED OPTIONS
+========================= */
+
+function getProductOptions(index){
+
+  const product =
+    products[index];
+
+  const selected = {};
+
+  if(!product.options){
+    return selected;
+  }
+
+  for(const optionKey in product.options){
+
+    const element =
+      document.getElementById(
+        "option-" +
+        index +
+        "-" +
+        optionKey
+      );
+
+    if(element){
+
+      const value =
+        element.value.trim();
+
+      if(!value){
+
+        alert(
+          "Please select or enter " +
+          product.options[optionKey].label +
+          " for " +
+          product.name +
+          "."
+        );
+
+        return null;
+      }
+
+      selected[optionKey] = value;
+
+    }
+
+  }
+
+  return selected;
+}
 
 
 /* =========================
@@ -826,6 +1129,8 @@ function displayProducts(list = products){
         <div class="price">
           ₦${product.price.toLocaleString()}
         </div>
+
+        ${createOptions(product,index)}
 
         <div class="product-buttons">
 
@@ -913,8 +1218,21 @@ function selectCategory(category,button){
 
 function addToCart(index){
 
+  const options =
+    getProductOptions(index);
+
+  if(options === null){
+    return;
+  }
+
+  const optionKey =
+    JSON.stringify(options);
+
   const existing =
-    cart.find(item => item.index === index);
+    cart.find(item =>
+      item.index === index &&
+      JSON.stringify(item.options) === optionKey
+    );
 
   if(existing){
 
@@ -924,7 +1242,8 @@ function addToCart(index){
 
     cart.push({
       index:index,
-      quantity:1
+      quantity:1,
+      options:options
     });
 
   }
@@ -940,8 +1259,21 @@ function addToCart(index){
 
 function buyNow(index){
 
+  const options =
+    getProductOptions(index);
+
+  if(options === null){
+    return;
+  }
+
+  const optionKey =
+    JSON.stringify(options);
+
   const existing =
-    cart.find(item => item.index === index);
+    cart.find(item =>
+      item.index === index &&
+      JSON.stringify(item.options) === optionKey
+    );
 
   if(existing){
 
@@ -951,7 +1283,8 @@ function buyNow(index){
 
     cart.push({
       index:index,
-      quantity:1
+      quantity:1,
+      options:options
     });
 
   }
@@ -960,6 +1293,77 @@ function buyNow(index){
 
   openCart();
 
+}
+
+
+/* =========================
+   OPTIONS DISPLAY
+========================= */
+
+function formatOptions(options){
+
+  if(!options ||
+     Object.keys(options).length === 0){
+
+    return "";
+
+  }
+
+  let html =
+    '<div class="selected-options">';
+
+  Object.keys(options).forEach(key => {
+
+    const label =
+      key.charAt(0).toUpperCase() +
+      key.slice(1);
+
+    html +=
+      '<div><strong>' +
+      label +
+      ':</strong> ' +
+      options[key] +
+      '</div>';
+
+  });
+
+  html +=
+    '</div>';
+
+  return html;
+}
+
+
+/* =========================
+   OPTIONS FOR MESSAGE
+========================= */
+
+function optionsForMessage(options){
+
+  if(!options ||
+     Object.keys(options).length === 0){
+
+    return "";
+
+  }
+
+  let text = "";
+
+  Object.keys(options).forEach(key => {
+
+    const label =
+      key.charAt(0).toUpperCase() +
+      key.slice(1);
+
+    text +=
+      " | " +
+      label +
+      ": " +
+      options[key];
+
+  });
+
+  return text;
 }
 
 
@@ -1014,6 +1418,8 @@ function updateCart(){
       <div>
         ₦${product.price.toLocaleString()} each
       </div>
+
+      ${formatOptions(item.options)}
 
       <div class="cart-controls">
 
@@ -1196,21 +1602,29 @@ function payWithPaystack(){
 
   let total = 0;
 
+  let orderDetails = "";
+
   cart.forEach(item => {
 
     const product =
       products[item.index];
 
-    total +=
+    const itemTotal =
       product.price * item.quantity;
+
+    total += itemTotal;
+
+    orderDetails +=
+      product.name +
+      " x" +
+      item.quantity +
+      optionsForMessage(item.options) +
+      " = ₦" +
+      itemTotal.toLocaleString() +
+      "\n";
 
   });
 
-
-  /*
-    Paystack uses the smallest currency unit.
-    For NGN, ₦1 = 100 kobo.
-  */
 
   const amountInKobo =
     total * 100;
@@ -1244,7 +1658,9 @@ function payWithPaystack(){
 
       order_total:total,
 
-      store:"Erin Enterprises"
+      store:"Erin Enterprises",
+
+      order_items:orderDetails
 
     },
 
@@ -1343,9 +1759,15 @@ function sendPaidOrderToWhatsApp(
     const itemTotal =
       product.price * item.quantity;
 
+    const optionsText =
+      optionsForMessage(item.options);
+
     message +=
       "• " +
-      encodeURIComponent(product.name) +
+      encodeURIComponent(
+        product.name +
+        optionsText
+      ) +
       " x" +
       item.quantity +
       " = ₦" +
@@ -1382,7 +1804,7 @@ function sendPaidOrderToWhatsApp(
 
 
 /* =========================
-   EXISTING WHATSAPP CHECKOUT
+   WHATSAPP CHECKOUT
 ========================= */
 
 function checkoutWhatsApp(){
@@ -1473,9 +1895,15 @@ function checkoutWhatsApp(){
 
     total += itemTotal;
 
+    const optionsText =
+      optionsForMessage(item.options);
+
     message +=
       "• " +
-      encodeURIComponent(product.name) +
+      encodeURIComponent(
+        product.name +
+        optionsText
+      ) +
       " x" +
       item.quantity +
       " = ₦" +
@@ -1512,5 +1940,7 @@ displayProducts();
 
 updateCart();
 
-</script></body>
+</script>
+
+</body>
   </html>
