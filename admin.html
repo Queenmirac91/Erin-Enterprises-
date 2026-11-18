@@ -1,1 +1,137 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Erin Enterprises Admin</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{font-family:Arial;background:#171717;color:white;padding:20px}
+.container{max-width:500px;margin:auto}
+input,select,button{width:100%;padding:13px;margin:9px 0;box-sizing:border-box;border-radius:6px}
+button{background:#16a34a;color:white;border:0;font-weight:bold}
+h2{color:#4ade80}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Erin Enterprises Admin</h2>
+
+<div id="login">
+<h3>Admin Login</h3>
+<input id="email" type="email" placeholder="Your email">
+<input id="password" type="password" placeholder="Your password">
+<button onclick="login()">Login</button>
+</div>
+
+<div id="admin" class="hidden">
+<h3>Add New Product</h3>
+<input id="name" placeholder="Product name">
+<input id="price" type="number" placeholder="Price in Naira">
+
+<select id="category">
+<option value="">Choose category</option>
+<option>Beauty</option>
+<option>Hair</option>
+<option>Health</option>
+<option>Home</option>
+<option>Fashion</option>
+<option>Electronics</option>
+</select>
+
+<label>Product picture</label>
+<input id="image" type="file" accept="image/*">
+
+<button onclick="addProduct()">Save Product</button>
+<button onclick="logout()" style="background:#555">Logout</button>
+<p id="message"></p>
+</div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://axpmuyotadgjpnacytyk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_DLi_RoprPf4saGfxr3LWVg_rrKDzou5";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function login(){
+  const {data,error} = await db.auth.signInWithPassword({
+    email:document.getElementById("email").value,
+    password:document.getElementById("password").value
+  });
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("admin").classList.remove("hidden");
+}
+
+async function logout(){
+  await db.auth.signOut();
+  document.getElementById("admin").classList.add("hidden");
+  document.getElementById("login").classList.remove("hidden");
+}
+
+async function addProduct(){
+  const message = document.getElementById("message");
+  const name = document.getElementById("name").value.trim();
+  const price = Number(document.getElementById("price").value);
+  const category = document.getElementById("category").value;
+  const file = document.getElementById("image").files[0];
+
+  if(!name || !price || price <= 0 || !category || !file){
+    message.textContent = "Please fill all fields and choose a picture.";
+    return;
+  }
+
+  message.textContent = "Uploading product...";
+
+  const extension = file.name.split(".").pop();
+  const filePath = Date.now() + "." + extension;
+
+  const {error:uploadError} = await db.storage
+    .from("product-images")
+    .upload(filePath,file);
+
+  if(uploadError){
+    message.textContent = uploadError.message;
+    return;
+  }
+
+  const {data:urlData} = db.storage
+    .from("product-images")
+    .getPublicUrl(filePath);
+
+  const {error:insertError} = await db
+    .from("products")
+    .insert([{
+      name:name,
+      price:price,
+      category:category,
+      image_url:urlData.publicUrl
+    }]);
+
+  if(insertError){
+    message.textContent = insertError.message;
+    return;
+  }
+
+  message.textContent = "Product saved successfully!";
+
+  document.getElementById("name").value = "";
+  document.getElementById("price").value = "";
+  document.getElementById("category").value = "";
+  document.getElementById("image").value = "";
+}
+</script>
+</body>
+</html>
+
