@@ -7,60 +7,61 @@
 <script src="https://js.paystack.co/v2/inline.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
+:root{--ink:#20213a;--purple:#5941a9;--purple-dark:#39276f;--pink:#f3a6c8;--gold:#f4c76b;--cream:#fffaf3;--green:#16865b;--red:#bd3045;--muted:#6c6c7c}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f5f5f5;color:#222}
-header{background:#111;color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1000}
-.logo{font-size:24px;font-weight:bold}.header-actions{display:flex;gap:8px;align-items:center}
-.cart-btn,.admin-link{background:#fff;color:#111;border:0;padding:10px 14px;border-radius:8px;font-weight:bold;cursor:pointer;text-decoration:none}
-.hero{background:linear-gradient(135deg,#111,#444);color:#fff;text-align:center;padding:50px 20px}
-.hero h1{font-size:36px;margin-bottom:12px}.hero p{font-size:17px;margin:7px 0}
+body{font-family:Arial,sans-serif;background:var(--cream);color:var(--ink)}
+header{background:linear-gradient(110deg,var(--purple-dark),var(--purple));color:#fff;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1000;box-shadow:0 3px 14px #24164b30}
+.logo{font-size:23px;font-weight:bold;letter-spacing:.2px}.header-actions{display:flex;gap:8px;align-items:center}
+.cart-btn,.admin-link{background:#fff;color:var(--purple-dark);border:0;padding:10px 14px;border-radius:9px;font-weight:bold;cursor:pointer;text-decoration:none}
+.hero{background:radial-gradient(circle at 15% 15%,#8e76d2 0,transparent 35%),linear-gradient(135deg,#39276f,#7455bb 65%,#c47aa7);color:#fff;text-align:center;padding:54px 20px}
+.hero h1{font-size:36px;margin-bottom:12px}.hero p{font-size:17px;margin:7px 0}.hero p:last-child{color:#ffe7b0}
 .container{max-width:1200px;margin:auto;padding:25px 15px}
-.search-box{margin:10px auto 20px;max-width:600px}.search-box input{width:100%;padding:14px 18px;border:1px solid #ccc;border-radius:10px;font-size:16px}
+.search-box{margin:10px auto 20px;max-width:600px}.search-box input{width:100%;padding:14px 18px;border:1px solid #ded8ee;border-radius:12px;font-size:16px;background:#fff}
 .categories{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:25px}
-.category-btn{border:1px solid #ddd;background:#fff;padding:9px 14px;border-radius:20px;cursor:pointer;font-weight:bold}
-.category-btn.active,.category-btn:hover{background:#111;color:#fff}
-.section-title{text-align:center;margin-bottom:20px;font-size:28px}.status-message{text-align:center;padding:12px;margin:10px auto;color:#555}
+.category-btn{border:1px solid #e1d9f1;background:#fff;padding:9px 14px;border-radius:20px;cursor:pointer;font-weight:bold;color:var(--purple-dark)}
+.category-btn.active,.category-btn:hover{background:var(--purple);color:#fff;border-color:var(--purple)}
+.section-title{text-align:center;margin-bottom:20px;font-size:28px;color:var(--purple-dark)}.status-message{text-align:center;padding:12px;margin:10px auto;color:var(--muted)}
 .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px}
-.product{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.1);transition:.2s}
-.product:hover{transform:translateY(-3px)}.product img{width:100%;height:210px;object-fit:cover;display:block;background:#eee}
-.no-image{width:100%;height:210px;background:#eee;display:flex;align-items:center;justify-content:center;color:#777}
-.product-info{padding:15px}.product h3{font-size:17px;margin-bottom:6px}
-.category-label{display:inline-block;font-size:12px;background:#eee;padding:4px 8px;border-radius:10px;margin-bottom:10px}
-.price{font-size:19px;font-weight:bold;margin-bottom:8px}.stock-status{font-size:13px;font-weight:bold;margin:0 0 12px;color:#087d43}.stock-status.low{color:#b36b00}.stock-status.out{color:#b00020}.stock-status.unset{color:#666}.product-options{margin-bottom:12px}
+.product{background:#fff;border:1px solid #eee8f5;border-radius:15px;overflow:hidden;box-shadow:0 4px 16px rgba(48,31,91,.09);transition:.2s}
+.product:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(48,31,91,.14)}.product img{width:100%;height:210px;object-fit:cover;display:block;background:#f1edf7}
+.no-image{width:100%;height:210px;background:#f1edf7;display:flex;align-items:center;justify-content:center;color:#777}
+.product-info{padding:15px}.product h3{font-size:17px;margin-bottom:6px;color:var(--ink)}
+.category-label{display:inline-block;font-size:12px;background:#f1eafa;color:var(--purple-dark);padding:4px 8px;border-radius:10px;margin-bottom:10px}
+.price{font-size:19px;font-weight:bold;margin-bottom:8px;color:var(--purple-dark)}.stock-status{font-size:13px;font-weight:bold;margin:0 0 12px;color:var(--green)}.stock-status.low{color:#ad6900}.stock-status.out{color:var(--red)}.stock-status.unset{color:var(--muted)}.product-options{margin-bottom:12px}
 .option-group{margin-bottom:9px}.option-group label{display:block;font-size:13px;font-weight:bold;margin-bottom:5px}
-.option-group select,.option-group input{width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;font-size:14px;background:#fff}
-.product-buttons{display:flex;gap:8px}.add-btn,.buy-btn{flex:1;padding:11px 5px;border:0;border-radius:7px;cursor:pointer;font-weight:bold}
-.add-btn{background:#111;color:#fff}.buy-btn{background:#25D366;color:#fff}
+.option-group select,.option-group input{width:100%;padding:9px;border:1px solid #d8d2e5;border-radius:7px;font-size:14px;background:#fff}
+.product-buttons{display:flex;gap:8px}.add-btn,.buy-btn{flex:1;padding:11px 5px;border:0;border-radius:8px;cursor:pointer;font-weight:bold}
+.add-btn{background:var(--purple-dark);color:#fff}.buy-btn{background:#168b60;color:#fff}.add-btn:disabled,.buy-btn:disabled{background:#aaa;cursor:not-allowed}
 .no-results{text-align:center;padding:40px;color:#777;display:none}
-.cart-panel{position:fixed;right:-430px;top:0;width:410px;max-width:100%;height:100%;background:#fff;z-index:2000;box-shadow:-4px 0 15px rgba(0,0,0,.2);transition:.3s;padding:20px;overflow-y:auto}
-.cart-panel.open{right:0}.cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.close-cart{background:#eee;border:0;padding:8px 12px;border-radius:6px;cursor:pointer}
-.cart-item{border-bottom:1px solid #ddd;padding:15px 0}.cart-item h4{margin-bottom:7px}
-.selected-options{background:#f5f5f5;padding:8px;border-radius:6px;margin-top:8px;font-size:13px}
+.cart-panel{position:fixed;right:-430px;top:0;width:410px;max-width:100%;height:100%;background:#fff;z-index:2000;box-shadow:-4px 0 18px rgba(0,0,0,.2);transition:.3s;padding:20px;overflow-y:auto}
+.cart-panel.open{right:0}.cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;color:var(--purple-dark)}
+.close-cart{background:#f0ebf7;border:0;padding:8px 12px;border-radius:6px;cursor:pointer}
+.cart-item{border-bottom:1px solid #eee;padding:15px 0}.cart-item h4{margin-bottom:7px}
+.selected-options{background:#f7f3fb;padding:8px;border-radius:6px;margin-top:8px;font-size:13px}
 .cart-controls{display:flex;align-items:center;gap:8px;margin-top:10px}
-.cart-controls button{border:0;background:#111;color:#fff;width:30px;height:30px;border-radius:5px;cursor:pointer}
-.cart-controls .remove-btn{background:#c00;width:auto;padding:0 9px}
-.cart-total{font-size:21px;font-weight:bold;margin:20px 0}
-.customer-form{margin-top:20px;border-top:1px solid #ddd;padding-top:20px}.customer-form h3{margin-bottom:12px}
-.customer-form input,.customer-form textarea{width:100%;padding:12px;margin-bottom:10px;border:1px solid #ccc;border-radius:7px;font-size:15px;font-family:Arial,sans-serif}
+.cart-controls button{border:0;background:var(--purple-dark);color:#fff;width:30px;height:30px;border-radius:5px;cursor:pointer}
+.cart-controls .remove-btn{background:#bd3045;width:auto;padding:0 9px}
+.cart-total{font-size:21px;font-weight:bold;margin:20px 0;color:var(--purple-dark)}
+.customer-form{margin-top:20px;border-top:1px solid #eee;padding-top:20px}.customer-form h3{margin-bottom:12px;color:var(--purple-dark)}
+.customer-form input,.customer-form textarea{width:100%;padding:12px;margin-bottom:10px;border:1px solid #ddd5e9;border-radius:8px;font-size:15px;font-family:Arial,sans-serif}
 .customer-form textarea{min-height:80px;resize:vertical}
 .paystack-btn,.whatsapp-btn{width:100%;color:#fff;border:0;padding:14px;border-radius:8px;font-weight:bold;cursor:pointer;font-size:16px;margin-bottom:10px}
-.paystack-btn{background:#0a8f4d}.whatsapp-btn{background:#25D366}
+.paystack-btn{background:#087d4b}.whatsapp-btn{background:#20b963}
 .empty-cart{text-align:center;color:#777;padding:30px 0}
-footer{margin-top:40px;background:#111;color:#fff;text-align:center;padding:25px 15px}
-footer p{margin:7px}footer a{color:#25D366;text-decoration:none;font-weight:bold}
-.admin-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:3000;overflow:auto;padding:18px}
-.admin-overlay.open{display:block}.admin-panel{max-width:850px;margin:20px auto;background:#fff;border-radius:14px;padding:20px}
+footer{margin-top:40px;background:#2d2058;color:#fff;text-align:center;padding:25px 15px}
+footer p{margin:7px}footer a{color:#ffd78a;text-decoration:none;font-weight:bold}
+.admin-overlay{display:none;position:fixed;inset:0;background:rgba(20,13,42,.72);z-index:3000;overflow:auto;padding:18px}
+.admin-overlay.open{display:block}.admin-panel{max-width:850px;margin:20px auto;background:#fff;border-radius:15px;padding:20px}
 .admin-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:18px}
-.admin-panel h2,.admin-panel h3{margin-bottom:12px}.admin-panel input,.admin-panel select,.admin-panel textarea{width:100%;padding:11px;margin:6px 0 12px;border:1px solid #ccc;border-radius:7px;font:15px Arial}
+.admin-panel h2,.admin-panel h3{margin-bottom:12px;color:var(--purple-dark)}.admin-panel input,.admin-panel select,.admin-panel textarea{width:100%;padding:11px;margin:6px 0 12px;border:1px solid #ddd5e9;border-radius:7px;font:15px Arial}
 .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.admin-button{border:0;border-radius:7px;padding:11px 14px;background:#111;color:#fff;font-weight:bold;cursor:pointer;margin:4px 4px 4px 0}
-.admin-button.secondary{background:#666}.admin-button.danger{background:#b00020}.admin-button.green{background:#087d43}
-.admin-note{background:#f2f2f2;padding:12px;border-radius:8px;margin:10px 0;color:#444;font-size:14px;line-height:1.5}
-.admin-list{margin-top:18px}.admin-row{border:1px solid #ddd;border-radius:8px;padding:10px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.admin-button{border:0;border-radius:7px;padding:11px 14px;background:var(--purple-dark);color:#fff;font-weight:bold;cursor:pointer;margin:4px 4px 4px 0}
+.admin-button.secondary{background:#777}.admin-button.danger{background:#b00020}.admin-button.green{background:#087d4b}
+.admin-note{background:#f5f0fb;padding:12px;border-radius:8px;margin:10px 0;color:#49445a;font-size:14px;line-height:1.5}
+.admin-list{margin-top:18px}.admin-row{border:1px solid #e6e0ef;border-radius:8px;padding:10px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;gap:10px}
 .admin-row img{width:55px;height:55px;object-fit:cover;border-radius:6px}.admin-row-info{flex:1;min-width:0}.admin-row-info strong{display:block;overflow-wrap:anywhere}
 .hidden{display:none!important}
-@media(max-width:600px){.hero h1{font-size:28px}.products{grid-template-columns:repeat(2,1fr);gap:12px}.product img,.no-image{height:170px}.product-info{padding:10px}.product h3{font-size:14px}.price{font-size:16px}.product-buttons{flex-direction:column}.product-buttons button{width:100%}.cart-panel{width:100%}.admin-grid{grid-template-columns:1fr}.admin-row{align-items:flex-start}.admin-top{align-items:flex-start}}
+@media(max-width:600px){.hero h1{font-size:28px}.products{grid-template-columns:repeat(2,1fr);gap:12px}.product img,.no-image{height:170px}.product-info{padding:10px}.product h3{font-size:14px}.price{font-size:16px}.product-buttons{flex-direction:column}.product-buttons button{width:100%}.cart-panel{width:100%}.admin-grid{grid-template-columns:1fr}.admin-row{align-items:flex-start}.admin-top{align-items:flex-start}.logo{font-size:19px}}
 </style>
 </head>
 <body>
@@ -118,7 +119,7 @@ footer p{margin:7px}footer a{color:#25D366;text-decoration:none;font-weight:bold
       <p id="adminLoginStatus" class="admin-note">Only your authorised admin account should be used here.</p>
     </div>
     <div id="adminWorkspace" class="hidden">
-      <div class="admin-note">You are signed in. Add products, upload pictures from your phone, edit details, or delete products.</div>
+      <div class="admin-note">You are signed in. Add products, upload pictures from your phone, edit details, manage stock quantities, or delete products.</div>
       <h3 id="productFormHeading">Add a new product</h3>
       <input id="editProductId" type="hidden">
       <label>Product name</label><input id="adminProductName" type="text" placeholder="e.g. New body cream">
@@ -129,7 +130,7 @@ footer p{margin:7px}footer a{color:#25D366;text-decoration:none;font-weight:bold
       </div>
       <label>Product picture (choose from your phone)</label><input id="adminProductImage" type="file" accept="image/*">
       <div id="imageStatus" class="admin-note">Choose an image when adding a product. When editing, leave this empty to keep the current picture.</div>
-      <div class="admin-note">Stock is optional for now. Enter 0 when an item is sold out. Leave it blank only if you have not counted that product yet. Customers can order only up to the quantity recorded here.</div>
+      <div class="admin-note">Enter the actual number of units available. Enter 0 when sold out. Products with 1–5 units show a low-stock warning. Leave blank only if you have not counted that product yet.</div>
       <label>Product options (optional JSON)</label><textarea id="adminProductOptions" rows="3" placeholder='Example: {"size":{"type":"select","label":"Size","values":["S","M","L"]}}'>{}</textarea>
       <button class="admin-button green" onclick="saveProduct()">Save product</button>
       <button class="admin-button secondary" onclick="resetProductForm()">Clear form</button>
@@ -175,13 +176,18 @@ function prepareOptions(p){
  if(p.name==="Thrift Clothes"||p.name==="Kiddies Shoes")return {size:{type:"text",label:"Size",placeholder:"Enter size"},colour:{type:"text",label:"Colour",placeholder:"Enter colour"}};
  return {};
 }
+function getStockValue(row){
+ // Prefer the new column. Fall back to the old column for existing products not migrated yet.
+ const value=row.stock_quantity!==null&&row.stock_quantity!==undefined?row.stock_quantity:row.stock;
+ return value===null||value===undefined||value===""?null:Number(value);
+}
 async function loadProducts(){
  const status=document.getElementById("loadStatus");
  status.textContent="Loading Erin Enterprises products...";
  try{
-  const {data,error}=await supabaseClient.from("products").select("id,name,price,category,image_url,options,stock").order("created_at",{ascending:false});
+  const {data,error}=await supabaseClient.from("products").select("id,name,price,category,image_url,options,stock_quantity,stock").order("created_at",{ascending:false});
   if(error)throw error;
-  products=(data||[]).map(r=>({id:r.id,name:r.name,price:Number(r.price),category:r.category,image:r.image_url||productImages[r.name]||"",options:prepareOptions(r),stock:r.stock===null||r.stock===undefined?null:Number(r.stock)}));
+  products=(data||[]).map(r=>({id:r.id,name:r.name,price:Number(r.price),category:r.category,image:r.image_url||productImages[r.name]||"",options:prepareOptions(r),stock:getStockValue(r)}));
   status.textContent=products.length?`${products.length} products available`:"No products have been added yet.";
   displayProducts();updateCart();
   if(currentAdmin)renderAdminProducts();
@@ -207,7 +213,7 @@ function getProductOptions(i){
 function stockStatus(p){
  if(p.stock===null||p.stock===undefined||Number.isNaN(Number(p.stock)))return '<div class="stock-status unset">Stock availability on request</div>';
  if(Number(p.stock)<=0)return '<div class="stock-status out">Out of stock</div>';
- if(Number(p.stock)<=5)return `<div class="stock-status low">Only ${Number(p.stock)} left</div>`;
+ if(Number(p.stock)<=5)return `<div class="stock-status low">Only ${Number(p.stock)} left — low stock</div>`;
  return '<div class="stock-status">In stock</div>';
 }
 function displayProducts(list=products){
@@ -216,7 +222,8 @@ function displayProducts(list=products){
  list.forEach(p=>{
   const i=products.indexOf(p),card=document.createElement("div");card.className="product";
   const img=p.image?`<img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:"";
-  card.innerHTML=`${img}<div class="no-image" ${p.image?'style="display:none"':""}>📷 Image unavailable</div><div class="product-info"><h3>${escapeHTML(p.name)}</h3><span class="category-label">${escapeHTML(p.category)}</span><div class="price">₦${p.price.toLocaleString("en-NG")}</div>${stockStatus(p)}${createOptions(p,i)}<div class="product-buttons"><button class="add-btn" onclick="addToCart(${i})">🛒 Add</button><button class="buy-btn" onclick="buyNow(${i})">Buy Now</button></div></div>`;
+  const soldOut=p.stock!==null&&p.stock!==undefined&&Number(p.stock)<=0;
+  card.innerHTML=`${img}<div class="no-image" ${p.image?'style="display:none"':""}>📷 Image unavailable</div><div class="product-info"><h3>${escapeHTML(p.name)}</h3><span class="category-label">${escapeHTML(p.category)}</span><div class="price">₦${p.price.toLocaleString("en-NG")}</div>${stockStatus(p)}${createOptions(p,i)}<div class="product-buttons"><button class="add-btn" onclick="addToCart(${i})" ${soldOut?"disabled":""}>🛒 Add</button><button class="buy-btn" onclick="buyNow(${i})" ${soldOut?"disabled":""}>Buy Now</button></div></div>`;
   c.appendChild(card);
  });
 }
@@ -234,7 +241,7 @@ function addToCart(i){
  if(p.stock!==null&&p.stock!==undefined&&wanted>Number(p.stock)){alert("Only "+Number(p.stock)+" unit(s) of "+p.name+" are available.");return;}
  if(found)found.quantity++;else cart.push({index:i,quantity:1,options:opts});updateCart();
 }
-function buyNow(i){const old=cart.length;addToCart(i);if(cart.length>=old)openCart();}
+function buyNow(i){const before=cart.reduce((n,x)=>n+x.quantity,0);addToCart(i);const after=cart.reduce((n,x)=>n+x.quantity,0);if(after>before)openCart();}
 function formatOptions(o){if(!o||!Object.keys(o).length)return "";return '<div class="selected-options">'+Object.keys(o).map(k=>`<div><strong>${escapeHTML(k)}:</strong> ${escapeHTML(o[k])}</div>`).join("")+"</div>";}
 function optionsForMessage(o){if(!o||!Object.keys(o).length)return "";return Object.keys(o).map(k=>" | "+k+": "+o[k]).join("");}
 function getCartTotal(){return cart.reduce((s,x)=>s+(products[x.index]?products[x.index].price*x.quantity:0),0);}
@@ -326,12 +333,13 @@ async function saveProduct(){
    imageUrl=supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(path).data.publicUrl;
   }
   const stockText=document.getElementById("adminProductStock").value.trim();
-  let stock=null;
+  let stockQuantity=null;
   if(stockText!==""){
-   stock=Number(stockText);
-   if(!Number.isInteger(stock)||stock<0)throw new Error("Stock must be a whole number of zero or more.");
+   stockQuantity=Number(stockText);
+   if(!Number.isInteger(stockQuantity)||stockQuantity<0)throw new Error("Stock must be a whole number of zero or more.");
   }
-  const record={name,price,category,image_url:imageUrl,options,stock};
+  // Write only to stock_quantity. The legacy stock column is left unchanged.
+  const record={name,price,category,image_url:imageUrl,options,stock_quantity:stockQuantity};
   let result;
   if(id)result=await supabaseClient.from("products").update(record).eq("id",id);
   else result=await supabaseClient.from("products").insert(record);
@@ -344,14 +352,16 @@ async function saveProduct(){
 async function renderAdminProducts(){
  if(!currentAdmin)return;
  const box=document.getElementById("adminProductList");box.textContent="Loading products...";
- const {data,error}=await supabaseClient.from("products").select("id,name,price,category,image_url,options,stock").order("created_at",{ascending:false});
+ const {data,error}=await supabaseClient.from("products").select("id,name,price,category,image_url,options,stock_quantity,stock").order("created_at",{ascending:false});
  if(error){box.textContent="Could not load products: "+error.message;return;}
  if(!data.length){box.textContent="No products found.";return;}
  box.innerHTML="";
  data.forEach(p=>{
+  const stock=getStockValue(p);
+  const stockLabel=stock===null?"Not set":stock===0?"OUT OF STOCK":stock<=5?`${stock} — LOW STOCK`:`${stock} — In stock`;
   const row=document.createElement("div");row.className="admin-row";
   const thumb=p.image_url?`<img src="${escapeHTML(p.image_url)}" alt="">`:`<div style="width:55px;height:55px;background:#eee;display:grid;place-items:center;border-radius:6px">📷</div>`;
-  row.innerHTML=`${thumb}<div class="admin-row-info"><strong>${escapeHTML(p.name)}</strong><span>₦${Number(p.price).toLocaleString("en-NG")} · ${escapeHTML(p.category)} · Stock: ${p.stock===null||p.stock===undefined?"Not set":Number(p.stock)}</span></div><div><button class="admin-button" onclick="editProduct('${p.id}')">Edit</button><button class="admin-button danger" onclick="deleteProduct('${p.id}')">Delete</button></div>`;
+  row.innerHTML=`${thumb}<div class="admin-row-info"><strong>${escapeHTML(p.name)}</strong><span>₦${Number(p.price).toLocaleString("en-NG")} · ${escapeHTML(p.category)} · Stock: ${escapeHTML(stockLabel)}</span></div><div><button class="admin-button" onclick="editProduct('${p.id}')">Edit</button><button class="admin-button danger" onclick="deleteProduct('${p.id}')">Delete</button></div>`;
   box.appendChild(row);
  });
 }
@@ -375,4 +385,4 @@ supabaseClient.auth.getSession().then(({data})=>{
 updateCart();loadProducts();
 </script>
 </body>
-</html>
+  </html>
