@@ -26,7 +26,7 @@ header{background:#111;color:#fff;padding:16px 20px;display:flex;justify-content
 .no-image{width:100%;height:210px;background:#eee;display:flex;align-items:center;justify-content:center;color:#777}
 .product-info{padding:15px}.product h3{font-size:17px;margin-bottom:6px}
 .category-label{display:inline-block;font-size:12px;background:#eee;padding:4px 8px;border-radius:10px;margin-bottom:10px}
-.price{font-size:19px;font-weight:bold;margin-bottom:12px}.product-options{margin-bottom:12px}
+.price{font-size:19px;font-weight:bold;margin-bottom:8px}.stock-status{font-size:13px;font-weight:bold;margin:0 0 12px;color:#087d43}.stock-status.low{color:#b36b00}.stock-status.out{color:#b00020}.stock-status.unset{color:#666}.product-options{margin-bottom:12px}
 .option-group{margin-bottom:9px}.option-group label{display:block;font-size:13px;font-weight:bold;margin-bottom:5px}
 .option-group select,.option-group input{width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;font-size:14px;background:#fff}
 .product-buttons{display:flex;gap:8px}.add-btn,.buy-btn{flex:1;padding:11px 5px;border:0;border-radius:7px;cursor:pointer;font-weight:bold}
@@ -125,9 +125,11 @@ footer p{margin:7px}footer a{color:#25D366;text-decoration:none;font-weight:bold
       <div class="admin-grid">
         <div><label>Price (₦)</label><input id="adminProductPrice" type="number" min="1" step="1" placeholder="e.g. 5000"></div>
         <div><label>Category</label><select id="adminProductCategory"><option>Beauty</option><option>Hair</option><option>Health</option><option>Home</option><option>Fashion</option><option>Electronics</option></select></div>
+        <div><label>Available stock (units)</label><input id="adminProductStock" type="number" min="0" step="1" placeholder="e.g. 10"></div>
       </div>
       <label>Product picture (choose from your phone)</label><input id="adminProductImage" type="file" accept="image/*">
       <div id="imageStatus" class="admin-note">Choose an image when adding a product. When editing, leave this empty to keep the current picture.</div>
+      <div class="admin-note">Stock is optional for now. Enter 0 when an item is sold out. Leave it blank only if you have not counted that product yet. Customers can order only up to the quantity recorded here.</div>
       <label>Product options (optional JSON)</label><textarea id="adminProductOptions" rows="3" placeholder='Example: {"size":{"type":"select","label":"Size","values":["S","M","L"]}}'>{}</textarea>
       <button class="admin-button green" onclick="saveProduct()">Save product</button>
       <button class="admin-button secondary" onclick="resetProductForm()">Clear form</button>
@@ -177,9 +179,9 @@ async function loadProducts(){
  const status=document.getElementById("loadStatus");
  status.textContent="Loading Erin Enterprises products...";
  try{
-  const {data,error}=await supabaseClient.from("products").select("id,name,price,category,image_url,options").order("created_at",{ascending:false});
+  const {data,error}=await supabaseClient.from("products").select("id,name,price,category,image_url,options,stock").order("created_at",{ascending:false});
   if(error)throw error;
-  products=(data||[]).map(r=>({id:r.id,name:r.name,price:Number(r.price),category:r.category,image:r.image_url||productImages[r.name]||"",options:prepareOptions(r)}));
+  products=(data||[]).map(r=>({id:r.id,name:r.name,price:Number(r.price),category:r.category,image:r.image_url||productImages[r.name]||"",options:prepareOptions(r),stock:r.stock===null||r.stock===undefined?null:Number(r.stock)}));
   status.textContent=products.length?`${products.length} products available`:"No products have been added yet.";
   displayProducts();updateCart();
   if(currentAdmin)renderAdminProducts();
@@ -202,13 +204,19 @@ function getProductOptions(i){
  for(const k of Object.keys(p.options)){const el=document.getElementById(`option-${i}-${k}`),v=el?el.value.trim():"";if(!v){alert("Please select or enter "+(p.options[k].label||k)+" for "+p.name+".");return null;}selected[k]=v;}
  return selected;
 }
+function stockStatus(p){
+ if(p.stock===null||p.stock===undefined||Number.isNaN(Number(p.stock)))return '<div class="stock-status unset">Stock availability on request</div>';
+ if(Number(p.stock)<=0)return '<div class="stock-status out">Out of stock</div>';
+ if(Number(p.stock)<=5)return `<div class="stock-status low">Only ${Number(p.stock)} left</div>`;
+ return '<div class="stock-status">In stock</div>';
+}
 function displayProducts(list=products){
  const c=document.getElementById("products"),n=document.getElementById("noResults");c.innerHTML="";
  if(!list.length){n.style.display="block";return;}n.style.display="none";
  list.forEach(p=>{
   const i=products.indexOf(p),card=document.createElement("div");card.className="product";
   const img=p.image?`<img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:"";
-  card.innerHTML=`${img}<div class="no-image" ${p.image?'style="display:none"':""}>📷 Image unavailable</div><div class="product-info"><h3>${escapeHTML(p.name)}</h3><span class="category-label">${escapeHTML(p.category)}</span><div class="price">₦${p.price.toLocaleString("en-NG")}</div>${createOptions(p,i)}<div class="product-buttons"><button class="add-btn" onclick="addToCart(${i})">🛒 Add</button><button class="buy-btn" onclick="buyNow(${i})">Buy Now</button></div></div>`;
+  card.innerHTML=`${img}<div class="no-image" ${p.image?'style="display:none"':""}>📷 Image unavailable</div><div class="product-info"><h3>${escapeHTML(p.name)}</h3><span class="category-label">${escapeHTML(p.category)}</span><div class="price">₦${p.price.toLocaleString("en-NG")}</div>${stockStatus(p)}${createOptions(p,i)}<div class="product-buttons"><button class="add-btn" onclick="addToCart(${i})">🛒 Add</button><button class="buy-btn" onclick="buyNow(${i})">Buy Now</button></div></div>`;
   c.appendChild(card);
  });
 }
@@ -218,8 +226,12 @@ function filterProducts(){
 }
 function selectCategory(cat,b){selectedCategory=cat;document.querySelectorAll(".category-btn").forEach(x=>x.classList.remove("active"));b.classList.add("active");filterProducts();}
 function addToCart(i){
+ const p=products[i];if(!p)return;
+ if(p.stock!==null&&p.stock!==undefined&&Number(p.stock)<=0){alert(p.name+" is currently out of stock.");return;}
  const opts=getProductOptions(i);if(opts===null)return;
  const found=cart.find(x=>x.index===i&&JSON.stringify(x.options)===JSON.stringify(opts));
+ const wanted=(found?found.quantity:0)+1;
+ if(p.stock!==null&&p.stock!==undefined&&wanted>Number(p.stock)){alert("Only "+Number(p.stock)+" unit(s) of "+p.name+" are available.");return;}
  if(found)found.quantity++;else cart.push({index:i,quantity:1,options:opts});updateCart();
 }
 function buyNow(i){const old=cart.length;addToCart(i);if(cart.length>=old)openCart();}
@@ -232,7 +244,26 @@ function updateCart(){
  cart.forEach((x,i)=>{const p=products[x.index];if(!p)return;count+=x.quantity;const d=document.createElement("div");d.className="cart-item";d.innerHTML=`<h4>${escapeHTML(p.name)}</h4><div>₦${p.price.toLocaleString("en-NG")} each</div>${formatOptions(x.options)}<div class="cart-controls"><button onclick="changeQuantity(${i},-1)">−</button><span>${x.quantity}</span><button onclick="changeQuantity(${i},1)">+</button><button class="remove-btn" onclick="removeFromCart(${i})">Remove</button></div><div style="margin-top:8px;font-weight:bold">₦${(p.price*x.quantity).toLocaleString("en-NG")}</div>`;c.appendChild(d);});
  document.getElementById("cartCount").textContent=count;document.getElementById("cartTotal").textContent=getCartTotal().toLocaleString("en-NG");
 }
-function changeQuantity(i,n){if(!cart[i])return;cart[i].quantity+=n;if(cart[i].quantity<=0)cart.splice(i,1);updateCart();}
+function changeQuantity(i,n){
+ if(!cart[i])return;
+ const p=products[cart[i].index];
+ if(n>0&&p&&p.stock!==null&&p.stock!==undefined&&cart[i].quantity+n>Number(p.stock)){alert("Only "+Number(p.stock)+" unit(s) of "+p.name+" are available.");return;}
+ cart[i].quantity+=n;if(cart[i].quantity<=0)cart.splice(i,1);updateCart();
+}
+function checkCartStock(){
+ for(const item of cart){
+  const p=products[item.index];if(!p)continue;
+  if(p.stock!==null&&p.stock!==undefined&&item.quantity>Number(p.stock)){
+   alert("Your cart has "+item.quantity+" unit(s) of "+p.name+", but only "+Number(p.stock)+" are available. Please adjust your cart.");
+   return false;
+  }
+  if(p.stock!==null&&p.stock!==undefined&&Number(p.stock)<=0){
+   alert(p.name+" is out of stock. Please remove it from your cart.");
+   return false;
+  }
+ }
+ return true;
+}
 function removeFromCart(i){cart.splice(i,1);updateCart();}
 function openCart(){document.getElementById("cartPanel").classList.add("open");}
 function closeCart(){document.getElementById("cartPanel").classList.remove("open");}
@@ -244,12 +275,12 @@ function getCustomerDetails(reqEmail=false){
 }
 function buildOrderText(){return cart.map(x=>{const p=products[x.index];return `• ${p.name}${optionsForMessage(x.options)} x${x.quantity} = ₦${(p.price*x.quantity).toLocaleString("en-NG")}\n`;}).join("");}
 function checkoutWhatsApp(){
- const d=getCustomerDetails();if(!d)return;
+ const d=getCustomerDetails();if(!d||!checkCartStock())return;
  const msg=`Hello Erin Enterprises!\n\nNEW ORDER\n\nCustomer Name: ${d.name}\nPhone: ${d.phone}\nDelivery Address: ${d.address}\n\nORDER ITEMS:\n${buildOrderText()}\nTOTAL: ₦${getCartTotal().toLocaleString("en-NG")}\n\nPlease confirm my order. Thank you.`;
  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,"_blank");
 }
 function payWithPaystack(){
- const d=getCustomerDetails(true);if(!d)return;
+ const d=getCustomerDetails(true);if(!d||!checkCartStock())return;
  if(!window.PaystackPop){alert("Paystack could not load. Check your internet connection and try again.");return;}
  const total=getCartTotal();if(!Number.isFinite(total)||total<=0){alert("The order total is invalid.");return;}
  const popup=new PaystackPop();
@@ -276,7 +307,7 @@ async function adminLogout(){
 }
 function resetProductForm(){
  document.getElementById("editProductId").value="";document.getElementById("adminProductName").value="";document.getElementById("adminProductPrice").value="";
- document.getElementById("adminProductCategory").value="Beauty";document.getElementById("adminProductImage").value="";document.getElementById("adminProductOptions").value="{}";
+ document.getElementById("adminProductCategory").value="Beauty";document.getElementById("adminProductStock").value="";document.getElementById("adminProductImage").value="";document.getElementById("adminProductOptions").value="{}";
  document.getElementById("productFormHeading").textContent="Add a new product";document.getElementById("imageStatus").textContent="Choose an image when adding a product. When editing, leave this empty to keep the current picture.";
 }
 async function saveProduct(){
@@ -294,7 +325,13 @@ async function saveProduct(){
    if(upErr)throw new Error("Picture upload failed: "+upErr.message);
    imageUrl=supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(path).data.publicUrl;
   }
-  const record={name,price,category,image_url:imageUrl,options};
+  const stockText=document.getElementById("adminProductStock").value.trim();
+  let stock=null;
+  if(stockText!==""){
+   stock=Number(stockText);
+   if(!Number.isInteger(stock)||stock<0)throw new Error("Stock must be a whole number of zero or more.");
+  }
+  const record={name,price,category,image_url:imageUrl,options,stock};
   let result;
   if(id)result=await supabaseClient.from("products").update(record).eq("id",id);
   else result=await supabaseClient.from("products").insert(record);
@@ -307,21 +344,21 @@ async function saveProduct(){
 async function renderAdminProducts(){
  if(!currentAdmin)return;
  const box=document.getElementById("adminProductList");box.textContent="Loading products...";
- const {data,error}=await supabaseClient.from("products").select("id,name,price,category,image_url,options").order("created_at",{ascending:false});
+ const {data,error}=await supabaseClient.from("products").select("id,name,price,category,image_url,options,stock").order("created_at",{ascending:false});
  if(error){box.textContent="Could not load products: "+error.message;return;}
  if(!data.length){box.textContent="No products found.";return;}
  box.innerHTML="";
  data.forEach(p=>{
   const row=document.createElement("div");row.className="admin-row";
   const thumb=p.image_url?`<img src="${escapeHTML(p.image_url)}" alt="">`:`<div style="width:55px;height:55px;background:#eee;display:grid;place-items:center;border-radius:6px">📷</div>`;
-  row.innerHTML=`${thumb}<div class="admin-row-info"><strong>${escapeHTML(p.name)}</strong><span>₦${Number(p.price).toLocaleString("en-NG")} · ${escapeHTML(p.category)}</span></div><div><button class="admin-button" onclick="editProduct('${p.id}')">Edit</button><button class="admin-button danger" onclick="deleteProduct('${p.id}')">Delete</button></div>`;
+  row.innerHTML=`${thumb}<div class="admin-row-info"><strong>${escapeHTML(p.name)}</strong><span>₦${Number(p.price).toLocaleString("en-NG")} · ${escapeHTML(p.category)} · Stock: ${p.stock===null||p.stock===undefined?"Not set":Number(p.stock)}</span></div><div><button class="admin-button" onclick="editProduct('${p.id}')">Edit</button><button class="admin-button danger" onclick="deleteProduct('${p.id}')">Delete</button></div>`;
   box.appendChild(row);
  });
 }
 function editProduct(id){
  const p=products.find(x=>x.id===id);if(!p){alert("Refresh the product list and try again.");return;}
  document.getElementById("editProductId").value=p.id;document.getElementById("adminProductName").value=p.name;document.getElementById("adminProductPrice").value=p.price;
- document.getElementById("adminProductCategory").value=p.category;document.getElementById("adminProductOptions").value=JSON.stringify(p.options||{},null,2);
+ document.getElementById("adminProductCategory").value=p.category;document.getElementById("adminProductStock").value=p.stock===null||p.stock===undefined?"":p.stock;document.getElementById("adminProductOptions").value=JSON.stringify(p.options||{},null,2);
  document.getElementById("adminProductImage").value="";document.getElementById("productFormHeading").textContent="Edit product";
  document.getElementById("imageStatus").textContent="Current picture will remain unless you choose a new picture.";
  document.querySelector(".admin-panel").scrollIntoView({behavior:"smooth"});
