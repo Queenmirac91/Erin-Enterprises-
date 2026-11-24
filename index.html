@@ -3,1947 +3,565 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Erin Enterprises | Online Store</title>
 
-<!-- PAYSTACK -->
 <script src="https://js.paystack.co/v2/inline.js"></script>
-
-<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-body{
-  font-family:Arial,sans-serif;
-  background:#f5f5f5;
-  color:#222;
-}
-
-header{
-  background:#111;
-  color:white;
-  padding:16px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  position:sticky;
-  top:0;
-  z-index:1000;
-}
-
-.logo{
-  font-size:24px;
-  font-weight:bold;
-}
-
-.cart-btn{
-  background:white;
-  color:#111;
-  border:none;
-  padding:10px 16px;
-  border-radius:8px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.hero{
-  background:linear-gradient(135deg,#111,#444);
-  color:white;
-  text-align:center;
-  padding:50px 20px;
-}
-
-.hero h1{
-  font-size:36px;
-  margin-bottom:12px;
-}
-
-.hero p{
-  font-size:17px;
-  margin:7px 0;
-}
-
-.container{
-  max-width:1200px;
-  margin:auto;
-  padding:25px 15px;
-}
-
-.search-box{
-  margin:10px auto 20px;
-  max-width:600px;
-}
-
-.search-box input{
-  width:100%;
-  padding:14px 18px;
-  border:1px solid #ccc;
-  border-radius:10px;
-  font-size:16px;
-  outline:none;
-}
-
-.search-box input:focus{
-  border-color:#111;
-}
-
-.categories{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  justify-content:center;
-  margin-bottom:25px;
-}
-
-.category-btn{
-  border:none;
-  background:white;
-  border:1px solid #ddd;
-  padding:9px 14px;
-  border-radius:20px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-.category-btn.active,
-.category-btn:hover{
-  background:#111;
-  color:white;
-}
-
-.section-title{
-  text-align:center;
-  margin-bottom:20px;
-  font-size:28px;
-}
-
-.products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-  gap:20px;
-}
-
-.product{
-  background:white;
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow:0 3px 12px rgba(0,0,0,.1);
-  transition:.2s;
-}
-
-.product:hover{
-  transform:translateY(-3px);
-}
-
-.product img{
-  width:100%;
-  height:210px;
-  object-fit:cover;
-  display:block;
-  background:#eee;
-}
-
-.no-image{
-  width:100%;
-  height:210px;
-  background:#eee;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#777;
-}
-
-.product-info{
-  padding:15px;
-}
-
-.product h3{
-  font-size:17px;
-  margin-bottom:6px;
-}
-
-.category-label{
-  display:inline-block;
-  font-size:12px;
-  background:#eee;
-  padding:4px 8px;
-  border-radius:10px;
-  margin-bottom:10px;
-}
-
-.price{
-  font-size:19px;
-  font-weight:bold;
-  margin-bottom:12px;
-}
-
-/* PRODUCT OPTIONS */
-
-.product-options{
-  margin-bottom:12px;
-}
-
-.option-group{
-  margin-bottom:9px;
-}
-
-.option-group label{
-  display:block;
-  font-size:13px;
-  font-weight:bold;
-  margin-bottom:5px;
-}
-
-.option-group select,
-.option-group input{
-  width:100%;
-  padding:9px;
-  border:1px solid #ccc;
-  border-radius:6px;
-  font-size:14px;
-  background:white;
-}
-
-.product-buttons{
-  display:flex;
-  gap:8px;
-}
-
-.add-btn,
-.buy-btn{
-  flex:1;
-  padding:11px 5px;
-  border:none;
-  border-radius:7px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-.add-btn{
-  background:#111;
-  color:white;
-}
-
-.buy-btn{
-  background:#25D366;
-  color:white;
-}
-
-.add-btn:hover{
-  background:#333;
-}
-
-.buy-btn:hover{
-  background:#1ebe5d;
-}
-
-.no-results{
-  text-align:center;
-  padding:40px;
-  color:#777;
-  display:none;
-}
-
-.cart-panel{
-  position:fixed;
-  right:-430px;
-  top:0;
-  width:410px;
-  max-width:100%;
-  height:100%;
-  background:white;
-  z-index:2000;
-  box-shadow:-4px 0 15px rgba(0,0,0,.2);
-  transition:.3s;
-  padding:20px;
-  overflow-y:auto;
-}
-
-.cart-panel.open{
-  right:0;
-}
-
-.cart-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
-}
-
-.close-cart{
-  background:#eee;
-  border:none;
-  padding:8px 12px;
-  border-radius:6px;
-  cursor:pointer;
-}
-
-.cart-item{
-  border-bottom:1px solid #ddd;
-  padding:15px 0;
-}
-
-.cart-item h4{
-  margin-bottom:7px;
-}
-
-.selected-options{
-  background:#f5f5f5;
-  padding:8px;
-  border-radius:6px;
-  margin-top:8px;
-  font-size:13px;
-}
-
-.cart-controls{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin-top:10px;
-}
-
-.cart-controls button{
-  border:none;
-  background:#111;
-  color:white;
-  width:30px;
-  height:30px;
-  border-radius:5px;
-  cursor:pointer;
-}
-
-.remove-btn{
-  background:#c00 !important;
-  width:auto !important;
-  padding:0 9px;
-}
-
-.cart-total{
-  font-size:21px;
-  font-weight:bold;
-  margin:20px 0;
-}
-
-.customer-form{
-  margin-top:20px;
-  border-top:1px solid #ddd;
-  padding-top:20px;
-}
-
-.customer-form h3{
-  margin-bottom:12px;
-}
-
-.customer-form input,
-.customer-form textarea{
-  width:100%;
-  padding:12px;
-  margin-bottom:10px;
-  border:1px solid #ccc;
-  border-radius:7px;
-  font-size:15px;
-  font-family:Arial,sans-serif;
-}
-
-.customer-form textarea{
-  min-height:80px;
-  resize:vertical;
-}
-
-/* PAYSTACK BUTTON */
-
-.paystack-btn{
-  width:100%;
-  background:#0a8f4d;
-  color:white;
-  border:none;
-  padding:14px;
-  border-radius:8px;
-  font-weight:bold;
-  cursor:pointer;
-  font-size:16px;
-  margin-bottom:10px;
-}
-
-.paystack-btn:hover{
-  background:#087a41;
-}
-
-.whatsapp-btn{
-  width:100%;
-  background:#25D366;
-  color:white;
-  border:none;
-  padding:14px;
-  border-radius:8px;
-  font-weight:bold;
-  cursor:pointer;
-  font-size:16px;
-}
-
-.empty-cart{
-  text-align:center;
-  color:#777;
-  padding:30px 0;
-}
-
-footer{
-  margin-top:40px;
-  background:#111;
-  color:white;
-  text-align:center;
-  padding:25px 15px;
-}
-
-footer p{
-  margin:7px;
-}
-
-footer a{
-  color:#25D366;
-  text-decoration:none;
-  font-weight:bold;
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f5f5;color:#222}
+header{background:#111;color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1000}
+.logo{font-size:24px;font-weight:bold}
+.cart-btn{background:#fff;color:#111;border:0;padding:10px 16px;border-radius:8px;font-weight:bold;cursor:pointer}
+.hero{background:linear-gradient(135deg,#111,#444);color:#fff;text-align:center;padding:50px 20px}
+.hero h1{font-size:36px;margin-bottom:12px}
+.hero p{font-size:17px;margin:7px 0}
+.container{max-width:1200px;margin:auto;padding:25px 15px}
+.search-box{margin:10px auto 20px;max-width:600px}
+.search-box input{width:100%;padding:14px 18px;border:1px solid #ccc;border-radius:10px;font-size:16px;outline:none}
+.search-box input:focus{border-color:#111}
+.categories{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:25px}
+.category-btn{border:1px solid #ddd;background:#fff;padding:9px 14px;border-radius:20px;cursor:pointer;font-weight:bold}
+.category-btn.active,.category-btn:hover{background:#111;color:#fff}
+.section-title{text-align:center;margin-bottom:20px;font-size:28px}
+.status-message{text-align:center;padding:12px;margin:10px auto;color:#555}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px}
+.product{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.1);transition:.2s}
+.product:hover{transform:translateY(-3px)}
+.product img{width:100%;height:210px;object-fit:cover;display:block;background:#eee}
+.no-image{width:100%;height:210px;background:#eee;display:flex;align-items:center;justify-content:center;color:#777}
+.product-info{padding:15px}
+.product h3{font-size:17px;margin-bottom:6px}
+.category-label{display:inline-block;font-size:12px;background:#eee;padding:4px 8px;border-radius:10px;margin-bottom:10px}
+.price{font-size:19px;font-weight:bold;margin-bottom:12px}
+.product-options{margin-bottom:12px}
+.option-group{margin-bottom:9px}
+.option-group label{display:block;font-size:13px;font-weight:bold;margin-bottom:5px}
+.option-group select,.option-group input{width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;font-size:14px;background:#fff}
+.product-buttons{display:flex;gap:8px}
+.add-btn,.buy-btn{flex:1;padding:11px 5px;border:0;border-radius:7px;cursor:pointer;font-weight:bold}
+.add-btn{background:#111;color:#fff}
+.buy-btn{background:#25D366;color:#fff}
+.no-results{text-align:center;padding:40px;color:#777;display:none}
+.cart-panel{position:fixed;right:-430px;top:0;width:410px;max-width:100%;height:100%;background:#fff;z-index:2000;box-shadow:-4px 0 15px rgba(0,0,0,.2);transition:.3s;padding:20px;overflow-y:auto}
+.cart-panel.open{right:0}
+.cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.close-cart{background:#eee;border:0;padding:8px 12px;border-radius:6px;cursor:pointer}
+.cart-item{border-bottom:1px solid #ddd;padding:15px 0}
+.cart-item h4{margin-bottom:7px}
+.selected-options{background:#f5f5f5;padding:8px;border-radius:6px;margin-top:8px;font-size:13px}
+.cart-controls{display:flex;align-items:center;gap:8px;margin-top:10px}
+.cart-controls button{border:0;background:#111;color:#fff;width:30px;height:30px;border-radius:5px;cursor:pointer}
+.cart-controls .remove-btn{background:#c00;width:auto;padding:0 9px}
+.cart-total{font-size:21px;font-weight:bold;margin:20px 0}
+.customer-form{margin-top:20px;border-top:1px solid #ddd;padding-top:20px}
+.customer-form h3{margin-bottom:12px}
+.customer-form input,.customer-form textarea{width:100%;padding:12px;margin-bottom:10px;border:1px solid #ccc;border-radius:7px;font-size:15px;font-family:Arial,sans-serif}
+.customer-form textarea{min-height:80px;resize:vertical}
+.paystack-btn,.whatsapp-btn{width:100%;color:#fff;border:0;padding:14px;border-radius:8px;font-weight:bold;cursor:pointer;font-size:16px;margin-bottom:10px}
+.paystack-btn{background:#0a8f4d}
+.whatsapp-btn{background:#25D366}
+.empty-cart{text-align:center;color:#777;padding:30px 0}
+footer{margin-top:40px;background:#111;color:#fff;text-align:center;padding:25px 15px}
+footer p{margin:7px}
+footer a{color:#25D366;text-decoration:none;font-weight:bold}
 @media(max-width:500px){
-
-  .hero h1{
-    font-size:28px;
-  }
-
-  .products{
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-  }
-
-  .product img,
-  .no-image{
-    height:170px;
-  }
-
-  .product-info{
-    padding:10px;
-  }
-
-  .product h3{
-    font-size:14px;
-  }
-
-  .price{
-    font-size:16px;
-  }
-
-  .product-buttons{
-    flex-direction:column;
-  }
-
-  .product-buttons button{
-    width:100%;
-  }
-
-  .cart-panel{
-    width:100%;
-  }
+ .hero h1{font-size:28px}
+ .products{grid-template-columns:repeat(2,1fr);gap:12px}
+ .product img,.no-image{height:170px}
+ .product-info{padding:10px}
+ .product h3{font-size:14px}
+ .price{font-size:16px}
+ .product-buttons{flex-direction:column}
+ .product-buttons button{width:100%}
+ .cart-panel{width:100%}
 }
-
 </style>
 </head>
-
 <body>
-
 <header>
-
-  <div class="logo">
-    Erin Enterprises
-  </div>
-
-  <button class="cart-btn" onclick="openCart()">
-    🛒 Cart (<span id="cartCount">0</span>)
-  </button>
-
+  <div class="logo">Erin Enterprises</div>
+  <button class="cart-btn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
 </header>
 
-
 <section class="hero">
-
   <h1>Welcome to Erin Enterprises</h1>
-
   <p>Quality products at affordable prices.</p>
-
   <p>Shop online and order easily through WhatsApp.</p>
-
 </section>
 
-
 <div class="container">
-
   <div class="search-box">
-
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="🔎 Search for a product..."
-      oninput="filterProducts()"
-    >
-
+    <input type="text" id="searchInput" placeholder="🔎 Search for a product..." oninput="filterProducts()">
   </div>
-
 
   <div class="categories">
-
-    <button
-      class="category-btn active"
-      onclick="selectCategory('All',this)">
-      All
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="selectCategory('Beauty',this)">
-      Beauty
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="selectCategory('Hair',this)">
-      Hair
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="selectCategory('Health',this)">
-      Health
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="selectCategory('Home',this)">
-      Home
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="selectCategory('Fashion',this)">
-      Fashion
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="selectCategory('Electronics',this)">
-      Electronics
-    </button>
-
+    <button class="category-btn active" onclick="selectCategory('All',this)">All</button>
+    <button class="category-btn" onclick="selectCategory('Beauty',this)">Beauty</button>
+    <button class="category-btn" onclick="selectCategory('Hair',this)">Hair</button>
+    <button class="category-btn" onclick="selectCategory('Health',this)">Health</button>
+    <button class="category-btn" onclick="selectCategory('Home',this)">Home</button>
+    <button class="category-btn" onclick="selectCategory('Fashion',this)">Fashion</button>
+    <button class="category-btn" onclick="selectCategory('Electronics',this)">Electronics</button>
   </div>
 
-
-  <h2 class="section-title">
-    Our Products
-  </h2>
-
-
+  <h2 class="section-title">Our Products</h2>
+  <div id="loadStatus" class="status-message">Loading Erin Enterprises products...</div>
   <div class="products" id="products"></div>
-
-
-  <div class="no-results" id="noResults">
-    No products found.
-  </div>
-
+  <div class="no-results" id="noResults">No products found.</div>
 </div>
-
 
 <div class="cart-panel" id="cartPanel">
-
   <div class="cart-header">
-
     <h2>🛒 Your Cart</h2>
-
-    <button
-      class="close-cart"
-      onclick="closeCart()">
-      ✕
-    </button>
-
+    <button class="close-cart" onclick="closeCart()">✕</button>
   </div>
-
-
   <div id="cartItems"></div>
-
-
-  <div class="cart-total">
-    Total: ₦<span id="cartTotal">0</span>
-  </div>
-
+  <div class="cart-total">Total: ₦<span id="cartTotal">0</span></div>
 
   <div class="customer-form">
-
     <h3>Customer Details</h3>
-
-    <input
-      type="text"
-      id="customerName"
-      placeholder="Your full name"
-    >
-
-    <input
-      type="tel"
-      id="customerPhone"
-      placeholder="Your phone number"
-    >
-
-    <input
-      type="email"
-      id="customerEmail"
-      placeholder="Your email address"
-    >
-
-    <textarea
-      id="customerAddress"
-      placeholder="Delivery address"
-    ></textarea>
-
+    <input type="text" id="customerName" placeholder="Your full name" autocomplete="name">
+    <input type="tel" id="customerPhone" placeholder="Your phone number" autocomplete="tel">
+    <input type="email" id="customerEmail" placeholder="Your email address" autocomplete="email">
+    <textarea id="customerAddress" placeholder="Delivery address" autocomplete="street-address"></textarea>
   </div>
 
-
-  <button
-    class="paystack-btn"
-    onclick="payWithPaystack()">
-
-    💳 Pay with Paystack
-
-  </button>
-
-
-  <button
-    class="whatsapp-btn"
-    onclick="checkoutWhatsApp()">
-
-    💬 Order via WhatsApp
-
-  </button>
-
+  <button class="paystack-btn" onclick="payWithPaystack()">💳 Pay with Paystack</button>
+  <button class="whatsapp-btn" onclick="checkoutWhatsApp()">💬 Order via WhatsApp</button>
+  <p style="font-size:12px;color:#777;margin-top:8px">For paid orders, confirm the transaction reference in your Paystack dashboard before dispatch.</p>
 </div>
 
-
 <footer>
-
-  <p>
-    © 2026 Erin Enterprises. All Rights Reserved.
-  </p>
-
-  <p>
-    WhatsApp:
-    <a
-      href="https://wa.me/2348125253898"
-      target="_blank">
-      +234 812 525 3898
-    </a>
-  </p>
-
+  <p>© 2026 Erin Enterprises. All Rights Reserved.</p>
+  <p>WhatsApp: <a href="https://wa.me/2348125253898" target="_blank" rel="noopener">+234 812 525 3898</a></p>
+  <p>Email: Erinsenterprisesvarieties@gmail.com</p>
 </footer>
 
-
 <script>
-
 /* =========================
-   PAYSTACK
+   STORE CONFIGURATION
 ========================= */
+const PAYSTACK_PUBLIC_KEY = "pk_live_caee99bf950a74d75facd70e10e40781dabe9f3c";
+const WHATSAPP_NUMBER = "2348125253898";
+const SUPABASE_URL = "https://szvnmmmtnrucqhguumia.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_DLi_RoprPf4saGfxr3LWVg_rrKDzou5";
 
-const PAYSTACK_PUBLIC_KEY =
-  "pk_live_caee99bf950a74d75facd70e10e40781dabe9f3c";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-
-/* =========================
-   PRODUCTS
-========================= */
-
-const products = [
-
-  {
-    name:"Dodo Skin Gold",
-    price:2500,
-    image:"20260921_115408.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"Wig Stand",
-    price:1000,
-    image:"20260921_115710.jpg",
-    category:"Hair"
-  },
-
-  {
-    name:"Whitening Cream",
-    price:3500,
-    image:"20260921_115803.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"Charcoal Whitening Teeth",
-    price:2500,
-    image:"20260921_115527.jpg",
-    category:"Health"
-  },
-
-  {
-    name:"Body Mix Perfume",
-    price:2500,
-    image:"20260921_115746.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"Eyebrows Sharpener",
-    price:2000,
-    image:"20260921_115455.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"Pipe Cleaner",
-    price:4000,
-    image:"20260921_115557.jpg",
-    category:"Home"
-  },
-
-  {
-    name:"Dish Washer Powder",
-    price:4000,
-    image:"20260921_115725.jpg",
-    category:"Home"
-  },
-
-  {
-    name:"Children Shoes (Sizes 29 & 30)",
-    price:9000,
-    image:"IMG-20260708-WA0104.jpg",
-    category:"Fashion",
-
-    options:{
-      size:{
-        type:"select",
-        label:"Size",
-        values:["29","30"]
-      },
-
-      colour:{
-        type:"text",
-        label:"Colour",
-        placeholder:"Enter colour"
-      }
-    }
-  },
-
-  {
-    name:"Gold Angel Perfume",
-    price:6000,
-    image:"20260921_115754.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"Dermaliss White Lotion",
-    price:3500,
-    image:"20260921_115742.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"Dr Paris Cream",
-    price:12000,
-    image:"20260901_143051.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"SP Toothpaste",
-    price:6500,
-    image:"20260921_115546.jpg",
-    category:"Health"
-  },
-
-  {
-    name:"Rechargeable Chopper",
-    price:6000,
-    image:"20260921_115624.jpg",
-    category:"Home"
-  },
-
-  {
-    name:"Hand Cream",
-    price:1000,
-    image:"20260921_115518.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"Thrift Clothes",
-    price:2500,
-    image:"1688_image_share_9c8e4f0d5a9bfe7edbdb4a79ed4ce007.jpg",
-    category:"Fashion",
-
-    options:{
-      size:{
-        type:"text",
-        label:"Size",
-        placeholder:"Enter size"
-      },
-
-      colour:{
-        type:"text",
-        label:"Colour",
-        placeholder:"Enter colour"
-      }
-    }
-  },
-
-  {
-    name:"Sulphur Active Hair Cream",
-    price:2500,
-    image:"20260921_115432.jpg",
-    category:"Hair"
-  },
-
-  {
-    name:"Magic Black Hair Cream",
-    price:2000,
-    image:"20260921_115839.jpg",
-    category:"Hair"
-  },
-
-  {
-    name:"Vitamin C Cream",
-    price:2500,
-    image:"20260901_143158.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"Pearl Cream",
-    price:8000,
-    image:"20260901_143019.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"Yellow Pawpaw Cream",
-    price:5500,
-    image:"20260901_143137.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"Asantee Body Cream",
-    price:3000,
-    image:"20260901_143214.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"Knife Sharpener",
-    price:3000,
-    image:"20260921_115631.jpg",
-    category:"Home"
-  },
-
-  {
-    name:"Aloe Vera Cream",
-    price:3500,
-    image:"20260921_115736.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"Dental Oral Care",
-    price:3000,
-    image:"20260921_115703.jpg",
-    category:"Health"
-  },
-
-  {
-    name:"Mosquito Shocker",
-    price:8000,
-    image:"20260921_115607.jpg",
-    category:"Home"
-  },
-
-  {
-    name:"Vivon Cocoa Shea Butter",
-    price:5500,
-    image:"20260901_143149.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"P. Clinic",
-    price:12000,
-    image:"20260901_142937.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"Vivon Kiddies",
-    price:5500,
-    image:"20260901_143125.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"Dodo Black Soap",
-    price:1500,
-    image:"20260901_143254.jpg",
-    category:"Beauty"
-  },
-
-  {
-    name:"Kiddies Shoes",
-    price:25000,
-    image:"IMG-20260913-WA0013.jpg",
-    category:"Fashion",
-
-    options:{
-      size:{
-        type:"text",
-        label:"Size",
-        placeholder:"Enter shoe size"
-      },
-
-      colour:{
-        type:"text",
-        label:"Colour",
-        placeholder:"Enter colour"
-      }
-    }
-  }
-
-];
-
-
-/* =========================
-   CART
-========================= */
-
+let products = [];
 let cart = [];
-
 let selectedCategory = "All";
 
+/* Images already supplied for the original catalogue.
+   New products without an uploaded image will show the image placeholder. */
+const productImages = {
+  "Dodo Skin Gold":"20260921_115408.jpg",
+  "Wig Stand":"20260921_115710.jpg",
+  "Whitening Cream":"20260921_115803.jpg",
+  "Charcoal Whitening Teeth":"20260921_115527.jpg",
+  "Body Mix Perfume":"20260921_115746.jpg",
+  "Eyebrows Sharpener":"20260921_115455.jpg",
+  "Pipe Cleaner":"20260921_115557.jpg",
+  "Dish Washer Powder":"20260921_115725.jpg",
+  "Children Shoes":"IMG-20260708-WA0104.jpg",
+  "Gold Angel Perfume":"20260921_115754.jpg",
+  "Dermaliss White Lotion":"20260921_115742.jpg",
+  "Dr Paris Cream":"20260901_143051.jpg",
+  "SP Toothpaste":"20260921_115546.jpg",
+  "Rechargeable Chopper":"20260921_115624.jpg",
+  "Hand Cream":"20260921_115518.jpg",
+  "Thrift Clothes":"1688_image_share_9c8e4f0d5a9bfe7edbdb4a79ed4ce007.jpg",
+  "Sulphur Active Hair Cream":"20260921_115432.jpg",
+  "Magic Black Hair Cream":"20260921_115839.jpg",
+  "Vitamin C Cream":"20260901_143158.jpg",
+  "Pearl Cream":"20260901_143019.jpg",
+  "Yellow Pawpaw Cream":"20260901_143137.jpg",
+  "Asantee Body Cream Gold":"20260901_143214.jpg",
+  "Knife Sharpener":"20260921_115631.jpg",
+  "Aloe Vera Cream":"20260921_115736.jpg",
+  "Dental Oral Care Kits":"20260921_115703.jpg",
+  "Mosquito Shocker":"20260921_115607.jpg",
+  "Vivon Cocoa Shea Butter":"20260901_143149.jpg",
+  "P. Clinic":"20260901_142937.jpg",
+  "Vivon Kiddies":"20260901_143125.jpg",
+  "Dodo Black Soap":"20260901_143254.jpg",
+  "Kiddies Shoes":"IMG-20260913-WA0013.jpg"
+};
 
-/* =========================
-   CREATE PRODUCT OPTIONS
-========================= */
-
-function createOptions(product,index){
-
-  if(!product.options){
-    return "";
-  }
-
-  let html =
-    '<div class="product-options">';
-
-  Object.keys(product.options).forEach(optionKey => {
-
-    const option =
-      product.options[optionKey];
-
-    html +=
-      '<div class="option-group">';
-
-    html +=
-      '<label>' +
-      option.label +
-      '</label>';
-
-    if(option.type === "select"){
-
-      html +=
-        '<select id="option-' +
-        index +
-        '-' +
-        optionKey +
-        '">';
-
-      html +=
-        '<option value="">Select ' +
-        option.label.toLowerCase() +
-        '</option>';
-
-      option.values.forEach(value => {
-
-        html +=
-          '<option value="' +
-          value +
-          '">' +
-          value +
-          '</option>';
-
-      });
-
-      html += '</select>';
-
-    }else{
-
-      html +=
-        '<input ' +
-        'type="text" ' +
-        'id="option-' +
-        index +
-        '-' +
-        optionKey +
-        '" ' +
-        'placeholder="' +
-        option.placeholder +
-        '">';
-
-    }
-
-    html +=
-      '</div>';
-
-  });
-
-  html +=
-    '</div>';
-
-  return html;
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[ch]);
 }
 
+function prepareOptions(product) {
+  const saved = product.options && typeof product.options === "object" ? product.options : {};
+  if (Object.keys(saved).length) return saved;
 
-/* =========================
-   GET SELECTED OPTIONS
-========================= */
-
-function getProductOptions(index){
-
-  const product =
-    products[index];
-
-  const selected = {};
-
-  if(!product.options){
-    return selected;
+  if (product.name === "Children Shoes") {
+    return {
+      size:{type:"select",label:"Size",values:["29","30"]},
+      colour:{type:"text",label:"Colour",placeholder:"Enter colour"}
+    };
   }
+  if (product.name === "Thrift Clothes" || product.name === "Kiddies Shoes") {
+    return {
+      size:{type:"text",label:"Size",placeholder:"Enter size"},
+      colour:{type:"text",label:"Colour",placeholder:"Enter colour"}
+    };
+  }
+  return {};
+}
 
-  for(const optionKey in product.options){
+async function loadProducts() {
+  const status = document.getElementById("loadStatus");
+  const container = document.getElementById("products");
+  status.textContent = "Loading Erin Enterprises products...";
+  container.innerHTML = "";
 
-    const element =
-      document.getElementById(
-        "option-" +
-        index +
-        "-" +
-        optionKey
-      );
+  try {
+    const {data, error} = await supabaseClient
+      .from("products")
+      .select("id,name,price,category,image_url,options")
+      .order("created_at", {ascending:false});
 
-    if(element){
+    if (error) throw error;
 
-      const value =
-        element.value.trim();
+    products = (data || []).map(row => ({
+      id:row.id,
+      name:row.name,
+      price:Number(row.price),
+      category:row.category,
+      image:row.image_url || productImages[row.name] || "",
+      options:prepareOptions(row)
+    }));
 
-      if(!value){
+    status.textContent = products.length
+      ? `${products.length} products available`
+      : "No products have been added yet.";
 
-        alert(
-          "Please select or enter " +
-          product.options[optionKey].label +
-          " for " +
-          product.name +
-          "."
-        );
+    displayProducts();
+    updateCart();
+  } catch (error) {
+    console.error("Supabase product loading error:", error);
+    status.textContent = "Products could not be loaded. Please refresh or contact the store.";
+  }
+}
 
-        return null;
-      }
+function createOptions(product,index) {
+  if (!product.options || !Object.keys(product.options).length) return "";
+  let html = '<div class="product-options">';
 
-      selected[optionKey] = value;
+  Object.keys(product.options).forEach(key => {
+    const option = product.options[key] || {};
+    const label = option.label || (key.charAt(0).toUpperCase()+key.slice(1));
+    html += `<div class="option-group"><label for="option-${index}-${escapeHTML(key)}">${escapeHTML(label)}</label>`;
 
+    if (option.type === "select" && Array.isArray(option.values)) {
+      html += `<select id="option-${index}-${escapeHTML(key)}"><option value="">Select ${escapeHTML(label.toLowerCase())}</option>`;
+      option.values.forEach(value => {
+        html += `<option value="${escapeHTML(value)}">${escapeHTML(value)}</option>`;
+      });
+      html += "</select>";
+    } else {
+      html += `<input type="text" id="option-${index}-${escapeHTML(key)}" placeholder="${escapeHTML(option.placeholder || "Enter "+label.toLowerCase())}">`;
     }
+    html += "</div>";
+  });
 
+  return html + "</div>";
+}
+
+function getProductOptions(index) {
+  const product = products[index];
+  const selected = {};
+  if (!product || !product.options) return selected;
+
+  for (const key of Object.keys(product.options)) {
+    const element = document.getElementById(`option-${index}-${key}`);
+    const value = element ? element.value.trim() : "";
+    if (!value) {
+      alert("Please select or enter " + (product.options[key].label || key) + " for " + product.name + ".");
+      return null;
+    }
+    selected[key] = value;
   }
-
   return selected;
 }
 
-
-/* =========================
-   DISPLAY PRODUCTS
-========================= */
-
-function displayProducts(list = products){
-
-  const container =
-    document.getElementById("products");
-
-  const noResults =
-    document.getElementById("noResults");
-
+function displayProducts(list = products) {
+  const container = document.getElementById("products");
+  const noResults = document.getElementById("noResults");
   container.innerHTML = "";
 
-  if(list.length === 0){
-
+  if (!list.length) {
     noResults.style.display = "block";
-
     return;
-
   }
-
   noResults.style.display = "none";
 
   list.forEach(product => {
-
-    const index =
-      products.indexOf(product);
-
-    const card =
-      document.createElement("div");
-
+    const index = products.indexOf(product);
+    const card = document.createElement("div");
     card.className = "product";
 
+    const imageMarkup = product.image
+      ? `<img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+      : "";
+
     card.innerHTML = `
-
-      <img
-        src="${product.image}"
-        alt="${product.name}"
-        onerror="
-          this.style.display='none';
-          this.nextElementSibling.style.display='flex';
-        "
-      >
-
-      <div
-        class="no-image"
-        style="display:none;">
-        📷 Image unavailable
-      </div>
-
+      ${imageMarkup}
+      <div class="no-image" ${product.image ? 'style="display:none"' : ""}>📷 Image unavailable</div>
       <div class="product-info">
-
-        <h3>${product.name}</h3>
-
-        <span class="category-label">
-          ${product.category}
-        </span>
-
-        <div class="price">
-          ₦${product.price.toLocaleString()}
-        </div>
-
+        <h3>${escapeHTML(product.name)}</h3>
+        <span class="category-label">${escapeHTML(product.category)}</span>
+        <div class="price">₦${product.price.toLocaleString("en-NG")}</div>
         ${createOptions(product,index)}
-
         <div class="product-buttons">
-
-          <button
-            class="add-btn"
-            onclick="addToCart(${index})">
-            🛒 Add
-          </button>
-
-          <button
-            class="buy-btn"
-            onclick="buyNow(${index})">
-            Buy Now
-          </button>
-
+          <button class="add-btn" onclick="addToCart(${index})">🛒 Add</button>
+          <button class="buy-btn" onclick="buyNow(${index})">Buy Now</button>
         </div>
-
-      </div>
-    `;
-
+      </div>`;
     container.appendChild(card);
-
   });
-
 }
 
-
-/* =========================
-   SEARCH + CATEGORY
-========================= */
-
-function filterProducts(){
-
-  const search =
-    document
-      .getElementById("searchInput")
-      .value
-      .toLowerCase()
-      .trim();
-
-  const filtered =
-    products.filter(product => {
-
-      const matchesSearch =
-        product.name
-          .toLowerCase()
-          .includes(search);
-
-      const matchesCategory =
-        selectedCategory === "All" ||
-        product.category === selectedCategory;
-
-      return matchesSearch &&
-             matchesCategory;
-
-    });
-
+function filterProducts() {
+  const search = document.getElementById("searchInput").value.toLowerCase().trim();
+  const filtered = products.filter(product => {
+    const matchesSearch = product.name.toLowerCase().includes(search);
+    const matchesCategory = selectedCategory === "All" || product.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
   displayProducts(filtered);
-
 }
 
-
-function selectCategory(category,button){
-
+function selectCategory(category,button) {
   selectedCategory = category;
-
-  document
-    .querySelectorAll(".category-btn")
-    .forEach(btn => {
-
-      btn.classList.remove("active");
-
-    });
-
+  document.querySelectorAll(".category-btn").forEach(btn => btn.classList.remove("active"));
   button.classList.add("active");
-
   filterProducts();
-
 }
 
-
-/* =========================
-   ADD TO CART
-========================= */
-
-function addToCart(index){
-
-  const options =
-    getProductOptions(index);
-
-  if(options === null){
-    return;
-  }
-
-  const optionKey =
-    JSON.stringify(options);
-
-  const existing =
-    cart.find(item =>
-      item.index === index &&
-      JSON.stringify(item.options) === optionKey
-    );
-
-  if(existing){
-
-    existing.quantity++;
-
-  }else{
-
-    cart.push({
-      index:index,
-      quantity:1,
-      options:options
-    });
-
-  }
-
+function addToCart(index) {
+  const options = getProductOptions(index);
+  if (options === null) return;
+  const existing = cart.find(item => item.index === index && JSON.stringify(item.options) === JSON.stringify(options));
+  if (existing) existing.quantity++;
+  else cart.push({index,quantity:1,options});
   updateCart();
-
 }
 
-
-/* =========================
-   BUY NOW
-========================= */
-
-function buyNow(index){
-
-  const options =
-    getProductOptions(index);
-
-  if(options === null){
-    return;
-  }
-
-  const optionKey =
-    JSON.stringify(options);
-
-  const existing =
-    cart.find(item =>
-      item.index === index &&
-      JSON.stringify(item.options) === optionKey
-    );
-
-  if(existing){
-
-    existing.quantity++;
-
-  }else{
-
-    cart.push({
-      index:index,
-      quantity:1,
-      options:options
-    });
-
-  }
-
-  updateCart();
-
-  openCart();
-
+function buyNow(index) {
+  const before = cart.length;
+  addToCart(index);
+  if (cart.length >= before) openCart();
 }
 
-
-/* =========================
-   OPTIONS DISPLAY
-========================= */
-
-function formatOptions(options){
-
-  if(!options ||
-     Object.keys(options).length === 0){
-
-    return "";
-
-  }
-
-  let html =
-    '<div class="selected-options">';
-
+function formatOptions(options) {
+  if (!options || !Object.keys(options).length) return "";
+  let html = '<div class="selected-options">';
   Object.keys(options).forEach(key => {
+    const label = key.charAt(0).toUpperCase()+key.slice(1);
+    html += `<div><strong>${escapeHTML(label)}:</strong> ${escapeHTML(options[key])}</div>`;
+  });
+  return html + "</div>";
+}
 
-    const label =
-      key.charAt(0).toUpperCase() +
-      key.slice(1);
+function optionsForMessage(options) {
+  if (!options || !Object.keys(options).length) return "";
+  return Object.keys(options).map(key =>
+    " | " + key.charAt(0).toUpperCase()+key.slice(1) + ": " + options[key]
+  ).join("");
+}
 
-    html +=
-      '<div><strong>' +
-      label +
-      ':</strong> ' +
-      options[key] +
-      '</div>';
+function getCartTotal() {
+  return cart.reduce((sum,item) => {
+    const product = products[item.index];
+    return sum + (product ? product.price * item.quantity : 0);
+  },0);
+}
 
+function updateCart() {
+  const cartItems = document.getElementById("cartItems");
+  let count = 0;
+  cartItems.innerHTML = "";
+
+  if (!cart.length) {
+    cartItems.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
+  }
+
+  cart.forEach((item,cartIndex) => {
+    const product = products[item.index];
+    if (!product) return;
+    count += item.quantity;
+    const itemTotal = product.price * item.quantity;
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <h4>${escapeHTML(product.name)}</h4>
+      <div>₦${product.price.toLocaleString("en-NG")} each</div>
+      ${formatOptions(item.options)}
+      <div class="cart-controls">
+        <button onclick="changeQuantity(${cartIndex},-1)">−</button>
+        <span>${item.quantity}</span>
+        <button onclick="changeQuantity(${cartIndex},1)">+</button>
+        <button class="remove-btn" onclick="removeFromCart(${cartIndex})">Remove</button>
+      </div>
+      <div style="margin-top:8px;font-weight:bold">₦${itemTotal.toLocaleString("en-NG")}</div>`;
+    cartItems.appendChild(div);
   });
 
-  html +=
-    '</div>';
-
-  return html;
+  document.getElementById("cartCount").textContent = count;
+  document.getElementById("cartTotal").textContent = getCartTotal().toLocaleString("en-NG");
 }
 
+function changeQuantity(index,change) {
+  if (!cart[index]) return;
+  cart[index].quantity += change;
+  if (cart[index].quantity <= 0) cart.splice(index,1);
+  updateCart();
+}
 
-/* =========================
-   OPTIONS FOR MESSAGE
-========================= */
+function removeFromCart(index) {
+  cart.splice(index,1);
+  updateCart();
+}
 
-function optionsForMessage(options){
+function openCart() {
+  document.getElementById("cartPanel").classList.add("open");
+}
+function closeCart() {
+  document.getElementById("cartPanel").classList.remove("open");
+}
 
-  if(!options ||
-     Object.keys(options).length === 0){
+function getCustomerDetails(requireEmail = false) {
+  const details = {
+    name:document.getElementById("customerName").value.trim(),
+    phone:document.getElementById("customerPhone").value.trim(),
+    email:document.getElementById("customerEmail").value.trim(),
+    address:document.getElementById("customerAddress").value.trim()
+  };
 
-    return "";
-
+  if (!cart.length) {
+    alert("Your cart is empty.");
+    return null;
   }
+  if (!details.name || !details.phone || !details.address || (requireEmail && !details.email)) {
+    alert(requireEmail
+      ? "Please enter your name, phone number, email address and delivery address."
+      : "Please enter your name, phone number and delivery address.");
+    return null;
+  }
+  if (requireEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(details.email)) {
+    alert("Please enter a valid email address.");
+    return null;
+  }
+  return details;
+}
 
+function buildOrderText() {
   let text = "";
-
-  Object.keys(options).forEach(key => {
-
-    const label =
-      key.charAt(0).toUpperCase() +
-      key.slice(1);
-
-    text +=
-      " | " +
-      label +
-      ": " +
-      options[key];
-
+  cart.forEach(item => {
+    const product = products[item.index];
+    const lineTotal = product.price * item.quantity;
+    text += `• ${product.name}${optionsForMessage(item.options)} x${item.quantity} = ₦${lineTotal.toLocaleString("en-NG")}\n`;
   });
-
   return text;
 }
 
+function checkoutWhatsApp() {
+  const customer = getCustomerDetails(false);
+  if (!customer) return;
 
-/* =========================
-   UPDATE CART
-========================= */
+  const message =
+`Hello Erin Enterprises!
 
-function updateCart(){
+NEW ORDER
 
-  const cartItems =
-    document.getElementById("cartItems");
+Customer Name: ${customer.name}
+Phone: ${customer.phone}
+Delivery Address: ${customer.address}
 
-  const cartCount =
-    document.getElementById("cartCount");
+ORDER ITEMS:
+${buildOrderText()}
+TOTAL: ₦${getCartTotal().toLocaleString("en-NG")}
 
-  const cartTotal =
-    document.getElementById("cartTotal");
+Please confirm my order. Thank you.`;
 
-  cartItems.innerHTML = "";
-
-  let total = 0;
-  let count = 0;
-
-  if(cart.length === 0){
-
-    cartItems.innerHTML =
-      '<div class="empty-cart">Your cart is empty.</div>';
-
-  }
-
-  cart.forEach((item,cartIndex)=>{
-
-    const product =
-      products[item.index];
-
-    const itemTotal =
-      product.price * item.quantity;
-
-    total += itemTotal;
-
-    count += item.quantity;
-
-    const div =
-      document.createElement("div");
-
-    div.className = "cart-item";
-
-    div.innerHTML = `
-
-      <h4>${product.name}</h4>
-
-      <div>
-        ₦${product.price.toLocaleString()} each
-      </div>
-
-      ${formatOptions(item.options)}
-
-      <div class="cart-controls">
-
-        <button
-          onclick="changeQuantity(${cartIndex},-1)">
-          −
-        </button>
-
-        <span>
-          ${item.quantity}
-        </span>
-
-        <button
-          onclick="changeQuantity(${cartIndex},1)">
-          +
-        </button>
-
-        <button
-          class="remove-btn"
-          onclick="removeFromCart(${cartIndex})">
-          Remove
-        </button>
-
-      </div>
-
-      <div
-        style="margin-top:8px;font-weight:bold;">
-        ₦${itemTotal.toLocaleString()}
-      </div>
-
-    `;
-
-    cartItems.appendChild(div);
-
-  });
-
-  cartCount.textContent = count;
-
-  cartTotal.textContent =
-    total.toLocaleString();
-
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,"_blank");
 }
 
+/* IMPORTANT:
+   The browser callback alone is not secure proof of payment.
+   Verify the reference in the Paystack dashboard or with a server-side
+   verification endpoint before treating the order as PAID or dispatching it. */
+function payWithPaystack() {
+  const customer = getCustomerDetails(true);
+  if (!customer) return;
 
-/* =========================
-   QUANTITY
-========================= */
-
-function changeQuantity(cartIndex,change){
-
-  cart[cartIndex].quantity += change;
-
-  if(cart[cartIndex].quantity <= 0){
-
-    cart.splice(cartIndex,1);
-
-  }
-
-  updateCart();
-
-}
-
-
-/* =========================
-   REMOVE
-========================= */
-
-function removeFromCart(cartIndex){
-
-  cart.splice(cartIndex,1);
-
-  updateCart();
-
-}
-
-
-/* =========================
-   OPEN CART
-========================= */
-
-function openCart(){
-
-  document
-    .getElementById("cartPanel")
-    .classList.add("open");
-
-}
-
-
-/* =========================
-   CLOSE CART
-========================= */
-
-function closeCart(){
-
-  document
-    .getElementById("cartPanel")
-    .classList.remove("open");
-
-}
-
-
-/* =========================
-   PAYSTACK PAYMENT
-========================= */
-
-function payWithPaystack(){
-
-  if(cart.length === 0){
-
-    alert("Your cart is empty.");
-
+  if (!window.PaystackPop) {
+    alert("Paystack could not load. Check your internet connection and try again.");
     return;
-
   }
 
-  const name =
-    document
-      .getElementById("customerName")
-      .value
-      .trim();
-
-  const phone =
-    document
-      .getElementById("customerPhone")
-      .value
-      .trim();
-
-  const email =
-    document
-      .getElementById("customerEmail")
-      .value
-      .trim();
-
-  const address =
-    document
-      .getElementById("customerAddress")
-      .value
-      .trim();
-
-  if(!name){
-
-    alert("Please enter your name.");
-
+  const total = getCartTotal();
+  if (!Number.isFinite(total) || total <= 0) {
+    alert("The order total is invalid.");
     return;
-
   }
 
-  if(!phone){
-
-    alert("Please enter your phone number.");
-
-    return;
-
-  }
-
-  if(!email){
-
-    alert("Please enter your email address.");
-
-    return;
-
-  }
-
-  if(!address){
-
-    alert("Please enter your delivery address.");
-
-    return;
-
-  }
-
-  if(!email.includes("@")){
-
-    alert("Please enter a valid email address.");
-
-    return;
-
-  }
-
-  let total = 0;
-
-  let orderDetails = "";
-
-  cart.forEach(item => {
-
-    const product =
-      products[item.index];
-
-    const itemTotal =
-      product.price * item.quantity;
-
-    total += itemTotal;
-
-    orderDetails +=
-      product.name +
-      " x" +
-      item.quantity +
-      optionsForMessage(item.options) +
-      " = ₦" +
-      itemTotal.toLocaleString() +
-      "\n";
-
-  });
-
-
-  const amountInKobo =
-    total * 100;
-
-
-  const popup =
-    new PaystackPop();
-
-
+  const popup = new PaystackPop();
   popup.newTransaction({
-
     key:PAYSTACK_PUBLIC_KEY,
-
-    email:email,
-
-    amount:amountInKobo,
-
+    email:customer.email,
+    amount:total * 100,
     currency:"NGN",
-
-    firstName:name,
-
-    phone:phone,
-
+    firstName:customer.name,
+    phone:customer.phone,
     metadata:{
-
-      customer_name:name,
-
-      customer_phone:phone,
-
-      delivery_address:address,
-
+      customer_name:customer.name,
+      customer_phone:customer.phone,
+      delivery_address:customer.address,
       order_total:total,
-
       store:"Erin Enterprises",
-
-      order_items:orderDetails
-
+      order_items:buildOrderText()
     },
+    onSuccess:(transaction) => {
+      const message =
+`Hello Erin Enterprises!
 
-    onSuccess:(transaction)=>{
+PAYSTACK PAYMENT CALLBACK RECEIVED — PLEASE VERIFY IN PAYSTACK DASHBOARD
 
-      alert(
-        "Payment successful!\n\n" +
-        "Reference: " +
-        transaction.reference
-      );
+Customer Name: ${customer.name}
+Phone: ${customer.phone}
+Email: ${customer.email}
+Delivery Address: ${customer.address}
 
+ORDER ITEMS:
+${buildOrderText()}
+ORDER TOTAL: ₦${total.toLocaleString("en-NG")}
 
-      sendPaidOrderToWhatsApp(
-        name,
-        phone,
-        email,
-        address,
-        total,
-        transaction.reference
-      );
+Paystack Reference: ${transaction.reference}
 
+Please verify this reference in Paystack before confirming the order or dispatching goods.`;
+
+      alert("Paystack returned a transaction reference. Your order details will open in WhatsApp. Please wait for the store to verify the payment.");
+      window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     },
-
-    onCancel:()=>{
-
-      alert(
-        "Payment was cancelled."
-      );
-
-    },
-
-    onError:(error)=>{
-
-      alert(
-        "Payment could not be completed. " +
-        (error && error.message
-          ? error.message
-          : "Please try again.")
-      );
-
+    onCancel:() => alert("Payment was cancelled. No order has been marked as paid."),
+    onError:(error) => {
+      console.error("Paystack error:",error);
+      alert("Payment could not be completed. Please try again.");
     }
-
   });
-
 }
 
-
-/* =========================
-   PAID ORDER → WHATSAPP
-========================= */
-
-function sendPaidOrderToWhatsApp(
-  name,
-  phone,
-  email,
-  address,
-  total,
-  reference
-){
-
-  let message =
-    "Hello Erin Enterprises!%0A%0A";
-
-  message +=
-    "*PAID ORDER*%0A%0A";
-
-  message +=
-    "*Customer Name:* " +
-    encodeURIComponent(name) +
-    "%0A";
-
-  message +=
-    "*Phone:* " +
-    encodeURIComponent(phone) +
-    "%0A";
-
-  message +=
-    "*Email:* " +
-    encodeURIComponent(email) +
-    "%0A";
-
-  message +=
-    "*Delivery Address:* " +
-    encodeURIComponent(address) +
-    "%0A%0A";
-
-  message +=
-    "*ORDER ITEMS:*%0A";
-
-
-  cart.forEach(item => {
-
-    const product =
-      products[item.index];
-
-    const itemTotal =
-      product.price * item.quantity;
-
-    const optionsText =
-      optionsForMessage(item.options);
-
-    message +=
-      "• " +
-      encodeURIComponent(
-        product.name +
-        optionsText
-      ) +
-      " x" +
-      item.quantity +
-      " = ₦" +
-      itemTotal.toLocaleString() +
-      "%0A";
-
-  });
-
-
-  message +=
-    "%0A*TOTAL PAID: ₦" +
-    total.toLocaleString() +
-    "*";
-
-  message +=
-    "%0A*Paystack Reference:* " +
-    encodeURIComponent(reference);
-
-  message +=
-    "%0A%0APayment completed through Paystack.";
-
-
-  const whatsappURL =
-    "https://wa.me/2348125253898?text=" +
-    message;
-
-
-  window.open(
-    whatsappURL,
-    "_blank"
-  );
-
-}
-
-
-/* =========================
-   WHATSAPP CHECKOUT
-========================= */
-
-function checkoutWhatsApp(){
-
-  if(cart.length === 0){
-
-    alert("Your cart is empty.");
-
-    return;
-
-  }
-
-  const name =
-    document
-      .getElementById("customerName")
-      .value
-      .trim();
-
-  const phone =
-    document
-      .getElementById("customerPhone")
-      .value
-      .trim();
-
-  const address =
-    document
-      .getElementById("customerAddress")
-      .value
-      .trim();
-
-  if(!name){
-
-    alert("Please enter your name.");
-
-    return;
-
-  }
-
-  if(!phone){
-
-    alert("Please enter your phone number.");
-
-    return;
-
-  }
-
-  if(!address){
-
-    alert("Please enter your delivery address.");
-
-    return;
-
-  }
-
-  let message =
-    "Hello Erin Enterprises!%0A%0A";
-
-  message +=
-    "*NEW ORDER*%0A%0A";
-
-  message +=
-    "*Customer Name:* " +
-    encodeURIComponent(name) +
-    "%0A";
-
-  message +=
-    "*Phone:* " +
-    encodeURIComponent(phone) +
-    "%0A";
-
-  message +=
-    "*Delivery Address:* " +
-    encodeURIComponent(address) +
-    "%0A%0A";
-
-  message +=
-    "*ORDER ITEMS:*%0A";
-
-  let total = 0;
-
-  cart.forEach(item => {
-
-    const product =
-      products[item.index];
-
-    const itemTotal =
-      product.price * item.quantity;
-
-    total += itemTotal;
-
-    const optionsText =
-      optionsForMessage(item.options);
-
-    message +=
-      "• " +
-      encodeURIComponent(
-        product.name +
-        optionsText
-      ) +
-      " x" +
-      item.quantity +
-      " = ₦" +
-      itemTotal.toLocaleString() +
-      "%0A";
-
-  });
-
-  message +=
-    "%0A*TOTAL: ₦" +
-    total.toLocaleString() +
-    "*";
-
-  message +=
-    "%0A%0APlease confirm my order. Thank you.";
-
-  const whatsappURL =
-    "https://wa.me/2348125253898?text=" +
-    message;
-
-  window.open(
-    whatsappURL,
-    "_blank"
-  );
-
-}
-
-
-/* =========================
-   START STORE
-========================= */
-
-displayProducts();
-
+/* Start the store */
 updateCart();
-
+loadProducts();
 </script>
-
 </body>
-  </html>
+</html>
