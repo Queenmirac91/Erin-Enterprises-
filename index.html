@@ -106,7 +106,6 @@ footer p{margin:7px}footer a{color:#25D366;text-decoration:none;font-weight:bold
   <p style="font-size:12px;color:#777;margin-top:8px">For paid orders, confirm the transaction reference in your Paystack dashboard before dispatch.</p>
 </div>
 
-<!-- ADMIN DASHBOARD -->
 <div class="admin-overlay" id="adminOverlay">
   <div class="admin-panel">
     <div class="admin-top"><h2>Erin Enterprises Admin</h2><button class="admin-button secondary" onclick="closeAdmin()">Close</button></div>
@@ -149,7 +148,7 @@ const PAYSTACK_PUBLIC_KEY = "pk_live_caee99bf950a74d75facd70e10e40781dabe9f3c";
 const WHATSAPP_NUMBER = "2348125253898";
 const SUPABASE_URL = "https://szvnmmmtnrucqhguumia.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_DLi_RoprPf4saGfxr3LWVg_rrKDzou5";
-const STORAGE_BUCKET = "products";
+const STORAGE_BUCKET = "product-images";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 let products = [], cart = [], selectedCategory = "All", currentAdmin = null;
 
