@@ -4,98 +4,80 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Erin Enterprises | Online Store</title>
-
 <script src="https://js.paystack.co/v2/inline.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,sans-serif;background:#f5f5f5;color:#222}
 header{background:#111;color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1000}
-.logo{font-size:24px;font-weight:bold}
-.cart-btn{background:#fff;color:#111;border:0;padding:10px 16px;border-radius:8px;font-weight:bold;cursor:pointer}
+.logo{font-size:24px;font-weight:bold}.header-actions{display:flex;gap:8px;align-items:center}
+.cart-btn,.admin-link{background:#fff;color:#111;border:0;padding:10px 14px;border-radius:8px;font-weight:bold;cursor:pointer;text-decoration:none}
 .hero{background:linear-gradient(135deg,#111,#444);color:#fff;text-align:center;padding:50px 20px}
-.hero h1{font-size:36px;margin-bottom:12px}
-.hero p{font-size:17px;margin:7px 0}
+.hero h1{font-size:36px;margin-bottom:12px}.hero p{font-size:17px;margin:7px 0}
 .container{max-width:1200px;margin:auto;padding:25px 15px}
-.search-box{margin:10px auto 20px;max-width:600px}
-.search-box input{width:100%;padding:14px 18px;border:1px solid #ccc;border-radius:10px;font-size:16px;outline:none}
-.search-box input:focus{border-color:#111}
+.search-box{margin:10px auto 20px;max-width:600px}.search-box input{width:100%;padding:14px 18px;border:1px solid #ccc;border-radius:10px;font-size:16px}
 .categories{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:25px}
 .category-btn{border:1px solid #ddd;background:#fff;padding:9px 14px;border-radius:20px;cursor:pointer;font-weight:bold}
 .category-btn.active,.category-btn:hover{background:#111;color:#fff}
-.section-title{text-align:center;margin-bottom:20px;font-size:28px}
-.status-message{text-align:center;padding:12px;margin:10px auto;color:#555}
+.section-title{text-align:center;margin-bottom:20px;font-size:28px}.status-message{text-align:center;padding:12px;margin:10px auto;color:#555}
 .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px}
 .product{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.1);transition:.2s}
-.product:hover{transform:translateY(-3px)}
-.product img{width:100%;height:210px;object-fit:cover;display:block;background:#eee}
+.product:hover{transform:translateY(-3px)}.product img{width:100%;height:210px;object-fit:cover;display:block;background:#eee}
 .no-image{width:100%;height:210px;background:#eee;display:flex;align-items:center;justify-content:center;color:#777}
-.product-info{padding:15px}
-.product h3{font-size:17px;margin-bottom:6px}
+.product-info{padding:15px}.product h3{font-size:17px;margin-bottom:6px}
 .category-label{display:inline-block;font-size:12px;background:#eee;padding:4px 8px;border-radius:10px;margin-bottom:10px}
-.price{font-size:19px;font-weight:bold;margin-bottom:12px}
-.product-options{margin-bottom:12px}
-.option-group{margin-bottom:9px}
-.option-group label{display:block;font-size:13px;font-weight:bold;margin-bottom:5px}
+.price{font-size:19px;font-weight:bold;margin-bottom:12px}.product-options{margin-bottom:12px}
+.option-group{margin-bottom:9px}.option-group label{display:block;font-size:13px;font-weight:bold;margin-bottom:5px}
 .option-group select,.option-group input{width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;font-size:14px;background:#fff}
-.product-buttons{display:flex;gap:8px}
-.add-btn,.buy-btn{flex:1;padding:11px 5px;border:0;border-radius:7px;cursor:pointer;font-weight:bold}
-.add-btn{background:#111;color:#fff}
-.buy-btn{background:#25D366;color:#fff}
+.product-buttons{display:flex;gap:8px}.add-btn,.buy-btn{flex:1;padding:11px 5px;border:0;border-radius:7px;cursor:pointer;font-weight:bold}
+.add-btn{background:#111;color:#fff}.buy-btn{background:#25D366;color:#fff}
 .no-results{text-align:center;padding:40px;color:#777;display:none}
 .cart-panel{position:fixed;right:-430px;top:0;width:410px;max-width:100%;height:100%;background:#fff;z-index:2000;box-shadow:-4px 0 15px rgba(0,0,0,.2);transition:.3s;padding:20px;overflow-y:auto}
-.cart-panel.open{right:0}
-.cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.cart-panel.open{right:0}.cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .close-cart{background:#eee;border:0;padding:8px 12px;border-radius:6px;cursor:pointer}
-.cart-item{border-bottom:1px solid #ddd;padding:15px 0}
-.cart-item h4{margin-bottom:7px}
+.cart-item{border-bottom:1px solid #ddd;padding:15px 0}.cart-item h4{margin-bottom:7px}
 .selected-options{background:#f5f5f5;padding:8px;border-radius:6px;margin-top:8px;font-size:13px}
 .cart-controls{display:flex;align-items:center;gap:8px;margin-top:10px}
 .cart-controls button{border:0;background:#111;color:#fff;width:30px;height:30px;border-radius:5px;cursor:pointer}
 .cart-controls .remove-btn{background:#c00;width:auto;padding:0 9px}
 .cart-total{font-size:21px;font-weight:bold;margin:20px 0}
-.customer-form{margin-top:20px;border-top:1px solid #ddd;padding-top:20px}
-.customer-form h3{margin-bottom:12px}
+.customer-form{margin-top:20px;border-top:1px solid #ddd;padding-top:20px}.customer-form h3{margin-bottom:12px}
 .customer-form input,.customer-form textarea{width:100%;padding:12px;margin-bottom:10px;border:1px solid #ccc;border-radius:7px;font-size:15px;font-family:Arial,sans-serif}
 .customer-form textarea{min-height:80px;resize:vertical}
 .paystack-btn,.whatsapp-btn{width:100%;color:#fff;border:0;padding:14px;border-radius:8px;font-weight:bold;cursor:pointer;font-size:16px;margin-bottom:10px}
-.paystack-btn{background:#0a8f4d}
-.whatsapp-btn{background:#25D366}
+.paystack-btn{background:#0a8f4d}.whatsapp-btn{background:#25D366}
 .empty-cart{text-align:center;color:#777;padding:30px 0}
 footer{margin-top:40px;background:#111;color:#fff;text-align:center;padding:25px 15px}
-footer p{margin:7px}
-footer a{color:#25D366;text-decoration:none;font-weight:bold}
-@media(max-width:500px){
- .hero h1{font-size:28px}
- .products{grid-template-columns:repeat(2,1fr);gap:12px}
- .product img,.no-image{height:170px}
- .product-info{padding:10px}
- .product h3{font-size:14px}
- .price{font-size:16px}
- .product-buttons{flex-direction:column}
- .product-buttons button{width:100%}
- .cart-panel{width:100%}
-}
+footer p{margin:7px}footer a{color:#25D366;text-decoration:none;font-weight:bold}
+.admin-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:3000;overflow:auto;padding:18px}
+.admin-overlay.open{display:block}.admin-panel{max-width:850px;margin:20px auto;background:#fff;border-radius:14px;padding:20px}
+.admin-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:18px}
+.admin-panel h2,.admin-panel h3{margin-bottom:12px}.admin-panel input,.admin-panel select,.admin-panel textarea{width:100%;padding:11px;margin:6px 0 12px;border:1px solid #ccc;border-radius:7px;font:15px Arial}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.admin-button{border:0;border-radius:7px;padding:11px 14px;background:#111;color:#fff;font-weight:bold;cursor:pointer;margin:4px 4px 4px 0}
+.admin-button.secondary{background:#666}.admin-button.danger{background:#b00020}.admin-button.green{background:#087d43}
+.admin-note{background:#f2f2f2;padding:12px;border-radius:8px;margin:10px 0;color:#444;font-size:14px;line-height:1.5}
+.admin-list{margin-top:18px}.admin-row{border:1px solid #ddd;border-radius:8px;padding:10px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.admin-row img{width:55px;height:55px;object-fit:cover;border-radius:6px}.admin-row-info{flex:1;min-width:0}.admin-row-info strong{display:block;overflow-wrap:anywhere}
+.hidden{display:none!important}
+@media(max-width:600px){.hero h1{font-size:28px}.products{grid-template-columns:repeat(2,1fr);gap:12px}.product img,.no-image{height:170px}.product-info{padding:10px}.product h3{font-size:14px}.price{font-size:16px}.product-buttons{flex-direction:column}.product-buttons button{width:100%}.cart-panel{width:100%}.admin-grid{grid-template-columns:1fr}.admin-row{align-items:flex-start}.admin-top{align-items:flex-start}}
 </style>
 </head>
 <body>
 <header>
   <div class="logo">Erin Enterprises</div>
-  <button class="cart-btn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
+  <div class="header-actions">
+    <button class="cart-btn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
+    <button class="admin-link" onclick="openAdmin()">Admin</button>
+  </div>
 </header>
-
 <section class="hero">
   <h1>Welcome to Erin Enterprises</h1>
   <p>Quality products at affordable prices.</p>
   <p>Shop online and order easily through WhatsApp.</p>
 </section>
-
 <div class="container">
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="🔎 Search for a product..." oninput="filterProducts()">
-  </div>
-
+  <div class="search-box"><input type="text" id="searchInput" placeholder="🔎 Search for a product..." oninput="filterProducts()"></div>
   <div class="categories">
     <button class="category-btn active" onclick="selectCategory('All',this)">All</button>
     <button class="category-btn" onclick="selectCategory('Beauty',this)">Beauty</button>
@@ -105,21 +87,13 @@ footer a{color:#25D366;text-decoration:none;font-weight:bold}
     <button class="category-btn" onclick="selectCategory('Fashion',this)">Fashion</button>
     <button class="category-btn" onclick="selectCategory('Electronics',this)">Electronics</button>
   </div>
-
   <h2 class="section-title">Our Products</h2>
   <div id="loadStatus" class="status-message">Loading Erin Enterprises products...</div>
-  <div class="products" id="products"></div>
-  <div class="no-results" id="noResults">No products found.</div>
+  <div class="products" id="products"></div><div class="no-results" id="noResults">No products found.</div>
 </div>
-
 <div class="cart-panel" id="cartPanel">
-  <div class="cart-header">
-    <h2>🛒 Your Cart</h2>
-    <button class="close-cart" onclick="closeCart()">✕</button>
-  </div>
-  <div id="cartItems"></div>
-  <div class="cart-total">Total: ₦<span id="cartTotal">0</span></div>
-
+  <div class="cart-header"><h2>🛒 Your Cart</h2><button class="close-cart" onclick="closeCart()">✕</button></div>
+  <div id="cartItems"></div><div class="cart-total">Total: ₦<span id="cartTotal">0</span></div>
   <div class="customer-form">
     <h3>Customer Details</h3>
     <input type="text" id="customerName" placeholder="Your full name" autocomplete="name">
@@ -127,10 +101,41 @@ footer a{color:#25D366;text-decoration:none;font-weight:bold}
     <input type="email" id="customerEmail" placeholder="Your email address" autocomplete="email">
     <textarea id="customerAddress" placeholder="Delivery address" autocomplete="street-address"></textarea>
   </div>
-
   <button class="paystack-btn" onclick="payWithPaystack()">💳 Pay with Paystack</button>
   <button class="whatsapp-btn" onclick="checkoutWhatsApp()">💬 Order via WhatsApp</button>
   <p style="font-size:12px;color:#777;margin-top:8px">For paid orders, confirm the transaction reference in your Paystack dashboard before dispatch.</p>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-panel">
+    <div class="admin-top"><h2>Erin Enterprises Admin</h2><button class="admin-button secondary" onclick="closeAdmin()">Close</button></div>
+    <div id="adminLogin">
+      <h3>Admin Login</h3>
+      <p>Sign in with the admin email and password created in your Supabase project.</p>
+      <input id="adminEmail" type="email" placeholder="Admin email">
+      <input id="adminPassword" type="password" placeholder="Password">
+      <button class="admin-button green" onclick="adminLogin()">Sign in</button>
+      <p id="adminLoginStatus" class="admin-note">Only your authorised admin account should be used here.</p>
+    </div>
+    <div id="adminWorkspace" class="hidden">
+      <div class="admin-note">You are signed in. Add products, upload pictures from your phone, edit details, or delete products.</div>
+      <h3 id="productFormHeading">Add a new product</h3>
+      <input id="editProductId" type="hidden">
+      <label>Product name</label><input id="adminProductName" type="text" placeholder="e.g. New body cream">
+      <div class="admin-grid">
+        <div><label>Price (₦)</label><input id="adminProductPrice" type="number" min="1" step="1" placeholder="e.g. 5000"></div>
+        <div><label>Category</label><select id="adminProductCategory"><option>Beauty</option><option>Hair</option><option>Health</option><option>Home</option><option>Fashion</option><option>Electronics</option></select></div>
+      </div>
+      <label>Product picture (choose from your phone)</label><input id="adminProductImage" type="file" accept="image/*">
+      <div id="imageStatus" class="admin-note">Choose an image when adding a product. When editing, leave this empty to keep the current picture.</div>
+      <label>Product options (optional JSON)</label><textarea id="adminProductOptions" rows="3" placeholder='Example: {"size":{"type":"select","label":"Size","values":["S","M","L"]}}'>{}</textarea>
+      <button class="admin-button green" onclick="saveProduct()">Save product</button>
+      <button class="admin-button secondary" onclick="resetProductForm()">Clear form</button>
+      <h3 class="admin-list">Your products</h3><div id="adminProductList">Loading products...</div>
+      <button class="admin-button secondary" onclick="adminLogout()">Sign out</button>
+    </div>
+  </div>
 </div>
 
 <footer>
@@ -140,428 +145,198 @@ footer a{color:#25D366;text-decoration:none;font-weight:bold}
 </footer>
 
 <script>
-/* =========================
-   STORE CONFIGURATION
-========================= */
 const PAYSTACK_PUBLIC_KEY = "pk_live_caee99bf950a74d75facd70e10e40781dabe9f3c";
 const WHATSAPP_NUMBER = "2348125253898";
 const SUPABASE_URL = "https://szvnmmmtnrucqhguumia.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_DLi_RoprPf4saGfxr3LWVg_rrKDzou5";
-
+const STORAGE_BUCKET = "products";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let products = [], cart = [], selectedCategory = "All", currentAdmin = null;
 
-let products = [];
-let cart = [];
-let selectedCategory = "All";
-
-/* Images already supplied for the original catalogue.
-   New products without an uploaded image will show the image placeholder. */
 const productImages = {
-  "Dodo Skin Gold":"20260921_115408.jpg",
-  "Wig Stand":"20260921_115710.jpg",
-  "Whitening Cream":"20260921_115803.jpg",
-  "Charcoal Whitening Teeth":"20260921_115527.jpg",
-  "Body Mix Perfume":"20260921_115746.jpg",
-  "Eyebrows Sharpener":"20260921_115455.jpg",
-  "Pipe Cleaner":"20260921_115557.jpg",
-  "Dish Washer Powder":"20260921_115725.jpg",
-  "Children Shoes":"IMG-20260708-WA0104.jpg",
-  "Gold Angel Perfume":"20260921_115754.jpg",
-  "Dermaliss White Lotion":"20260921_115742.jpg",
-  "Dr Paris Cream":"20260901_143051.jpg",
-  "SP Toothpaste":"20260921_115546.jpg",
-  "Rechargeable Chopper":"20260921_115624.jpg",
-  "Hand Cream":"20260921_115518.jpg",
-  "Thrift Clothes":"1688_image_share_9c8e4f0d5a9bfe7edbdb4a79ed4ce007.jpg",
-  "Sulphur Active Hair Cream":"20260921_115432.jpg",
-  "Magic Black Hair Cream":"20260921_115839.jpg",
-  "Vitamin C Cream":"20260901_143158.jpg",
-  "Pearl Cream":"20260901_143019.jpg",
-  "Yellow Pawpaw Cream":"20260901_143137.jpg",
-  "Asantee Body Cream Gold":"20260901_143214.jpg",
-  "Knife Sharpener":"20260921_115631.jpg",
-  "Aloe Vera Cream":"20260921_115736.jpg",
-  "Dental Oral Care Kits":"20260921_115703.jpg",
-  "Mosquito Shocker":"20260921_115607.jpg",
-  "Vivon Cocoa Shea Butter":"20260901_143149.jpg",
-  "P. Clinic":"20260901_142937.jpg",
-  "Vivon Kiddies":"20260901_143125.jpg",
-  "Dodo Black Soap":"20260901_143254.jpg",
-  "Kiddies Shoes":"IMG-20260913-WA0013.jpg"
+"Dodo Skin Gold":"20260921_115408.jpg","Wig Stand":"20260921_115710.jpg","Whitening Cream":"20260921_115803.jpg",
+"Charcoal Whitening Teeth":"20260921_115527.jpg","Body Mix Perfume":"20260921_115746.jpg","Eyebrows Sharpener":"20260921_115455.jpg",
+"Pipe Cleaner":"20260921_115557.jpg","Dish Washer Powder":"20260921_115725.jpg","Children Shoes":"IMG-20260708-WA0104.jpg",
+"Gold Angel Perfume":"20260921_115754.jpg","Dermaliss White Lotion":"20260921_115742.jpg","Dr Paris Cream":"20260901_143051.jpg",
+"SP Toothpaste":"20260921_115546.jpg","Rechargeable Chopper":"20260921_115624.jpg","Hand Cream":"20260921_115518.jpg",
+"Thrift Clothes":"1688_image_share_9c8e4f0d5a9bfe7edbdb4a79ed4ce007.jpg","Sulphur Active Hair Cream":"20260921_115432.jpg",
+"Magic Black Hair Cream":"20260921_115839.jpg","Vitamin C Cream":"20260901_143158.jpg","Pearl Cream":"20260901_143019.jpg",
+"Yellow Pawpaw Cream":"20260901_143137.jpg","Asantee Body Cream Gold":"20260901_143214.jpg","Knife Sharpener":"20260921_115631.jpg",
+"Aloe Vera Cream":"20260921_115736.jpg","Dental Oral Care Kits":"20260921_115703.jpg","Mosquito Shocker":"20260921_115607.jpg",
+"Vivon Cocoa Shea Butter":"20260901_143149.jpg","P. Clinic":"20260901_142937.jpg","Vivon Kiddies":"20260901_143125.jpg",
+"Dodo Black Soap":"20260901_143254.jpg","Kiddies Shoes":"IMG-20260913-WA0013.jpg"
 };
-
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, ch => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
-  })[ch]);
+function escapeHTML(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function prepareOptions(p){
+ const saved=p.options&&typeof p.options==="object"?p.options:{};
+ if(Object.keys(saved).length)return saved;
+ if(p.name==="Children Shoes")return {size:{type:"select",label:"Size",values:["29","30"]},colour:{type:"text",label:"Colour",placeholder:"Enter colour"}};
+ if(p.name==="Thrift Clothes"||p.name==="Kiddies Shoes")return {size:{type:"text",label:"Size",placeholder:"Enter size"},colour:{type:"text",label:"Colour",placeholder:"Enter colour"}};
+ return {};
+}
+async function loadProducts(){
+ const status=document.getElementById("loadStatus");
+ status.textContent="Loading Erin Enterprises products...";
+ try{
+  const {data,error}=await supabaseClient.from("products").select("id,name,price,category,image_url,options").order("created_at",{ascending:false});
+  if(error)throw error;
+  products=(data||[]).map(r=>({id:r.id,name:r.name,price:Number(r.price),category:r.category,image:r.image_url||productImages[r.name]||"",options:prepareOptions(r)}));
+  status.textContent=products.length?`${products.length} products available`:"No products have been added yet.";
+  displayProducts();updateCart();
+  if(currentAdmin)renderAdminProducts();
+ }catch(e){console.error(e);status.textContent="Products could not be loaded. Please refresh or contact the store.";}
+}
+function createOptions(p,i){
+ if(!p.options||!Object.keys(p.options).length)return "";
+ let h='<div class="product-options">';
+ Object.keys(p.options).forEach(k=>{
+  const o=p.options[k]||{},label=o.label||(k.charAt(0).toUpperCase()+k.slice(1)),id=`option-${i}-${k}`;
+  h+=`<div class="option-group"><label for="${escapeHTML(id)}">${escapeHTML(label)}</label>`;
+  if(o.type==="select"&&Array.isArray(o.values)){h+=`<select id="${escapeHTML(id)}"><option value="">Select ${escapeHTML(label.toLowerCase())}</option>`;o.values.forEach(v=>h+=`<option value="${escapeHTML(v)}">${escapeHTML(v)}</option>`);h+="</select>";}
+  else h+=`<input type="text" id="${escapeHTML(id)}" placeholder="${escapeHTML(o.placeholder||"Enter "+label.toLowerCase())}">`;
+  h+="</div>";
+ });
+ return h+"</div>";
+}
+function getProductOptions(i){
+ const p=products[i],selected={};if(!p||!p.options)return selected;
+ for(const k of Object.keys(p.options)){const el=document.getElementById(`option-${i}-${k}`),v=el?el.value.trim():"";if(!v){alert("Please select or enter "+(p.options[k].label||k)+" for "+p.name+".");return null;}selected[k]=v;}
+ return selected;
+}
+function displayProducts(list=products){
+ const c=document.getElementById("products"),n=document.getElementById("noResults");c.innerHTML="";
+ if(!list.length){n.style.display="block";return;}n.style.display="none";
+ list.forEach(p=>{
+  const i=products.indexOf(p),card=document.createElement("div");card.className="product";
+  const img=p.image?`<img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:"";
+  card.innerHTML=`${img}<div class="no-image" ${p.image?'style="display:none"':""}>📷 Image unavailable</div><div class="product-info"><h3>${escapeHTML(p.name)}</h3><span class="category-label">${escapeHTML(p.category)}</span><div class="price">₦${p.price.toLocaleString("en-NG")}</div>${createOptions(p,i)}<div class="product-buttons"><button class="add-btn" onclick="addToCart(${i})">🛒 Add</button><button class="buy-btn" onclick="buyNow(${i})">Buy Now</button></div></div>`;
+  c.appendChild(card);
+ });
+}
+function filterProducts(){
+ const s=document.getElementById("searchInput").value.toLowerCase().trim();
+ displayProducts(products.filter(p=>p.name.toLowerCase().includes(s)&&(selectedCategory==="All"||p.category===selectedCategory)));
+}
+function selectCategory(cat,b){selectedCategory=cat;document.querySelectorAll(".category-btn").forEach(x=>x.classList.remove("active"));b.classList.add("active");filterProducts();}
+function addToCart(i){
+ const opts=getProductOptions(i);if(opts===null)return;
+ const found=cart.find(x=>x.index===i&&JSON.stringify(x.options)===JSON.stringify(opts));
+ if(found)found.quantity++;else cart.push({index:i,quantity:1,options:opts});updateCart();
+}
+function buyNow(i){const old=cart.length;addToCart(i);if(cart.length>=old)openCart();}
+function formatOptions(o){if(!o||!Object.keys(o).length)return "";return '<div class="selected-options">'+Object.keys(o).map(k=>`<div><strong>${escapeHTML(k)}:</strong> ${escapeHTML(o[k])}</div>`).join("")+"</div>";}
+function optionsForMessage(o){if(!o||!Object.keys(o).length)return "";return Object.keys(o).map(k=>" | "+k+": "+o[k]).join("");}
+function getCartTotal(){return cart.reduce((s,x)=>s+(products[x.index]?products[x.index].price*x.quantity:0),0);}
+function updateCart(){
+ const c=document.getElementById("cartItems");let count=0;c.innerHTML="";
+ if(!cart.length)c.innerHTML='<div class="empty-cart">Your cart is empty.</div>';
+ cart.forEach((x,i)=>{const p=products[x.index];if(!p)return;count+=x.quantity;const d=document.createElement("div");d.className="cart-item";d.innerHTML=`<h4>${escapeHTML(p.name)}</h4><div>₦${p.price.toLocaleString("en-NG")} each</div>${formatOptions(x.options)}<div class="cart-controls"><button onclick="changeQuantity(${i},-1)">−</button><span>${x.quantity}</span><button onclick="changeQuantity(${i},1)">+</button><button class="remove-btn" onclick="removeFromCart(${i})">Remove</button></div><div style="margin-top:8px;font-weight:bold">₦${(p.price*x.quantity).toLocaleString("en-NG")}</div>`;c.appendChild(d);});
+ document.getElementById("cartCount").textContent=count;document.getElementById("cartTotal").textContent=getCartTotal().toLocaleString("en-NG");
+}
+function changeQuantity(i,n){if(!cart[i])return;cart[i].quantity+=n;if(cart[i].quantity<=0)cart.splice(i,1);updateCart();}
+function removeFromCart(i){cart.splice(i,1);updateCart();}
+function openCart(){document.getElementById("cartPanel").classList.add("open");}
+function closeCart(){document.getElementById("cartPanel").classList.remove("open");}
+function getCustomerDetails(reqEmail=false){
+ const d={name:document.getElementById("customerName").value.trim(),phone:document.getElementById("customerPhone").value.trim(),email:document.getElementById("customerEmail").value.trim(),address:document.getElementById("customerAddress").value.trim()};
+ if(!cart.length){alert("Your cart is empty.");return null;}
+ if(!d.name||!d.phone||!d.address||(reqEmail&&!d.email)){alert(reqEmail?"Please enter your name, phone number, email address and delivery address.":"Please enter your name, phone number and delivery address.");return null;}
+ if(reqEmail&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)){alert("Please enter a valid email address.");return null;}return d;
+}
+function buildOrderText(){return cart.map(x=>{const p=products[x.index];return `• ${p.name}${optionsForMessage(x.options)} x${x.quantity} = ₦${(p.price*x.quantity).toLocaleString("en-NG")}\n`;}).join("");}
+function checkoutWhatsApp(){
+ const d=getCustomerDetails();if(!d)return;
+ const msg=`Hello Erin Enterprises!\n\nNEW ORDER\n\nCustomer Name: ${d.name}\nPhone: ${d.phone}\nDelivery Address: ${d.address}\n\nORDER ITEMS:\n${buildOrderText()}\nTOTAL: ₦${getCartTotal().toLocaleString("en-NG")}\n\nPlease confirm my order. Thank you.`;
+ window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,"_blank");
+}
+function payWithPaystack(){
+ const d=getCustomerDetails(true);if(!d)return;
+ if(!window.PaystackPop){alert("Paystack could not load. Check your internet connection and try again.");return;}
+ const total=getCartTotal();if(!Number.isFinite(total)||total<=0){alert("The order total is invalid.");return;}
+ const popup=new PaystackPop();
+ popup.newTransaction({key:PAYSTACK_PUBLIC_KEY,email:d.email,amount:total*100,currency:"NGN",firstName:d.name,phone:d.phone,
+ metadata:{customer_name:d.name,customer_phone:d.phone,delivery_address:d.address,order_total:total,store:"Erin Enterprises",order_items:buildOrderText()},
+ onSuccess:t=>{
+  const msg=`Hello Erin Enterprises!\n\nPAYSTACK PAYMENT CALLBACK RECEIVED — PLEASE VERIFY IN PAYSTACK DASHBOARD\n\nCustomer Name: ${d.name}\nPhone: ${d.phone}\nEmail: ${d.email}\nDelivery Address: ${d.address}\n\nORDER ITEMS:\n${buildOrderText()}\nORDER TOTAL: ₦${total.toLocaleString("en-NG")}\n\nPaystack Reference: ${t.reference}\n\nPlease verify this reference in Paystack before confirming the order or dispatching goods.`;
+  alert("Transaction reference received. Please verify payment in your Paystack dashboard before dispatch.");window.location.href=`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+ },onCancel:()=>alert("Payment was cancelled. No order has been marked as paid."),onError:e=>{console.error(e);alert("Payment could not be completed. Please try again.");}});
 }
 
-function prepareOptions(product) {
-  const saved = product.options && typeof product.options === "object" ? product.options : {};
-  if (Object.keys(saved).length) return saved;
-
-  if (product.name === "Children Shoes") {
-    return {
-      size:{type:"select",label:"Size",values:["29","30"]},
-      colour:{type:"text",label:"Colour",placeholder:"Enter colour"}
-    };
+/* ADMIN FUNCTIONS */
+function openAdmin(){document.getElementById("adminOverlay").classList.add("open");}
+function closeAdmin(){document.getElementById("adminOverlay").classList.remove("open");}
+async function adminLogin(){
+ const email=document.getElementById("adminEmail").value.trim(),password=document.getElementById("adminPassword").value;
+ const s=document.getElementById("adminLoginStatus");s.textContent="Signing in...";
+ const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
+ if(error){s.textContent="Login failed: "+error.message;return;}
+ currentAdmin=data.user;document.getElementById("adminLogin").classList.add("hidden");document.getElementById("adminWorkspace").classList.remove("hidden");await renderAdminProducts();
+}
+async function adminLogout(){
+ await supabaseClient.auth.signOut();currentAdmin=null;document.getElementById("adminWorkspace").classList.add("hidden");document.getElementById("adminLogin").classList.remove("hidden");document.getElementById("adminPassword").value="";
+}
+function resetProductForm(){
+ document.getElementById("editProductId").value="";document.getElementById("adminProductName").value="";document.getElementById("adminProductPrice").value="";
+ document.getElementById("adminProductCategory").value="Beauty";document.getElementById("adminProductImage").value="";document.getElementById("adminProductOptions").value="{}";
+ document.getElementById("productFormHeading").textContent="Add a new product";document.getElementById("imageStatus").textContent="Choose an image when adding a product. When editing, leave this empty to keep the current picture.";
+}
+async function saveProduct(){
+ if(!currentAdmin){alert("Please sign in first.");return;}
+ const id=document.getElementById("editProductId").value,name=document.getElementById("adminProductName").value.trim(),price=Number(document.getElementById("adminProductPrice").value),category=document.getElementById("adminProductCategory").value,file=document.getElementById("adminProductImage").files[0];
+ if(!name||!Number.isInteger(price)||price<=0){alert("Enter a product name and a valid whole-number price.");return;}
+ let options;try{options=JSON.parse(document.getElementById("adminProductOptions").value||"{}");if(!options||Array.isArray(options)||typeof options!=="object")throw new Error();}catch(e){alert("Product options must be valid JSON. Use {} if you do not need options.");return;}
+ const btn=document.querySelector("#adminWorkspace button.admin-button.green"); if(btn){btn.disabled=true;btn.textContent="Saving...";}
+ try{
+  let imageUrl="";
+  if(id){const old=products.find(p=>p.id===id);imageUrl=old?old.image:"";}
+  if(file){
+   const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_"),path=`${Date.now()}-${safeName}`;
+   const {error:upErr}=await supabaseClient.storage.from(STORAGE_BUCKET).upload(path,file,{cacheControl:"3600",upsert:false});
+   if(upErr)throw new Error("Picture upload failed: "+upErr.message);
+   imageUrl=supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(path).data.publicUrl;
   }
-  if (product.name === "Thrift Clothes" || product.name === "Kiddies Shoes") {
-    return {
-      size:{type:"text",label:"Size",placeholder:"Enter size"},
-      colour:{type:"text",label:"Colour",placeholder:"Enter colour"}
-    };
-  }
-  return {};
+  const record={name,price,category,image_url:imageUrl,options};
+  let result;
+  if(id)result=await supabaseClient.from("products").update(record).eq("id",id);
+  else result=await supabaseClient.from("products").insert(record);
+  if(result.error)throw result.error;
+  alert(id?"Product updated successfully.":"Product added successfully.");
+  resetProductForm();await loadProducts();await renderAdminProducts();
+ }catch(e){console.error(e);alert("Could not save product: "+e.message);}
+ finally{if(btn){btn.disabled=false;btn.textContent="Save product";}}
 }
-
-async function loadProducts() {
-  const status = document.getElementById("loadStatus");
-  const container = document.getElementById("products");
-  status.textContent = "Loading Erin Enterprises products...";
-  container.innerHTML = "";
-
-  try {
-    const {data, error} = await supabaseClient
-      .from("products")
-      .select("id,name,price,category,image_url,options")
-      .order("created_at", {ascending:false});
-
-    if (error) throw error;
-
-    products = (data || []).map(row => ({
-      id:row.id,
-      name:row.name,
-      price:Number(row.price),
-      category:row.category,
-      image:row.image_url || productImages[row.name] || "",
-      options:prepareOptions(row)
-    }));
-
-    status.textContent = products.length
-      ? `${products.length} products available`
-      : "No products have been added yet.";
-
-    displayProducts();
-    updateCart();
-  } catch (error) {
-    console.error("Supabase product loading error:", error);
-    status.textContent = "Products could not be loaded. Please refresh or contact the store.";
-  }
+async function renderAdminProducts(){
+ if(!currentAdmin)return;
+ const box=document.getElementById("adminProductList");box.textContent="Loading products...";
+ const {data,error}=await supabaseClient.from("products").select("id,name,price,category,image_url,options").order("created_at",{ascending:false});
+ if(error){box.textContent="Could not load products: "+error.message;return;}
+ if(!data.length){box.textContent="No products found.";return;}
+ box.innerHTML="";
+ data.forEach(p=>{
+  const row=document.createElement("div");row.className="admin-row";
+  const thumb=p.image_url?`<img src="${escapeHTML(p.image_url)}" alt="">`:`<div style="width:55px;height:55px;background:#eee;display:grid;place-items:center;border-radius:6px">📷</div>`;
+  row.innerHTML=`${thumb}<div class="admin-row-info"><strong>${escapeHTML(p.name)}</strong><span>₦${Number(p.price).toLocaleString("en-NG")} · ${escapeHTML(p.category)}</span></div><div><button class="admin-button" onclick="editProduct('${p.id}')">Edit</button><button class="admin-button danger" onclick="deleteProduct('${p.id}')">Delete</button></div>`;
+  box.appendChild(row);
+ });
 }
-
-function createOptions(product,index) {
-  if (!product.options || !Object.keys(product.options).length) return "";
-  let html = '<div class="product-options">';
-
-  Object.keys(product.options).forEach(key => {
-    const option = product.options[key] || {};
-    const label = option.label || (key.charAt(0).toUpperCase()+key.slice(1));
-    html += `<div class="option-group"><label for="option-${index}-${escapeHTML(key)}">${escapeHTML(label)}</label>`;
-
-    if (option.type === "select" && Array.isArray(option.values)) {
-      html += `<select id="option-${index}-${escapeHTML(key)}"><option value="">Select ${escapeHTML(label.toLowerCase())}</option>`;
-      option.values.forEach(value => {
-        html += `<option value="${escapeHTML(value)}">${escapeHTML(value)}</option>`;
-      });
-      html += "</select>";
-    } else {
-      html += `<input type="text" id="option-${index}-${escapeHTML(key)}" placeholder="${escapeHTML(option.placeholder || "Enter "+label.toLowerCase())}">`;
-    }
-    html += "</div>";
-  });
-
-  return html + "</div>";
+function editProduct(id){
+ const p=products.find(x=>x.id===id);if(!p){alert("Refresh the product list and try again.");return;}
+ document.getElementById("editProductId").value=p.id;document.getElementById("adminProductName").value=p.name;document.getElementById("adminProductPrice").value=p.price;
+ document.getElementById("adminProductCategory").value=p.category;document.getElementById("adminProductOptions").value=JSON.stringify(p.options||{},null,2);
+ document.getElementById("adminProductImage").value="";document.getElementById("productFormHeading").textContent="Edit product";
+ document.getElementById("imageStatus").textContent="Current picture will remain unless you choose a new picture.";
+ document.querySelector(".admin-panel").scrollIntoView({behavior:"smooth"});
 }
-
-function getProductOptions(index) {
-  const product = products[index];
-  const selected = {};
-  if (!product || !product.options) return selected;
-
-  for (const key of Object.keys(product.options)) {
-    const element = document.getElementById(`option-${index}-${key}`);
-    const value = element ? element.value.trim() : "";
-    if (!value) {
-      alert("Please select or enter " + (product.options[key].label || key) + " for " + product.name + ".");
-      return null;
-    }
-    selected[key] = value;
-  }
-  return selected;
+async function deleteProduct(id){
+ if(!currentAdmin)return;if(!confirm("Delete this product from your store? This cannot be undone."))return;
+ const {error}=await supabaseClient.from("products").delete().eq("id",id);
+ if(error){alert("Delete failed: "+error.message);return;}
+ alert("Product deleted.");await loadProducts();await renderAdminProducts();
 }
-
-function displayProducts(list = products) {
-  const container = document.getElementById("products");
-  const noResults = document.getElementById("noResults");
-  container.innerHTML = "";
-
-  if (!list.length) {
-    noResults.style.display = "block";
-    return;
-  }
-  noResults.style.display = "none";
-
-  list.forEach(product => {
-    const index = products.indexOf(product);
-    const card = document.createElement("div");
-    card.className = "product";
-
-    const imageMarkup = product.image
-      ? `<img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
-      : "";
-
-    card.innerHTML = `
-      ${imageMarkup}
-      <div class="no-image" ${product.image ? 'style="display:none"' : ""}>📷 Image unavailable</div>
-      <div class="product-info">
-        <h3>${escapeHTML(product.name)}</h3>
-        <span class="category-label">${escapeHTML(product.category)}</span>
-        <div class="price">₦${product.price.toLocaleString("en-NG")}</div>
-        ${createOptions(product,index)}
-        <div class="product-buttons">
-          <button class="add-btn" onclick="addToCart(${index})">🛒 Add</button>
-          <button class="buy-btn" onclick="buyNow(${index})">Buy Now</button>
-        </div>
-      </div>`;
-    container.appendChild(card);
-  });
-}
-
-function filterProducts() {
-  const search = document.getElementById("searchInput").value.toLowerCase().trim();
-  const filtered = products.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(search);
-    const matchesCategory = selectedCategory === "All" || product.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-  displayProducts(filtered);
-}
-
-function selectCategory(category,button) {
-  selectedCategory = category;
-  document.querySelectorAll(".category-btn").forEach(btn => btn.classList.remove("active"));
-  button.classList.add("active");
-  filterProducts();
-}
-
-function addToCart(index) {
-  const options = getProductOptions(index);
-  if (options === null) return;
-  const existing = cart.find(item => item.index === index && JSON.stringify(item.options) === JSON.stringify(options));
-  if (existing) existing.quantity++;
-  else cart.push({index,quantity:1,options});
-  updateCart();
-}
-
-function buyNow(index) {
-  const before = cart.length;
-  addToCart(index);
-  if (cart.length >= before) openCart();
-}
-
-function formatOptions(options) {
-  if (!options || !Object.keys(options).length) return "";
-  let html = '<div class="selected-options">';
-  Object.keys(options).forEach(key => {
-    const label = key.charAt(0).toUpperCase()+key.slice(1);
-    html += `<div><strong>${escapeHTML(label)}:</strong> ${escapeHTML(options[key])}</div>`;
-  });
-  return html + "</div>";
-}
-
-function optionsForMessage(options) {
-  if (!options || !Object.keys(options).length) return "";
-  return Object.keys(options).map(key =>
-    " | " + key.charAt(0).toUpperCase()+key.slice(1) + ": " + options[key]
-  ).join("");
-}
-
-function getCartTotal() {
-  return cart.reduce((sum,item) => {
-    const product = products[item.index];
-    return sum + (product ? product.price * item.quantity : 0);
-  },0);
-}
-
-function updateCart() {
-  const cartItems = document.getElementById("cartItems");
-  let count = 0;
-  cartItems.innerHTML = "";
-
-  if (!cart.length) {
-    cartItems.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
-  }
-
-  cart.forEach((item,cartIndex) => {
-    const product = products[item.index];
-    if (!product) return;
-    count += item.quantity;
-    const itemTotal = product.price * item.quantity;
-    const div = document.createElement("div");
-    div.className = "cart-item";
-    div.innerHTML = `
-      <h4>${escapeHTML(product.name)}</h4>
-      <div>₦${product.price.toLocaleString("en-NG")} each</div>
-      ${formatOptions(item.options)}
-      <div class="cart-controls">
-        <button onclick="changeQuantity(${cartIndex},-1)">−</button>
-        <span>${item.quantity}</span>
-        <button onclick="changeQuantity(${cartIndex},1)">+</button>
-        <button class="remove-btn" onclick="removeFromCart(${cartIndex})">Remove</button>
-      </div>
-      <div style="margin-top:8px;font-weight:bold">₦${itemTotal.toLocaleString("en-NG")}</div>`;
-    cartItems.appendChild(div);
-  });
-
-  document.getElementById("cartCount").textContent = count;
-  document.getElementById("cartTotal").textContent = getCartTotal().toLocaleString("en-NG");
-}
-
-function changeQuantity(index,change) {
-  if (!cart[index]) return;
-  cart[index].quantity += change;
-  if (cart[index].quantity <= 0) cart.splice(index,1);
-  updateCart();
-}
-
-function removeFromCart(index) {
-  cart.splice(index,1);
-  updateCart();
-}
-
-function openCart() {
-  document.getElementById("cartPanel").classList.add("open");
-}
-function closeCart() {
-  document.getElementById("cartPanel").classList.remove("open");
-}
-
-function getCustomerDetails(requireEmail = false) {
-  const details = {
-    name:document.getElementById("customerName").value.trim(),
-    phone:document.getElementById("customerPhone").value.trim(),
-    email:document.getElementById("customerEmail").value.trim(),
-    address:document.getElementById("customerAddress").value.trim()
-  };
-
-  if (!cart.length) {
-    alert("Your cart is empty.");
-    return null;
-  }
-  if (!details.name || !details.phone || !details.address || (requireEmail && !details.email)) {
-    alert(requireEmail
-      ? "Please enter your name, phone number, email address and delivery address."
-      : "Please enter your name, phone number and delivery address.");
-    return null;
-  }
-  if (requireEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(details.email)) {
-    alert("Please enter a valid email address.");
-    return null;
-  }
-  return details;
-}
-
-function buildOrderText() {
-  let text = "";
-  cart.forEach(item => {
-    const product = products[item.index];
-    const lineTotal = product.price * item.quantity;
-    text += `• ${product.name}${optionsForMessage(item.options)} x${item.quantity} = ₦${lineTotal.toLocaleString("en-NG")}\n`;
-  });
-  return text;
-}
-
-function checkoutWhatsApp() {
-  const customer = getCustomerDetails(false);
-  if (!customer) return;
-
-  const message =
-`Hello Erin Enterprises!
-
-NEW ORDER
-
-Customer Name: ${customer.name}
-Phone: ${customer.phone}
-Delivery Address: ${customer.address}
-
-ORDER ITEMS:
-${buildOrderText()}
-TOTAL: ₦${getCartTotal().toLocaleString("en-NG")}
-
-Please confirm my order. Thank you.`;
-
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,"_blank");
-}
-
-/* IMPORTANT:
-   The browser callback alone is not secure proof of payment.
-   Verify the reference in the Paystack dashboard or with a server-side
-   verification endpoint before treating the order as PAID or dispatching it. */
-function payWithPaystack() {
-  const customer = getCustomerDetails(true);
-  if (!customer) return;
-
-  if (!window.PaystackPop) {
-    alert("Paystack could not load. Check your internet connection and try again.");
-    return;
-  }
-
-  const total = getCartTotal();
-  if (!Number.isFinite(total) || total <= 0) {
-    alert("The order total is invalid.");
-    return;
-  }
-
-  const popup = new PaystackPop();
-  popup.newTransaction({
-    key:PAYSTACK_PUBLIC_KEY,
-    email:customer.email,
-    amount:total * 100,
-    currency:"NGN",
-    firstName:customer.name,
-    phone:customer.phone,
-    metadata:{
-      customer_name:customer.name,
-      customer_phone:customer.phone,
-      delivery_address:customer.address,
-      order_total:total,
-      store:"Erin Enterprises",
-      order_items:buildOrderText()
-    },
-    onSuccess:(transaction) => {
-      const message =
-`Hello Erin Enterprises!
-
-PAYSTACK PAYMENT CALLBACK RECEIVED — PLEASE VERIFY IN PAYSTACK DASHBOARD
-
-Customer Name: ${customer.name}
-Phone: ${customer.phone}
-Email: ${customer.email}
-Delivery Address: ${customer.address}
-
-ORDER ITEMS:
-${buildOrderText()}
-ORDER TOTAL: ₦${total.toLocaleString("en-NG")}
-
-Paystack Reference: ${transaction.reference}
-
-Please verify this reference in Paystack before confirming the order or dispatching goods.`;
-
-      alert("Paystack returned a transaction reference. Your order details will open in WhatsApp. Please wait for the store to verify the payment.");
-      window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-    },
-    onCancel:() => alert("Payment was cancelled. No order has been marked as paid."),
-    onError:(error) => {
-      console.error("Paystack error:",error);
-      alert("Payment could not be completed. Please try again.");
-    }
-  });
-}
-
-/* Start the store */
-updateCart();
-loadProducts();
+supabaseClient.auth.getSession().then(({data})=>{
+ if(data.session){currentAdmin=data.session.user;document.getElementById("adminLogin").classList.add("hidden");document.getElementById("adminWorkspace").classList.remove("hidden");renderAdminProducts();}
+});
+updateCart();loadProducts();
 </script>
 </body>
 </html>
