@@ -151,14 +151,30 @@ if(!cart.length){alert("Your cart is empty.");return null;}if(!d.name||!d.phone|
 if(requireEmail&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)){alert("Please enter a valid email address.");return null;}return d;}
 function orderItems(){return cart.map(x=>{const p=products[x.index];return {product_id:p.id,name:p.name,price:p.price,quantity:x.quantity,options:x.options||{},line_total:p.price*x.quantity};});}
 function buildOrderText(){return cart.map(x=>{const p=products[x.index];return `• ${p.name}${optionsForMessage(x.options)} x${x.quantity} = ₦${(p.price*x.quantity).toLocaleString("en-NG")}\n`;}).join("");}
+
+/* FIXED: Customer contact details are saved inside items JSON.
+   Do not send customer_name as a separate column. */
 async function saveOrder(details,paymentMethod,paymentStatus,reference=""){
-/* The existing orders table fields confirmed for this store are:
-   delivery_address, items (jsonb), total, payment_method, payment_status,
-   order_status, paystack_reference, created_at.
-   Customer name/phone/email are stored inside the items JSON to avoid
-   requiring extra database columns. */
-const record={customer_name:details.name,delivery_address:details.address,items:{customer:{name:details.name,phone:details.phone,email:details.email||""},products:orderItems()},total:getCartTotal(),payment_method:paymentMethod,payment_status:paymentStatus,order_status:"New",paystack_reference:reference||null};
-const {data,error}=await supabaseClient.from("orders").insert(record).select().single();if(error)throw error;return data;}
+  if(!details||!details.name||!details.phone||!details.address){
+    throw new Error("Customer name, phone number and delivery address are required.");
+  }
+  const record={
+    delivery_address:details.address,
+    items:{
+      customer:{name:details.name,phone:details.phone,email:details.email||""},
+      products:orderItems()
+    },
+    total:getCartTotal(),
+    payment_method:paymentMethod,
+    payment_status:paymentStatus,
+    order_status:"New",
+    paystack_reference:reference||null
+  };
+  const {data,error}=await supabaseClient.from("orders").insert(record).select().single();
+  if(error){console.error("Order saving error:",error);throw error;}
+  return data;
+}
+
 async function checkoutWhatsApp(){const d=getCustomerDetails();if(!d||!checkCartStock())return;const btn=document.querySelector(".whatsapp-btn");btn.disabled=true;btn.textContent="Saving order...";
 try{await saveOrder(d,"WhatsApp","Awaiting confirmation");const msg=`Hello Erin Enterprises!\n\nNEW ORDER\n\nCustomer Name: ${d.name}\nPhone: ${d.phone}\nDelivery Address: ${d.address}\n\nORDER ITEMS:\n${buildOrderText()}\nTOTAL: ₦${getCartTotal().toLocaleString("en-NG")}\n\nI have submitted this order on the website. Please confirm.`;
 window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,"_blank");alert("Your order has been saved. Please send the WhatsApp message to complete your request.");}
