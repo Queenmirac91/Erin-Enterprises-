@@ -384,5 +384,39 @@ supabaseClient.auth.getSession().then(({data})=>{
 });
 updateCart();loadProducts();
 </script>
+
+<script>
+async function loadAdminOrders(){
+  if(!currentAdmin) return;
+
+  const box = document.getElementById("adminOrders");
+  if(!box) return;
+
+  box.textContent = "Loading orders...";
+
+  const {data, error} = await supabaseClient
+    .from("orders")
+    .select("*")
+    .order("created_at", {ascending:false});
+
+  if(error){
+    box.textContent = "Error: " + error.message;
+    return;
+  }
+
+  if(!data || data.length === 0){
+    box.textContent = "No customer orders yet.";
+    return;
+  }
+
+  box.innerHTML = data.map(order => `
+    <div style="border:1px solid #ddd;padding:12px;margin:10px 0">
+      <p>Payment: ${order.payment_status || "Pending"}</p>
+      <p>Status: ${order.order_status || "Pending"}</p>
+    </div>
+  `).join("");
+}
+</script>
+
 </body>
-  </html>
+</html>
