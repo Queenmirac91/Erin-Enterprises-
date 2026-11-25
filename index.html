@@ -157,7 +157,7 @@ async function saveOrder(details,paymentMethod,paymentStatus,reference=""){
    order_status, paystack_reference, created_at.
    Customer name/phone/email are stored inside the items JSON to avoid
    requiring extra database columns. */
-const record={delivery_address:details.address,items:{customer:{name:details.name,phone:details.phone,email:details.email||""},products:orderItems()},total:getCartTotal(),payment_method:paymentMethod,payment_status:paymentStatus,order_status:"New",paystack_reference:reference||null};
+const record={customer_name:details.name,delivery_address:details.address,items:{customer:{name:details.name,phone:details.phone,email:details.email||""},products:orderItems()},total:getCartTotal(),payment_method:paymentMethod,payment_status:paymentStatus,order_status:"New",paystack_reference:reference||null};
 const {data,error}=await supabaseClient.from("orders").insert(record).select().single();if(error)throw error;return data;}
 async function checkoutWhatsApp(){const d=getCustomerDetails();if(!d||!checkCartStock())return;const btn=document.querySelector(".whatsapp-btn");btn.disabled=true;btn.textContent="Saving order...";
 try{await saveOrder(d,"WhatsApp","Awaiting confirmation");const msg=`Hello Erin Enterprises!\n\nNEW ORDER\n\nCustomer Name: ${d.name}\nPhone: ${d.phone}\nDelivery Address: ${d.address}\n\nORDER ITEMS:\n${buildOrderText()}\nTOTAL: ₦${getCartTotal().toLocaleString("en-NG")}\n\nI have submitted this order on the website. Please confirm.`;
